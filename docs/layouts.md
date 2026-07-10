@@ -69,3 +69,11 @@ Notes: keep `cli.py` thin so the library surface stays importable and testable.
 Combined projects (e.g. API + ML pipeline) take the union of the relevant profiles under one `src/`;
 prune anything unused at bootstrap. Record the chosen layout in `docs/architecture.md` (module map) and
 the decision in an ADR if it deviates from these profiles.
+
+**Per-area memory (large multi-area repos).** When areas (backend / frontend / agent-LLM) are built in
+their own sessions, give each its own `<area>/HANDOVER.md` and a nested `<area>/CLAUDE.md` that
+`@`-imports it — Claude Code auto-loads a subtree's `CLAUDE.md` when working there, so the right memory
+loads automatically. The root `HANDOVER.md` / `CLAUDE.md` stay **program-level** (milestones, cross-area
+decisions, an index of the area handovers). The AI creates these when an area needs them and **records the
+structure in this module map**. Default: one root handover — split only when it hurts. Details:
+`HANDOVER.md` → "Scaling: per-area handovers".

@@ -22,7 +22,8 @@ cd my-project && rm -rf .git && git init
 #    "Read CLAUDE.md, then run the bootstrap: prune what this project doesn't need and plan."
 ```
 Not every project needs the whole template — the bootstrap prunes it to fit (with your approval).
-See **How to use** below.
+See **How to use** below. **Already have a project?** Don't `rm -rf .git` — see
+[Adopting into an existing project](#adopting-into-an-existing-project-brownfield).
 
 > **Purpose:** When starting a new project (you or your teammates), give Claude Code this folder as a
 > **template**. The generic "working discipline" files inside help set up the project from day one as
@@ -65,6 +66,21 @@ Rules alone can be ignored; Keel also wires the discipline into Claude Code's **
 6. Follow the discipline in `rules.md` and proceed in phases; update docs + `HANDOVER.md` at the end of
    each phase, then commit + push with approval.
 
+## Adopting into an existing project (brownfield)
+Keel isn't only for new projects — you can bring an **already-in-progress** project under its discipline.
+The kit is *overlaid, never dumped on top*: **non-destructive is the hard rule** (rules.md §0, Mode B).
+```bash
+# clone the kit somewhere ELSE — never touch your project's .git
+git clone https://github.com/muratsilahtaroglu/claude-code-starter-kit.git /tmp/keel
+# add ONLY the files you don't already have (existing files are kept, never overwritten):
+rsync -av --ignore-existing /tmp/keel/ /path/to/your-project/ --exclude '.git'
+```
+Then, in Claude Code, run **`/adopt`** (or: *"Adopt Keel into THIS project — don't overwrite my files, add
+only what's missing, back-fill `docs/architecture.md` + `HANDOVER.md` from the current code, merge conflicts
+by showing me a diff first, and propose the plan before changing anything."*). `/adopt` inventories every
+path as **add · merge · defer**, reverse-engineers the docs from your real code, and migrates security
+(rules.md §7) gradually — without breaking a working build.
+
 ## Contents (all generic / project-agnostic)
 ```text
 claude-code-starter-kit/
@@ -79,7 +95,7 @@ claude-code-starter-kit/
 ├── .claude/                  # ⚙️  Claude Code enforcement layer (deterministic, not just advice)
 │   ├── settings.json         #     permissions: deny reading secrets · ask before push
 │   ├── hooks/                #     block-dangerous.sh (rm -rf · force-push · .env) + handover reminder
-│   └── skills/               #     invokable workflows: /handoff · /phase-review · /research
+│   └── skills/               #     invokable workflows: /handoff · /phase-review · /research · /adopt
 │
 ├── docs/                     # 📚 long-form documentation
 │   ├── architecture.md       #     live module map (updated on every structural change)

@@ -4,11 +4,28 @@
 > These rules apply every session.
 
 ## 0. Session start
-0. **(First session in a NEW project only) Template bootstrap — tailor the template to THIS project.**
-   Before anything else, understand the project (goal, type, constraints, target platforms/hosts). Then
-   propose a tailoring plan and **apply it only after user approval** — never silently keep, delete, or
-   add template parts. Ask the user the **project language** (e.g. Turkish or English) and use it for docs.
-   The plan covers:
+0. **(First session only) Bootstrap — fit the template to THIS project.** Before anything else, understand
+   the project (goal, type, constraints, target platforms/hosts) and ask the **project language** (e.g.
+   Turkish or English) for docs. Then propose a tailoring plan and **apply it only after user approval** —
+   never silently keep, delete, add, or **overwrite**. First pick the mode:
+
+   - **Mode A — New / greenfield project** (empty or near-empty repo): the template files are the starting
+     point. Go straight to the tailoring plan (a)–(e) below.
+   - **Mode B — Adopt into an EXISTING project** (brownfield): the project already has code + history; the
+     template is *overlaid, never dumped on top*. **Non-destructive is the hard rule.** Run the `/adopt`
+     skill (`.claude/skills/adopt/`), which before (a)–(e) additionally:
+     - **keeps their `.git`** — never re-init or wipe history (no `rm -rf .git`);
+     - **inventories & classifies** every template path vs. the repo — *missing* (safe to add), *present*
+       (project has its own: `README.md`, `pyproject.toml`, `.gitignore`, `CLAUDE.md`, ...), or
+       *conflicting* — and **adds only the missing; merges present/conflicting from a shown diff with
+       approval; never overwrites** (safe bulk-add: `rsync -av --ignore-existing <keel>/ ./ --exclude .git`);
+     - **back-fills the living docs from the real code** — reverse-engineers `docs/architecture.md` and
+       fills `HANDOVER.md` (a) with what already exists (not blank placeholders);
+     - **adopts security §7 as a migration** — freezes *currently-installed* versions into `==`, generates
+       the lock, `pip-audit`; doesn't break a working build to reach the ideal;
+     - **records the adoption in an ADR** (what was added / merged / deferred and why).
+
+   The tailoring plan (both modes) covers:
    - **(a) Prune what's unneeded** — list template parts to remove *with reasons*, then **cascade the
      removal**: grep the removed part's name across every `.md` (README.md, CLAUDE.md, docs/* incl.
      `docs/user_manual.md`, HANDOVER.md, folder READMEs) and **update or delete every reference** so no dangling
@@ -19,6 +36,7 @@
    - **(b) Add what's missing** — if the project needs files/folders the template lacks (a specific source
      layout, a service/worker dir, a data pipeline, etc.), propose them and create **only after approval**.
    - **(c) Instantiate a layout profile** from `docs/layouts.md` (ML, service/API, CLI, ...) or a mix.
+     (Mode B: **map the existing layout** to the nearest profile — don't create parallel folders beside it.)
    - **(d) Optional research** — ask whether to run external research first (see §8); skip silently if declined.
    - **(e) Record the tailoring** — note what was removed/added/renamed and why in `HANDOVER.md` (a) (or a
      short ADR), so later sessions understand why the tree differs from the stock template.
@@ -31,7 +49,11 @@
    docs/architecture.md, ADRs) — **but USER approval is required before committing/updating.**
 4. **`HANDOVER.md` is updated BEFORE every compact/session end.** Cumulative and historical:
    (a) completed work, (b) approaches tried and failed (so they aren't retried), (c) latest updates,
-   (d) next steps.
+   (d) next steps. Default is a **single root** handover. On large multi-area projects the AI may create
+   **per-area handovers** (`<area>/HANDOVER.md`, e.g. backend/frontend/agent) when an area needs its own —
+   the root then indexes them (program-level + links). Whenever it creates one it **registers the structure
+   in `docs/architecture.md`** (§1.6) and wires a nested `<area>/CLAUDE.md` `@`-import. Split only when the
+   single file grows unwieldy — see `HANDOVER.md` → "Scaling: per-area handovers".
 5. **Failed attempts** are written into the handoff as "tried, didn't work, reason".
 6. **Every structural change** is recorded in `docs/architecture.md` (what each file does).
 
