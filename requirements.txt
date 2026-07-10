@@ -1,0 +1,5 @@
+# Direct dependencies only — EXACT pins with `==`, never `>=`/`~=`/`^` (rules.md §7).
+# After editing, refresh the lock file:
+#   pip-compile --generate-hashes -o requirements.lock requirements.txt
+#
+# <package>==<exact.version>

@@ -1,0 +1,52 @@
+name: security-ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # rules.md §7 / docs/security.md — install must fail if requirements.lock
+      # doesn't have exact hashes for every dependency.
+      - name: Hash-verified install
+        run: |
+          pip install --require-hashes -r requirements.lock
+
+      # High-signal-only pattern to avoid false-positiving on setuptools'
+      # legitimate distutils-precedence.pth (see docs/security.md note).
+      - name: Scan .pth files for injection
+        run: |
+          set -euo pipefail
+          PATTERN='exec\(|subprocess|os\.system|socket|eval\(|marshal|base64|__import__'
+          SITE=$(python -c "import sysconfig; print(sysconfig.get_paths()['purelib'])")
+          FOUND=$(find "$SITE" -name "*.pth" 2>/dev/null \
+            | xargs -r grep -lE "$PATTERN" || true)
+          if [ -n "$FOUND" ]; then
+            echo "Suspicious .pth file(s) found:"
+            echo "$FOUND"
+            exit 1
+          fi
+
+      - name: pip-audit
+        run: |
+          pip install pip-audit==2.7.3
+          pip-audit -r requirements.lock
+          pip-audit -r requirements-dev.lock
+
+      # Belt-and-suspenders: fail CI if a real .env slipped past .gitignore.
+      - name: Secret-file guard
+        run: |
+          if git ls-files | grep -E '(^|/)\.env$'; then
+            echo "A tracked .env file was found — secrets must never be committed."
+            exit 1
+          fi

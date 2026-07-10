@@ -1,0 +1,17 @@
+# Tool configuration only. Dependencies stay in requirements*.txt / *.lock (rules.md §7).
+# Do NOT add [project]/[build-system] here unless this project is a distributable library.
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+# E/F = pyflakes+pycodestyle, I = isort, B = bugbear, UP = pyupgrade, S = flake8-bandit (security).
+select = ["E", "F", "I", "B", "UP", "S"]
+# S101 (assert) is fine inside tests.
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

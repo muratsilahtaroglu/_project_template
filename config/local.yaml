@@ -1,0 +1,4 @@
+# Dev/local parameters — NON-SECRET only (secrets live in .env; see config/README.md)
+app:
+  log_level: DEBUG
+  # <parameter>: <value>

@@ -1,0 +1,23 @@
+# pip install pre-commit==3.8.0 && pre-commit install
+# Enforces rules.md §6.18 (secret scan before push) automatically.
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: check-added-large-files
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.4
+    hooks:
+      - id: gitleaks
+
+  - repo: local
+    hooks:
+      - id: no-tracked-dotenv
+        name: Block tracked .env files
+        entry: bash -c 'git diff --cached --name-only | grep -E "(^|/)\.env$" && exit 1 || exit 0'
+        language: system
+        pass_filenames: false

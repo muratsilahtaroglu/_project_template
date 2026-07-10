@@ -1,0 +1,7 @@
+# AUTO-GENERATED — do not hand-edit. Regenerate with:
+#   pip-compile --generate-hashes -o requirements.lock requirements.txt
+# Install with:
+#   pip install --require-hashes -r requirements.lock
+#
+# <package>==<exact.version> \
+#     --hash=sha256:<...>

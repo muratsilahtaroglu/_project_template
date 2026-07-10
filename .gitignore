@@ -1,0 +1,53 @@
+# === Secrets — NEVER committed (rules.md §5) ===
+.env
+*.env
+!.env.example
+secrets/
+*.key
+*.pem
+*.p12
+*_cookie*.txt
+*_token*.txt
+
+# === Python ===
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# === Node / frontend ===
+node_modules/
+dist/
+.vite/
+*-debug.log*
+
+# === Data / runtime ===
+*.db
+*.sqlite*
+logs/
+*.log
+data/
+pgdata/
+qdrant_storage/
+
+# === Scratch — ignore archive and outputs ===
+scratch/archive/
+scratch/**/__pycache__/
+scratch/**/*.out
+
+# === Claude Code — commit settings.json/skills/hooks; ignore personal ===
+.claude/settings.local.json
+CLAUDE.local.md
+
+# === OS / editor ===
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp

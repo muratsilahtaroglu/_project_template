@@ -1,0 +1,4 @@
+# Production parameters — NON-SECRET only (secrets live in .env; see config/README.md)
+app:
+  log_level: INFO
+  # <parameter>: <value>
