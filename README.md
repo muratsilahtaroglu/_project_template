@@ -1,7 +1,8 @@
-# Claude Code Project Template (Starter Kit)
+# Keel — Claude Code Starter Kit
 
-*A discipline + security starter kit that keeps Claude Code (or any LLM) building your project
-consistently, traceably, and safely — from the very first session.*
+*Like a ship's keel keeps a vessel on course, **Keel** keeps Claude Code (or any LLM) on course:
+a discipline + security starter kit that makes your project consistent, traceable, and safe —
+no drift across sessions, from the very first one.*
 
 **Requires:** [Claude Code](https://claude.com/claude-code). The `.claude/` layer (permissions, hooks,
 skills) is Claude-Code-native; the docs and discipline (`rules.md`, ADRs, `HANDOVER.md`, security guide)
@@ -9,13 +10,14 @@ are tool-agnostic and useful with any agent.
 
 ## Quick start
 ```bash
-# 1) copy the template (incl. dotfiles) into your new project's root
-cp -a _project_template/. my-project/ && cd my-project
+# 1) clone Keel as your new project, then start your own git history
+git clone https://github.com/muratsilahtaroglu/claude-code-starter-kit.git my-project
+cd my-project && rm -rf .git && git init
 # 2) in Claude Code, let it tailor the template to THIS project before coding:
 #    "Read CLAUDE.md, then run the bootstrap: prune what this project doesn't need and plan."
 ```
-Then follow **How to use** below. Not every project needs the whole template — the bootstrap prunes it
-to fit (with your approval).
+Not every project needs the whole template — the bootstrap prunes it to fit (with your approval).
+See **How to use** below.
 
 > **Purpose:** When starting a new project (you or your teammates), give Claude Code this folder as a
 > **template**. The generic "working discipline" files inside help set up the project from day one as
