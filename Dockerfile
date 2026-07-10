@@ -4,9 +4,9 @@
 FROM python:3.12-slim AS builder
 
 WORKDIR /build
-COPY requirements.txt requirements.lock ./
+COPY requirements/ ./requirements/
 
-RUN pip install --require-hashes --prefix=/install -r requirements.lock
+RUN pip install --require-hashes --prefix=/install -r requirements/base.lock
 
 # --- Runtime stage: no build tools, no secrets, non-root ---
 FROM python:3.12-slim AS runtime

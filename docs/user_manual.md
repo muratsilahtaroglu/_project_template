@@ -1,4 +1,4 @@
-# user_manual.md — <PROJECT NAME> User Guide (TEMPLATE)
+# docs/user_manual.md — <PROJECT NAME> User Guide (TEMPLATE)
 
 > Updated as features land.
 

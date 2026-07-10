@@ -10,8 +10,8 @@
    add template parts. Ask the user the **project language** (e.g. Turkish or English) and use it for docs.
    The plan covers:
    - **(a) Prune what's unneeded** — list template parts to remove *with reasons*, then **cascade the
-     removal**: grep the removed part's name across every `.md` (README.md, CLAUDE.md, docs/*,
-     user_manual.md, HANDOVER.md, folder READMEs) and **update or delete every reference** so no dangling
+     removal**: grep the removed part's name across every `.md` (README.md, CLAUDE.md, docs/* incl.
+     `docs/user_manual.md`, HANDOVER.md, folder READMEs) and **update or delete every reference** so no dangling
      mention or architectural confusion remains. *Example:* project won't use GitHub → also remove
      `.github/` (workflows + PULL_REQUEST_TEMPLATE.md), rewrite §6 for the real host (GitLab →
      `.gitlab-ci.yml`; no remote → local-commits-only), and fix the README contents list + every
@@ -27,7 +27,7 @@
 2. Review `docs/architecture.md` and the relevant ADR (if any) for the current phase.
 
 ## 1. Documentation discipline
-3. **At the end of every task/phase**, the relevant `.md` files are updated (CLAUDE.md, user_manual.md,
+3. **At the end of every task/phase**, the relevant `.md` files are updated (CLAUDE.md, docs/user_manual.md,
    docs/architecture.md, ADRs) — **but USER approval is required before committing/updating.**
 4. **`HANDOVER.md` is updated BEFORE every compact/session end.** Cumulative and historical:
    (a) completed work, (b) approaches tried and failed (so they aren't retried), (c) latest updates,
@@ -79,9 +79,10 @@
 
 ## 7. Supply-chain / dependency security (details: docs/security.md)
 20. **Exact version pinning:** all dependencies pinned with `==`; **`>=`, `~=`, `^` are FORBIDDEN**
-    (supply-chain attack prevention). Direct deps in `requirements.txt`; full transitive + **hash** lock
-    in `requirements.lock` (`pip-compile --generate-hashes`). (For Node: lockfile + `npm ci`.)
-21. **Hash-verified install:** `pip install --require-hashes -r requirements.lock`.
+    (supply-chain attack prevention). All dependency files live in `requirements/`: direct deps in
+    `requirements/base.txt`; full transitive + **hash** lock in `requirements/base.lock`
+    (`pip-compile --generate-hashes`); dev tooling in `requirements/dev.{txt,lock}`. (For Node: lockfile + `npm ci`.)
+21. **Hash-verified install:** `pip install --require-hashes -r requirements/base.lock`.
 22. **Container:** multi-stage build + **non-root** (`USER appuser`) + **`.pth` injection scan**
     (high-signal pattern). `.dockerignore` prevents `.env`/secrets from leaking into the image.
 23. **New dependency:** question its necessity + check for typosquatting/repo health → add with `==` →

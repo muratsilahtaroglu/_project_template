@@ -1,4 +1,4 @@
-# Tool configuration only. Dependencies stay in requirements*.txt / *.lock (rules.md §7).
+# Tool configuration only. Dependencies stay in requirements/*.txt / *.lock (rules.md §7).
 # Do NOT add [project]/[build-system] here unless this project is a distributable library.
 
 [tool.ruff]

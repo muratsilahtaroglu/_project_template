@@ -11,7 +11,7 @@
 - [ ] Relevant tests written & run; results in `HANDOVER.md` (§2.8)
 - [ ] `docs/architecture.md` updated for any structural change (§1.6)
 - [ ] ADR added in `docs/adr/` if a significant decision was made
-- [ ] `CLAUDE.md` / `user_manual.md` updated if behavior/usage changed (§1.3)
+- [ ] `CLAUDE.md` / `docs/user_manual.md` updated if behavior/usage changed (§1.3)
 - [ ] `HANDOVER.md` updated (§1.4)
 - [ ] `git diff --cached` reviewed — no `.env`/secrets staged (§6.18)
 - [ ] Deps changed? lock refreshed + `pip-audit` clean (§7.23)

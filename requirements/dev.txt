@@ -1,0 +1,10 @@
+# Dev/test tooling only — NEVER installed into the production image (Dockerfile uses requirements/base.lock).
+# Same pinning rules as requirements/base.txt: exact `==` only (rules.md §7).
+# After editing, refresh the dev lock:
+#   pip-compile --generate-hashes -o requirements/dev.lock requirements/dev.txt
+#
+# pytest==<exact.version>
+# ruff==<exact.version>
+# pip-audit==<exact.version>
+# pip-tools==<exact.version>
+# pre-commit==<exact.version>

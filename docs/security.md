@@ -8,7 +8,7 @@
 | Measure | How | Effect |
 |---|---|---|
 | Exact version pinning | All `>=`/`~=`/`^` → `==` | Malicious new versions don't arrive automatically |
-| Lock file | `pip-compile --generate-hashes` (or `uv lock`) → `requirements.lock`; Node: lockfile + `npm ci` | Reproducible build |
+| Lock file | `pip-compile --generate-hashes` (or `uv lock`) → `requirements/base.lock`; Node: lockfile + `npm ci` | Reproducible build |
 | Non-root container | Dockerfile `USER appuser` | Privilege escalation is harder |
 | Secret management | `.env` git-ignored; Vault/secret-store in prod | Credential theft is harder |
 | `.dockerignore` | `.env`/`.git`/`secrets` never enter the build context | No secrets leak into the image |
@@ -16,10 +16,10 @@
 ## Tier 2 — First sprint
 | Measure | How | Effect |
 |---|---|---|
-| Hash verification | `pip install --require-hashes -r requirements.lock` | Same version, different content → fails |
+| Hash verification | `pip install --require-hashes -r requirements/base.lock` | Same version, different content → fails |
 | Multi-stage build | Separate builder + prod stage; build tools don't ship to prod | Smaller attack surface |
 | `.pth` injection scan | Scan installed `.pth` for exfiltration/exec **primitives** (`subprocess\|socket\|os.system\|urllib\|base64\|marshal\|...`), skipping legit shims (`distutils-precedence.pth`) | Flags autorun exfiltration without false-failing on legit packages |
-| pip-audit CI step | `pip-audit -r requirements.lock` in CI | Catches known CVEs |
+| pip-audit CI step | `pip-audit -r requirements/base.lock` in CI | Catches known CVEs |
 | Network policy | Only necessary egress allowed in prod | Harder to exfiltrate |
 
 > **Note — `.pth` scanning is heuristic.** Legitimate `.pth` files execute code too (setuptools'
@@ -39,12 +39,12 @@
 | Private package mirror | Reduces external dependency exposure |
 
 ## CI security job (summary)
-`pip install --require-hashes -r requirements.lock` → `.pth` scan → `pip-audit`. On every PR and `main` push.
+`pip install --require-hashes -r requirements/base.lock` → `.pth` scan → `pip-audit`. On every PR and `main` push.
 
 ## New dependency procedure
 1. Is it actually necessary? Check for typosquatting/name + repo health/download count.
-2. Add to `requirements.txt` with `==` → refresh the lock (`pip-compile --generate-hashes`).
-3. `pip-audit -r requirements.lock` → no CVEs → proceed → rebuild + test.
+2. Add to `requirements/base.txt` with `==` → refresh the lock (`pip-compile --generate-hashes`).
+3. `pip-audit -r requirements/base.lock` → no CVEs → proceed → rebuild + test.
 
 ## 🚨 Emergency checklist (if a similar attack is detected)
 - [ ] Pin/downgrade the affected package version.

@@ -16,11 +16,11 @@ jobs:
         with:
           python-version: "3.12"
 
-      # rules.md §7 / docs/security.md — install must fail if requirements.lock
+      # rules.md §7 / docs/security.md — install must fail if requirements/base.lock
       # doesn't have exact hashes for every dependency.
       - name: Hash-verified install
         run: |
-          pip install --require-hashes -r requirements.lock
+          pip install --require-hashes -r requirements/base.lock
 
       # Scan installed .pth for exfiltration/execution PRIMITIVES only (network/subprocess/
       # encoding) — what a credential-harvesting .pth actually needs. We deliberately do NOT
@@ -42,8 +42,8 @@ jobs:
       - name: pip-audit
         run: |
           pip install pip-audit==2.7.3
-          pip-audit -r requirements.lock
-          pip-audit -r requirements-dev.lock
+          pip-audit -r requirements/base.lock
+          pip-audit -r requirements/dev.lock
 
       # Belt-and-suspenders: fail CI if a real .env slipped past .gitignore.
       - name: Secret-file guard

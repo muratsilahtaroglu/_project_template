@@ -4,6 +4,11 @@
 a discipline + security starter kit that makes your project consistent, traceable, and safe —
 no drift across sessions, from the very first one.*
 
+<p align="center">
+  <img src="docs/assets/keel-demo.gif" width="760"
+       alt="Keel demo: clone the kit → Claude runs the bootstrap and prunes it to fit → builds in phases → updates HANDOVER.md">
+</p>
+
 **Requires:** [Claude Code](https://claude.com/claude-code). The `.claude/` layer (permissions, hooks,
 skills) is Claude-Code-native; the docs and discipline (`rules.md`, ADRs, `HANDOVER.md`, security guide)
 are tool-agnostic and useful with any agent.
@@ -24,6 +29,30 @@ See **How to use** below.
 > **professional, traceable, and secure**. No file contains a project name or project-specific detail —
 > fill in the placeholders.
 
+## The loop (why it doesn't drift)
+```mermaid
+flowchart LR
+    New([new project]) --> Boot["🧭 bootstrap<br/>prune to fit · your approval"]
+    Boot --> Phase["⚙️ phase<br/>build + test · no skipping"]
+    Phase --> Docs["📝 update docs<br/>+ HANDOVER.md"]
+    Docs --> Commit["✅ commit + push<br/>your approval"]
+    Commit --> Phase
+    Docs -. session ends .-> Mem[("🧠 HANDOVER.md<br/>durable memory")]
+    Mem -. next session reads .-> Phase
+```
+The context window is volatile RAM; the repo is durable disk. Every phase writes what it did into
+`HANDOVER.md` + the docs, so the next session (even after 10+ compactions) picks up without drift.
+
+## Two layers: guidance + enforcement
+Rules alone can be ignored; Keel also wires the discipline into Claude Code's **native, deterministic** layer.
+
+| Layer | Where | Enforced? |
+|---|---|---|
+| **Guidance** | `rules.md`, ADRs, `HANDOVER.md` | advisory — the working discipline |
+| **Always in context** | `CLAUDE.md` `@`-imports `rules.md` + `HANDOVER.md` | auto-loaded every session |
+| **Permissions** | `.claude/settings.json` | denies reading `.env`/secrets · asks before `git push` |
+| **Hooks** | `.claude/hooks/` | blocks `rm -rf` · force-push · staging `.env` · pipe-to-shell |
+
 ## How to use
 1. Copy the contents of this folder into the root of the new project.
 2. **Bootstrap tailoring (rules.md §0.0):** have the AI first *understand the project*, then propose
@@ -37,46 +66,60 @@ See **How to use** below.
    each phase, then commit + push with approval.
 
 ## Contents (all generic / project-agnostic)
-```
-CLAUDE.md              # project constitution template (@-imports rules.md + HANDOVER.md)
-rules.md               # working rules: documentation discipline, testing, scratch layout,
-                       #   sub-agent verification, GitHub push, supply-chain security
-HANDOVER.md            # cumulative session handover (done/tried-failed/latest/next)
-user_manual.md         # end-user guide skeleton
-LICENSE                # MIT
-CONTRIBUTING.md        # how to contribute to the template itself (vs rules.md = building with it)
-.claude/settings.json  # permissions (deny .env/secrets, ask before push) + hook registration
-.claude/hooks/         # block-dangerous.sh (rm -rf/force-push/.env/pipe-to-shell) + handover reminder
-.claude/skills/        # invokable workflows: /handoff, /phase-review, /research
-.gitignore             # secrets + python/node/docker + .claude/settings.local.json
-.env.example           # generic example (secrets stay in .env)
-.editorconfig          # charset/newline/indent baseline
-pyproject.toml         # tool config only: ruff (incl. security lint) + pytest
-docs/architecture.md   # live module map template
-docs/security.md       # supply-chain security guide (pin/hash/non-root/.pth/CI)
-docs/layouts.md        # per-project-type source layout profiles (ML, service/API, CLI)
-docs/adr/               # architecture decision records (template + index)
-config/                # non-secret parameters per env (local.yaml/prod.yaml; secrets stay in .env)
-prompts/ reports/ scratch/ tests/   # organized folder layout + READMEs
-research/              # opt-in external research trail (github/articles/linkedin/huggingface/web → findings.md)
-Makefile               # runnable setup/test/lint/run targets
-.pre-commit-config.yaml # pre-commit secret scan (gitleaks) + .env guard + hygiene hooks
-requirements.txt / requirements.lock          # pinned + hash-locked runtime deps skeleton
-requirements-dev.txt / requirements-dev.lock  # dev tooling, kept out of the prod image
-Dockerfile / .dockerignore / docker-compose.yml  # multi-stage non-root container + compose skeleton
-.github/workflows/ci.yml           # hash-verify + pip-audit + .pth scan on every PR/push
-.github/PULL_REQUEST_TEMPLATE.md   # Definition-of-Done checklist (mirrors rules.md)
+```text
+claude-code-starter-kit/
+│
+├── CLAUDE.md                 # project constitution — Claude reads it first (@-imports rules + handover)
+├── rules.md                  # working discipline: docs · tests · security · git · research
+├── HANDOVER.md               # cumulative session memory (done · tried-failed · latest · next)
+├── README.md                 # this file
+├── CONTRIBUTING.md           # how to contribute to the kit itself
+├── LICENSE                   # MIT
+│
+├── .claude/                  # ⚙️  Claude Code enforcement layer (deterministic, not just advice)
+│   ├── settings.json         #     permissions: deny reading secrets · ask before push
+│   ├── hooks/                #     block-dangerous.sh (rm -rf · force-push · .env) + handover reminder
+│   └── skills/               #     invokable workflows: /handoff · /phase-review · /research
+│
+├── docs/                     # 📚 long-form documentation
+│   ├── architecture.md       #     live module map (updated on every structural change)
+│   ├── security.md           #     supply-chain security guide (pin · hash · non-root · .pth · CI)
+│   ├── layouts.md            #     per-project layout profiles (ML · service/API · CLI)
+│   ├── user_manual.md        #     end-user guide skeleton
+│   ├── assets/               #     README media (demo GIF)
+│   └── adr/                  #     architecture decision records (template + index)
+│
+├── requirements/             # 📦 all dependency manifests (see requirements/README.md)
+│   ├── base.txt · base.lock  #     runtime deps — pinned (==) + hash-locked
+│   └── dev.txt  · dev.lock   #     dev tooling — never enters the prod image
+│
+├── config/                   # non-secret parameters per env (local.yaml · prod.yaml)
+├── prompts/                  # versioned reusable prompts (code never embeds prompt strings)
+├── tests/                    # unit · integration · e2e · fixtures
+├── scratch/                  # throwaway experiments (probes · one_off · experiments)
+├── reports/                  # generated reports
+├── research/                 # opt-in external research trail
+│   └── github · articles · linkedin · huggingface · web   → findings.md per source
+│
+├── .github/                  # CI + PR template
+│   ├── workflows/ci.yml      #     hash-verify · pip-audit · .pth scan on every PR/push
+│   └── PULL_REQUEST_TEMPLATE.md  # Definition-of-Done checklist (mirrors rules.md)
+│
+├── Dockerfile · .dockerignore · docker-compose.yml   # multi-stage, non-root container skeleton
+├── Makefile                  # runnable targets: setup · test · lint · lock · audit
+├── pyproject.toml            # tool config only: ruff (+ security lint S) + pytest
+├── .pre-commit-config.yaml   # gitleaks + .env guard + hygiene hooks
+└── .editorconfig · .env.example · .gitignore
 ```
 
 ## Philosophy (why this discipline?)
 - **Fit the project, don't force the template:** the bootstrap step (rules.md §0.0) prunes unneeded
   parts and instantiates the right layout profile — always with user approval.
 - **Traceability:** every decision goes into an ADR, every structural change into `architecture.md`,
-  every session into the handoff. The project stays stable even after 10+ compactions.
+  every session into `HANDOVER.md`. The project stays stable even after 10+ compactions.
 - **Order:** throwaway code stays in `scratch/`, the main tree stays clean.
 - **Security from day one:** dependency pinning + hashing + non-root + secret hygiene from the start.
-- **Enforced, not just advised:** the discipline is wired into Claude Code's native layer — `.claude/`
-  permissions deny reading secrets, hooks block dangerous/secret-leaking commands, and `@`-imports keep
-  the rules + handover in context every session. Rules are guidance; hooks/permissions are enforced.
+- **Enforced, not just advised:** the discipline is wired into Claude Code's native layer (see the
+  table above) — rules are guidance; permissions and hooks are enforced.
 - **Controlled progress:** phases are not skipped; each phase ends with a working product + an
   approved commit/push.

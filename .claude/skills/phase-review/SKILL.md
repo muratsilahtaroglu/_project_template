@@ -15,7 +15,7 @@ Checklist:
   `tests/` + in HANDOVER.md (rules.md §2.8).
 - [ ] **Architecture** — every structural change recorded in `docs/architecture.md` (rules.md §1.6).
 - [ ] **ADRs** — any significant decision captured as an ADR in `docs/adr/` (+ index row).
-- [ ] **Docs** — CLAUDE.md / user_manual.md updated if behavior/usage changed.
+- [ ] **Docs** — CLAUDE.md / docs/user_manual.md updated if behavior/usage changed.
 - [ ] **HANDOVER.md** — updated (run `/handoff`).
 - [ ] **Secrets** — `git diff --cached` reviewed; no `.env`/secrets staged (rules.md §6.18).
 - [ ] **Deps** — if dependencies changed: lock refreshed + `pip-audit` clean (rules.md §7.23).
