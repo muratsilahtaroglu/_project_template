@@ -4,11 +4,24 @@
 > These rules apply every session.
 
 ## 0. Session start
-0. **(First session in a NEW project only) Template bootstrap:** before anything else, understand the
-   project (goal, type, constraints). Then propose to the user: (a) which template parts are
-   **unnecessary for this project** and should be removed (with reasons), (b) which **layout profile**
-   from `docs/layouts.md` (ML, service/API, CLI, ...) should be instantiated. **Apply removals/additions
-   only after user approval and ask to user the project language (Turkish or English)** — never silently keep or delete template parts.
+0. **(First session in a NEW project only) Template bootstrap — tailor the template to THIS project.**
+   Before anything else, understand the project (goal, type, constraints, target platforms/hosts). Then
+   propose a tailoring plan and **apply it only after user approval** — never silently keep, delete, or
+   add template parts. Ask the user the **project language** (e.g. Turkish or English) and use it for docs.
+   The plan covers:
+   - **(a) Prune what's unneeded** — list template parts to remove *with reasons*, then **cascade the
+     removal**: grep the removed part's name across every `.md` (README.md, CLAUDE.md, docs/*,
+     user_manual.md, HANDOVER.md, folder READMEs) and **update or delete every reference** so no dangling
+     mention or architectural confusion remains. *Example:* project won't use GitHub → also remove
+     `.github/` (workflows + PULL_REQUEST_TEMPLATE.md), rewrite §6 for the real host (GitLab →
+     `.gitlab-ci.yml`; no remote → local-commits-only), and fix the README contents list + every
+     `.github`/GitHub mention.
+   - **(b) Add what's missing** — if the project needs files/folders the template lacks (a specific source
+     layout, a service/worker dir, a data pipeline, etc.), propose them and create **only after approval**.
+   - **(c) Instantiate a layout profile** from `docs/layouts.md` (ML, service/API, CLI, ...) or a mix.
+   - **(d) Optional research** — ask whether to run external research first (see §8); skip silently if declined.
+   - **(e) Record the tailoring** — note what was removed/added/renamed and why in `HANDOVER.md` (a) (or a
+     short ADR), so later sessions understand why the tree differs from the stock template.
 1. Before writing any code, read **`CLAUDE.md` + `rules.md` + `HANDOVER.md`** (CLAUDE.md `@`-imports the
    latter two, so they auto-load).
 2. Review `docs/architecture.md` and the relevant ADR (if any) for the current phase.
@@ -51,9 +64,11 @@
     ADR decisions.
 14. Minimize personal data / PII collection; comply with applicable regulation (e.g. GDPR/local law).
 
-## 6. Version control / GitHub
+## 6. Version control (host-agnostic: GitHub / GitLab / Gitea / none)
 15. **Every meaningful unit of work / phase end → commit + `push`** (remote `main` or phase branch → PR).
-    Push happens **only after user approval**.
+    Push happens **only after user approval**. Host-specific files are set at bootstrap (§0a): GitHub uses
+    `.github/`; GitLab uses `.gitlab-ci.yml` + merge-request templates; a project with **no remote** commits
+    locally only (drop the push steps). Adapt this section to the chosen host.
 16. Commit messages are descriptive + tagged with phase/work item (e.g. `phase1: <feature>`). Commits are
     made **as the project owner** (git config: `<git-user> <git-email>`); no AI co-author line unless
     requested.
@@ -75,3 +90,16 @@
 25. **If a dependency-attack is suspected:** follow the **emergency checklist** in docs/security.md.
 26. In production, secrets live in Vault/a secret store; network egress is allowlisted. Roadmap: SBOM,
     Sigstore, Dependabot/Renovate + manual approval, private package mirror.
+
+## 8. Research (optional, opt-in — ask first)
+27. **Ask before researching.** External research (GitHub, articles/papers, LinkedIn, Hugging Face, the
+    web) runs **only when the user opts in** — offered at bootstrap (§0d) or on request. If declined, skip
+    it silently. The reusable workflow is the `/research` skill (`.claude/skills/research/`).
+28. **Layout:** findings live under `research/<platform>/` — one subfolder per source (`github/`,
+    `articles/`, `linkedin/`, `huggingface/`, `web/`, ...). Each keeps a `findings.md` (distilled, cited
+    notes) + raw downloads under `research/<platform>/downloads/` (git-ignored — large/copyrighted, not
+    committed). See `research/README.md`.
+29. **Verify, don't trust (per §4).** Web/sub-agent findings are verified before use; every claim in a
+    `findings.md` carries its **source URL** + a confidence note, and low-signal/paywalled sources are flagged.
+30. `research/` is the **evidence trail**, not the final architecture — conclusions that drive a decision
+    go into an **ADR** or `docs/`.

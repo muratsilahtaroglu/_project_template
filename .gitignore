@@ -45,6 +45,9 @@ scratch/**/*.out
 .claude/settings.local.json
 CLAUDE.local.md
 
+# === Research — commit findings.md; ignore raw/large downloads (rules.md §8) ===
+research/**/downloads/
+
 # === OS / editor ===
 .DS_Store
 Thumbs.db

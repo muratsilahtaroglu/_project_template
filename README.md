@@ -26,7 +26,7 @@ HANDOVER.md            # cumulative session handover (done/tried-failed/latest/n
 user_manual.md         # end-user guide skeleton
 .claude/settings.json  # permissions (deny .env/secrets, ask before push) + hook registration
 .claude/hooks/         # block-dangerous.sh (rm -rf/force-push/.env/pipe-to-shell) + handover reminder
-.claude/skills/        # invokable workflows: /handoff, /phase-review
+.claude/skills/        # invokable workflows: /handoff, /phase-review, /research
 .gitignore             # secrets + python/node/docker + .claude/settings.local.json
 .env.example           # generic example (secrets stay in .env)
 .editorconfig          # charset/newline/indent baseline
@@ -37,6 +37,7 @@ docs/layouts.md        # per-project-type source layout profiles (ML, service/AP
 docs/adr/               # architecture decision records (template + index)
 config/                # non-secret parameters per env (local.yaml/prod.yaml; secrets stay in .env)
 prompts/ reports/ scratch/ tests/   # organized folder layout + READMEs
+research/              # opt-in external research trail (github/articles/linkedin/huggingface/web → findings.md)
 Makefile               # runnable setup/test/lint/run targets
 .pre-commit-config.yaml # pre-commit secret scan (gitleaks) + .env guard + hygiene hooks
 requirements.txt / requirements.lock          # pinned + hash-locked runtime deps skeleton
