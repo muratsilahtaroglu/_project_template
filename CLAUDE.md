@@ -46,6 +46,8 @@ parameters from `config/<env>.yaml` selected by `ENV` (see `config/README.md`).
 ## Conventions
 - Reusable prompts live in `prompts/` (versioned; code never embeds prompt strings).
 - Reusable Claude Code workflows live in `.claude/skills/<name>/SKILL.md` (e.g. `/handover`, `/phase-review`).
+- Side tasks that would clutter the thread run as subagents in `.claude/agents/` (e.g. `researcher`,
+  `verifier`). Which mechanism for what (skill vs subagent vs rule vs hook) → `docs/steering.md`.
 - Throwaway/experimental code only in `scratch/<subfolder>/`, with a 1-line purpose comment at the top.
 - Every structural change → `docs/architecture.md`. Every phase end → docs + HANDOVER.md (approved commit+push).
 - Tests live in `tests/{unit,integration,e2e,fixtures}/`. Detailed rules: `rules.md`.

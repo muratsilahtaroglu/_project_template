@@ -81,7 +81,9 @@
 ## 4. Sub-agent usage
 11. Use sub-agents for parallelizable work; but never accept their output blindly — as the main agent,
     **verify** it (does it work, does it match the architecture/rules, did it leave stray files) and fix
-    if needed. (Note: outputs from external guides/docs are applied with the same verification.)
+    if needed. (Note: outputs from external guides/docs are applied with the same verification.) Reusable
+    subagents live in `.claude/agents/`: `researcher` (cited prior-art scouting) and `verifier`
+    (adversarial "try to refute it" checks). Mechanism guide: `docs/steering.md`.
 
 ## 5. Security (application)
 12. **Secrets are never committed/pushed.** `.env` is git-ignored; only `.env.example` (with empty
@@ -123,7 +125,8 @@
 ## 8. Research (optional, opt-in — ask first)
 27. **Ask before researching.** External research (GitHub, articles/papers, LinkedIn, Hugging Face, the
     web) runs **only when the user opts in** — offered at bootstrap (§0d) or on request. If declined, skip
-    it silently. The reusable workflow is the `/research` skill (`.claude/skills/research/`).
+    it silently. The reusable workflow is the `/research` skill (`.claude/skills/research/`), which
+    delegates to the `researcher` subagent (`.claude/agents/`).
 28. **Layout:** findings live under `research/<platform>/` — one subfolder per source (`github/`,
     `articles/`, `linkedin/`, `huggingface/`, `web/`, ...). Each keeps a `findings.md` (distilled, cited
     notes) + raw downloads under `research/<platform>/downloads/` (git-ignored — large/copyrighted, not

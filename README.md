@@ -134,6 +134,24 @@ next work), and migrates security (rules.md §7) gradually — without breaking 
        alt="Keel adopt flow: clone the kit elsewhere, rsync only missing files, then /adopt inventories add/merge/defer, keeps your git history, back-fills the docs and seeds the memory files — with your approval">
 </p>
 
+## Where your code lives (discipline vs. code)
+Keel's files sit at the **root** because that's where the tooling requires them (Claude Code reads the
+root `CLAUDE.md`; `.gitignore` / `pyproject.toml` must be at root). They don't mix *into* your code — they
+sit *beside* it, exactly like `package.json` or `.eslintrc` in any project. Your actual application code
+lives in a **separate source tree** the bootstrap creates from a `docs/layouts.md` profile:
+
+```text
+your-project/
+├── CLAUDE.md · rules.md · HANDOVER.md · LESSONS.md · TASKS.md   ← discipline (fixed, at root)
+├── .claude/ · docs/ · tests/ · config/ · requirements/ · prompts/   ← support (fixed)
+└── src/<app-or-package>/   (+ data/ entrypoint/ notebooks/ for ML)   ← YOUR CODE (chosen at bootstrap)
+```
+
+The kit ships **no `src/`** on purpose — the bootstrap proposes the right layout for *your* project type
+(service / CLI / ML / mix) and you approve it. **New project:** the shell comes first, you add code inside
+`src/`. **Existing project:** your code already exists and the shell wraps around it via `/adopt` — nothing
+in your `src/` moves. Think of Keel as a **shell that wraps your project, not a skeleton you pour code into.**
+
 ## Contents (all generic / project-agnostic)
 ```text
 claude-code-starter-kit/
@@ -147,16 +165,19 @@ claude-code-starter-kit/
 ├── CONTRIBUTING.md           # how to contribute to the kit itself
 ├── LICENSE                   # MIT
 │
-├── .claude/                  # ⚙️  Claude Code enforcement layer (deterministic, not just advice)
-│   ├── settings.json         #     permissions: deny reading secrets · ask before push
+├── .claude/                  # ⚙️  Claude Code layer — guidance + deterministic enforcement
+│   ├── settings.json         #     permissions: deny reading secrets · ask before push · hook registration
 │   ├── hooks/                #     block-dangerous · handover reminder · pre-compact snapshot ·
 │   │                         #     session-start re-ground (+ memory-cap warnings)
-│   └── skills/               #     invokable workflows: /handover · /phase-review · /research · /adopt · /distill
+│   ├── skills/               #     invokable workflows: /handover · /phase-review · /research · /adopt · /distill
+│   ├── agents/               #     reusable subagents: researcher · verifier (isolated context)
+│   └── rules/                #     optional path-scoped rules (load only when matching files are touched)
 │
 ├── docs/                     # 📚 long-form documentation
 │   ├── architecture.md       #     live module map (updated on every structural change)
 │   ├── security.md           #     supply-chain security guide (pin · hash · non-root · .pth · CI)
 │   ├── layouts.md            #     per-project layout profiles (ML · service/API · CLI)
+│   ├── steering.md           #     which Claude Code mechanism for what (skill/hook/rule/subagent/…)
 │   ├── user_manual.md        #     end-user guide skeleton
 │   ├── handover-archive.md   #     raw rotated HANDOVER blocks (never imported — zero context cost)
 │   ├── assets/               #     README media (demo · memory-lifecycle · adopt GIFs)
@@ -167,7 +188,7 @@ claude-code-starter-kit/
 │   └── dev.txt  · dev.lock   #     dev tooling — never enters the prod image
 │
 ├── config/                   # non-secret parameters per env (local.yaml · prod.yaml)
-├── prompts/                  # versioned reusable prompts (code never embeds prompt strings)
+├── prompts/                  # versioned reusable APP prompts (your code reads these at runtime)
 ├── tests/                    # unit · integration · e2e · fixtures
 ├── scratch/                  # throwaway experiments (probes · one_off · experiments)
 ├── reports/                  # generated reports
