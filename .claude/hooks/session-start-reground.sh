@@ -1,14 +1,25 @@
 #!/usr/bin/env bash
-# SessionStart hook (all sources: startup|resume|clear|compact) — re-grounds after a context reset.
-# stdout from a SessionStart hook is ADDED TO CLAUDE'S CONTEXT (unlike PreCompact, which cannot inject).
-# Emits: (1) a re-read directive, (2) memory-file cap warnings so /distill runs before bloat hurts.
-# Always exits 0 — never blocks a session.
+# SessionStart hook (sources: startup|resume|clear|compact). stdout IS added to Claude's context
+# (unlike PreCompact, which cannot inject). On a context RESET (compact|resume|clear) it emits a
+# re-read directive to recover lost state; on a cold startup it emits a lighter orientation nudge
+# (nothing was lost — no need to command "work only on ## Now"). Always emits memory-file cap
+# warnings. Always exits 0 — never blocks a session.
 set -u
 DIR="${CLAUDE_PROJECT_DIR:-$(pwd)}"
 
-echo "[keel] Re-ground after context reset: re-read HANDOVER.md (TOP block = current state), LESSONS.md, and TASKS.md '## Now' before continuing. Work only on a '## Now' item."
+# Claude Code pipes a JSON payload with the trigger "source" on stdin; read it (non-fatal if absent).
+payload="$(cat 2>/dev/null || true)"
+source="$(printf '%s' "$payload" | sed -n 's/.*"source"[[:space:]]*:[[:space:]]*"\([a-zA-Z]*\)".*/\1/p')"
 
-# Cap checks (rules.md §9): warn when a memory file needs /distill.
+case "$source" in
+  compact|resume|clear)
+    echo "[keel] Context was reset ($source) — re-read HANDOVER.md (TOP block = current state), LESSONS.md, and TASKS.md '## Now' to recover state before continuing; resume from a '## Now' item." ;;
+  *)
+    echo "[keel] Keel project — skim HANDOVER.md (top block) · LESSONS.md · TASKS.md '## Now' to get oriented (rules.md §1)." ;;
+esac
+
+# Cap checks (rules.md §9.33): warn when a memory file needs /distill. Thresholds mirror rules.md §1.4
+# / §9.33 and HANDOVER.md's header — keep the three in sync if you change a cap.
 warn_cap() { # $1=file $2=max_lines
   [ -f "$DIR/$1" ] || return 0
   lines=$(wc -l < "$DIR/$1" 2>/dev/null || true)

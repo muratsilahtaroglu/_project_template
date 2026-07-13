@@ -148,7 +148,9 @@
     finished item is marked `[x]` immediately and **deleted at `/handover`** as its one-liner lands in
     the new HANDOVER block (a) — git is the archive; mid-session discoveries get one line in
     `## Discovered` immediately, triaged at session end.
-33. **Consolidation (`/distill`).** Memory that is written but never reviewed degrades: when caps are
+33. **Consolidation (`/distill`).** These caps are the single source of truth — the `distill` skill and
+    `.claude/hooks/session-start-reground.sh` mirror them; change one, change all three. Memory that is
+    written but never reviewed degrades: when caps are
     exceeded (HANDOVER > 5 blocks/~200 lines, LESSONS/TASKS > ~100 lines) or every ~5 sessions, run
     `/distill` — rotate old blocks (critical → LESSONS, raw → `docs/handover-archive.md` **verbatim**),
     dedup/merge lessons (mark `SUPERSEDED`, never silently delete), promote 3×-applied lessons into

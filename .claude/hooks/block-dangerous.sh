@@ -14,8 +14,10 @@ block() { echo "BLOCKED by .claude/hooks/block-dangerous.sh: $1" >&2; exit 2; }
 
 # 1) Recursive delete of root / home / cwd (allows rm -rf ./subdir and absolute project paths).
 #    ('rm' matched without \b — a GNU extension that silently never matches on BSD/macOS grep.)
+#    The `[/*]*` after the target catches trailing chars that would otherwise bypass the guard
+#    (rm -rf ~/  ·  ~/*  ·  //  ·  /*/  ·  $HOME/) while still allowing ~/proj, /abs/proj, ./subdir.
 if printf '%s' "$cmd" | grep -Eq '(^|[^[:alnum:]_])rm([^[:alnum:]_]|$)' \
-   && printf '%s' "$cmd" | grep -Eq '[[:space:]]-[a-zA-Z]*[rf][a-zA-Z]*[[:space:]]+(/|/\*|~|\$HOME|\.)([[:space:]]|$)'; then
+   && printf '%s' "$cmd" | grep -Eq '[[:space:]]-[a-zA-Z]*[rf][a-zA-Z]*[[:space:]]+(/|~|\$HOME|\.)[/*]*([[:space:]]|$)'; then
   block "recursive delete of root/home/cwd"
 fi
 

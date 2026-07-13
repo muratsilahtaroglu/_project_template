@@ -1,6 +1,7 @@
 # === Secrets — NEVER committed (rules.md §5) ===
 .env
 *.env
+.env.*
 !.env.example
 secrets/
 *.key
