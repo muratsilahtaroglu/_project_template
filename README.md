@@ -35,11 +35,17 @@ This repo is **also its own Claude Code plugin marketplace** — install the enf
 /plugin install keel@keel
 ```
 That gives you the **skills** (namespaced: `/keel:handover` · `/keel:distill` · `/keel:phase-review` ·
-`/keel:research` · `/keel:adopt`), the `researcher` + `verifier` **subagents**, and the memory/safety
-**hooks** — across every repo, updated with `/plugin marketplace update`. It does **not** install the
-discipline docs (`rules.md`, `HANDOVER/LESSONS/TASKS`, `docs/`) or the `.claude/settings.json` permissions
-(plugins can't seed repo files or permission rules). The clone above is the full kit; the plugin is the
-tooling half for teams that already have the docs or want the skills everywhere.
+`/keel:research` · `/keel:adopt` · `/keel:update`), the `researcher` + `verifier` **subagents**, and the
+memory/safety **hooks** — across every repo. **A clone is a snapshot; the plugin is a subscription:**
+when the template improves, one `/plugin marketplace update` brings the new tooling to *all* your
+projects at once — no re-cloning. It does **not** install the discipline docs (`rules.md`,
+`HANDOVER/LESSONS/TASKS`, `docs/`) or the `.claude/settings.json` permissions (plugins can't seed repo
+files or permission rules). The clone above is the full kit; the plugin is the tooling half for teams
+that already have the docs or want the skills everywhere.
+
+**Updating a cloned kit** works the same reviewed way: run **`/update`** in the project — it fetches the
+latest template, diffs **only template-owned files**, skips what your bootstrap pruned, and applies just
+the hunks you approve. Your project memory (`HANDOVER/LESSONS/TASKS`) and tailored docs are never touched.
 
 > **Purpose:** When starting a new project (you or your teammates), give Claude Code this folder as a
 > **template**. The generic "working discipline" files inside help set up the project from day one as
@@ -192,7 +198,7 @@ claude-code-starter-kit/
 │   ├── settings.json         #     permissions: deny reading secrets · ask before push · hook registration
 │   ├── hooks/                #     block-dangerous · handover reminder · pre-compact snapshot ·
 │   │                         #     session-start re-ground (+ memory-cap warnings)
-│   ├── skills/               #     invokable workflows: /handover · /phase-review · /research · /adopt · /distill
+│   ├── skills/               #     invokable workflows: /handover · /phase-review · /research · /adopt · /distill · /update
 │   ├── agents/               #     reusable subagents: researcher · verifier (isolated context)
 │   ├── hooks/hooks.json      #     plugin-mode hook registration (standalone mode uses settings.json)
 │   └── rules/                #     optional path-scoped rules (load only when matching files are touched)
