@@ -143,14 +143,16 @@ lives in a **separate source tree** the bootstrap creates from a `docs/layouts.m
 ```text
 your-project/
 ├── CLAUDE.md · rules.md · HANDOVER.md · LESSONS.md · TASKS.md   ← discipline (fixed, at root)
-├── .claude/ · docs/ · tests/ · config/ · requirements/ · prompts/   ← support (fixed)
-└── src/<app-or-package>/   (+ data/ entrypoint/ notebooks/ for ML)   ← YOUR CODE (chosen at bootstrap)
+├── .claude/ · docs/ · tests/ · config/ · requirements/            ← support (fixed)
+└── src/<app-or-package>/   (+ data/ entrypoint/ notebooks/ for ML)   ← YOUR CODE (added at bootstrap)
 ```
 
-The kit ships **no `src/`** on purpose — the bootstrap proposes the right layout for *your* project type
-(service / CLI / ML / mix) and you approve it. **New project:** the shell comes first, you add code inside
-`src/`. **Existing project:** your code already exists and the shell wraps around it via `/adopt` — nothing
-in your `src/` moves. Think of Keel as a **shell that wraps your project, not a skeleton you pour code into.**
+The kit ships **no `src/`** — it is NOT part of the shipped tree below; the bootstrap proposes the right
+layout for *your* project type (service / CLI / ML / mix) and you approve it, then **all application code
+goes under `src/`** and nothing loose lands at the root (rules.md §3.10). LLM-app runtime prompts (if any)
+are versioned files under `src/`, read from disk. **New project:** the shell comes first, you add code
+inside `src/`. **Existing project:** your code already exists and the shell wraps around it via `/adopt` —
+nothing in your `src/` moves. Keel is a **shell that wraps your project, not a skeleton you pour code into.**
 
 ## Contents (all generic / project-agnostic)
 ```text
@@ -188,7 +190,6 @@ claude-code-starter-kit/
 │   └── dev.txt  · dev.lock   #     dev tooling — never enters the prod image
 │
 ├── config/                   # non-secret parameters per env (local.yaml · prod.yaml)
-├── prompts/                  # versioned reusable APP prompts (your code reads these at runtime)
 ├── tests/                    # unit · integration · e2e · fixtures
 ├── scratch/                  # throwaway experiments (probes · one_off · experiments)
 ├── reports/                  # generated reports

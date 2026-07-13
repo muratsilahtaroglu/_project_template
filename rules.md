@@ -65,15 +65,21 @@
 7. Phases are not skipped; each phase ends with a **working product + a "how to test this" summary**.
 8. After every code change, the relevant **unit/integration (and e2e if needed) tests** are written/run;
    results are summarized under `tests/` + in the handover.
-9. **Reusability:** repeated prompts/scripts/helpers are not written once and thrown away — they are
-   **permanently** saved into `prompts/`, `.claude/skills/` (Claude Code invokable skills), or the
-   appropriate module + recorded in `docs/architecture.md`. Recurring operations (handover, distill,
-   research, review) are always **fixed skills** — cheap, consistent, versioned — with the case-specific
-   details filled in at run time. The SECOND time you write a similar ad-hoc prompt, promote it.
+9. **Reusability:** repeated scripts/helpers/prompts are not written once and thrown away. By kind:
+   **prompts that steer Claude Code** → a skill (`.claude/skills/`) or a subagent (`.claude/agents/`);
+   **prompts your app sends at runtime** (LLM apps only) → a versioned file under `src/` (code never
+   embeds strings); **code** → the appropriate module. All recorded in `docs/architecture.md`. Recurring
+   operations (handover, distill, research, review) are always **fixed skills** — cheap, consistent,
+   versioned — with the case-specific details filled in at run time. The SECOND time you write a similar
+   ad-hoc prompt, promote it.
 
 ## 3. File layout (CRITICAL)
-10. Temporary/experimental/probe code goes **only** into the appropriate `scratch/` subfolder, with a
-    **1-line purpose comment** at the top. No file of unclear purpose is left in the main source tree.
+10. **Application code lives under the project's source tree** (`src/<app|package>/` per the chosen
+    layout profile), **never loose at the repo root** — the root holds only the discipline/config
+    scaffold (CLAUDE.md, rules, HANDOVER/LESSONS/TASKS, docs/, .claude/, config/, requirements/, tests/).
+    New modules go under `src/` and are recorded in `docs/architecture.md`, so the general architecture
+    stays intact across sessions. Temporary/experimental/probe code goes **only** into the appropriate
+    `scratch/` subfolder, with a **1-line purpose comment** at the top. No file of unclear purpose is left in the main source tree.
     At the end of a session, no file is left unanswered for "what is this file?": it is either moved into
     a module (+architecture.md), moved to `scratch/archive/`, or deleted. If layout drifts, **tidy up
     layout first**.

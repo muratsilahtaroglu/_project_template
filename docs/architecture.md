@@ -15,5 +15,6 @@
 ## Reused patterns
 - <which off-the-shelf pattern/from where> → <how it's used here>
 
-## Prompts (`prompts/`)
-Versioned, read from file by code (never embedded as strings): <list>.
+## Runtime prompts (LLM apps only — omit for non-LLM projects)
+Prompts the app sends at runtime, kept as versioned files under `src/` and read from disk (never
+embedded as strings): <list>.

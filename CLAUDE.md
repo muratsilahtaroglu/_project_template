@@ -44,7 +44,10 @@ parameters from `config/<env>.yaml` selected by `ENV` (see `config/README.md`).
 ```
 
 ## Conventions
-- Reusable prompts live in `prompts/` (versioned; code never embeds prompt strings).
+- **All application code lives under the source tree** (`src/<app|package>/` per `docs/layouts.md`) —
+  never loose at the repo root; the root holds only the discipline/config scaffold. New modules → `src/`.
+- Runtime LLM prompts (LLM apps only) live in versioned files under `src/` and are read from disk —
+  code never embeds prompt strings. (Prompts that steer *Claude Code* go in `.claude/skills/` or `.claude/agents/`, not here.)
 - Reusable Claude Code workflows live in `.claude/skills/<name>/SKILL.md` (e.g. `/handover`, `/phase-review`).
 - Side tasks that would clutter the thread run as subagents in `.claude/agents/` (e.g. `researcher`,
   `verifier`). Which mechanism for what (skill vs subagent vs rule vs hook) → `docs/steering.md`.

@@ -3,8 +3,10 @@
 > The template root deliberately ships **no** source layout — projects differ. During **bootstrap**
 > (rules.md §0.0) the AI proposes the matching profile below (or a mix), the user approves, and only
 > then are the folders created. Everything here composes with the always-present discipline base
-> (CLAUDE.md, rules.md, HANDOVER.md, LESSONS.md, TASKS.md, docs/, tests/, scratch/, prompts/,
-> .claude/skills/, config/, CI, Docker) plus the opt-in `research/` trail (rules.md §8).
+> (CLAUDE.md, rules.md, HANDOVER.md, LESSONS.md, TASKS.md, docs/, tests/, scratch/,
+> .claude/ (skills/agents/hooks/rules), config/, CI, Docker) plus the opt-in `research/` trail (rules.md §8).
+> **All application code goes under the source tree below — never loose at the repo root** (rules.md §3.10).
+> LLM apps keep runtime prompts as versioned files under `src/` (read from disk, never embedded).
 
 ## Profile: ML / Data Science
 ```
