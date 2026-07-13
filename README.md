@@ -25,6 +25,19 @@ Not every project needs the whole template — the bootstrap prunes it to fit (w
 See **How to use** below. **Already have a project?** Don't `rm -rf .git` — see
 [Adopting into an existing project](#adopting-into-an-existing-project-brownfield).
 
+### Or install just the tooling as a plugin
+This repo is **also its own Claude Code plugin marketplace** — install the enforcement layer without cloning:
+```text
+/plugin marketplace add muratsilahtaroglu/claude-code-starter-kit
+/plugin install keel@keel
+```
+That gives you the **skills** (namespaced: `/keel:handover` · `/keel:distill` · `/keel:phase-review` ·
+`/keel:research` · `/keel:adopt`), the `researcher` + `verifier` **subagents**, and the memory/safety
+**hooks** — across every repo, updated with `/plugin marketplace update`. It does **not** install the
+discipline docs (`rules.md`, `HANDOVER/LESSONS/TASKS`, `docs/`) or the `.claude/settings.json` permissions
+(plugins can't seed repo files or permission rules). The clone above is the full kit; the plugin is the
+tooling half for teams that already have the docs or want the skills everywhere.
+
 > **Purpose:** When starting a new project (you or your teammates), give Claude Code this folder as a
 > **template**. The generic "working discipline" files inside help set up the project from day one as
 > **professional, traceable, and secure**. No file contains a project name or project-specific detail —
@@ -173,7 +186,12 @@ claude-code-starter-kit/
 │   │                         #     session-start re-ground (+ memory-cap warnings)
 │   ├── skills/               #     invokable workflows: /handover · /phase-review · /research · /adopt · /distill
 │   ├── agents/               #     reusable subagents: researcher · verifier (isolated context)
+│   ├── hooks/hooks.json      #     plugin-mode hook registration (standalone mode uses settings.json)
 │   └── rules/                #     optional path-scoped rules (load only when matching files are touched)
+│
+├── .claude-plugin/           # 🔌 install the tooling via /plugin (this repo is its own marketplace)
+│   ├── plugin.json           #     bundles .claude/ skills · agents · hooks as the "keel" plugin
+│   └── marketplace.json      #     self-hosted marketplace (/plugin marketplace add <repo>)
 │
 ├── docs/                     # 📚 long-form documentation
 │   ├── architecture.md       #     live module map (updated on every structural change)

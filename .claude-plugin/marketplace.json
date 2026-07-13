@@ -1,0 +1,17 @@
+{
+  "name": "keel",
+  "metadata": {
+    "description": "Keel — Claude Code Starter Kit: the enforcement layer (discipline skills, research/verify subagents, memory + safety hooks) as an installable plugin. Clone the repo for the full discipline docs + permissions."
+  },
+  "owner": {
+    "name": "Murat Silahtaroğlu",
+    "url": "https://github.com/muratsilahtaroglu"
+  },
+  "plugins": [
+    {
+      "name": "keel",
+      "source": "./",
+      "description": "The Keel enforcement layer: /handover /distill /phase-review /research /adopt skills, researcher + verifier subagents, and the memory/safety hooks. Pair with the cloned template for the discipline docs + permissions."
+    }
+  ]
+}
