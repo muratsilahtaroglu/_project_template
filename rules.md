@@ -38,21 +38,25 @@
    - **(c) Instantiate a layout profile** from `docs/layouts.md` (ML, service/API, CLI, ...) or a mix.
      (Mode B: **map the existing layout** to the nearest profile — don't create parallel folders beside it.)
    - **(d) Optional research** — ask whether to run external research first (see §8); skip silently if declined.
-   - **(e) Record the tailoring** — note what was removed/added/renamed and why in `HANDOVER.md` (a) (or a
-     short ADR), so later sessions understand why the tree differs from the stock template.
-1. Before writing any code, read **`CLAUDE.md` + `rules.md` + `HANDOVER.md`** (CLAUDE.md `@`-imports the
-   latter two, so they auto-load).
+   - **(e) Record the tailoring** — note what was removed/added/renamed and why in the first
+     `HANDOVER.md` session block (a) (or a short ADR), so later sessions understand why the tree differs
+     from the stock template.
+1. Before writing any code, read **`CLAUDE.md` + `rules.md` + `HANDOVER.md` (top block) + `LESSONS.md` +
+   `TASKS.md ## Now`** (CLAUDE.md `@`-imports all four, so they auto-load).
 2. Review `docs/architecture.md` and the relevant ADR (if any) for the current phase.
 
 ## 1. Documentation discipline
 3. **At the end of every task/phase**, the relevant `.md` files are updated (CLAUDE.md, docs/user_manual.md,
    docs/architecture.md, ADRs) — **but USER approval is required before committing/updating.**
-4. **`HANDOVER.md` is updated BEFORE every compact/session end.** Cumulative and historical:
-   (a) completed work, (b) approaches tried and failed (so they aren't retried), (c) latest updates,
-   (d) next steps. Default is a **single root** handover. On large multi-area projects the AI may create
-   **per-area handovers** (`<area>/HANDOVER.md`, e.g. backend/frontend/agent) when an area needs its own —
-   the root then indexes them (program-level + links). Whenever it creates one it **registers the structure
-   in `docs/architecture.md`** (§1.6) and wires a nested `<area>/CLAUDE.md` `@`-import. Split only when the
+4. **`HANDOVER.md` is updated BEFORE every compact/session end** — one dated **session block** (newest
+   first) with (a) completed, (b) tried-and-failed (so they aren't retried), (c) latest updates,
+   (d) next steps. **Hard cap: max 5 blocks / ~200 lines** (it is `@`-imported into every session — bloat
+   is a per-session token tax and an adherence tax). On overflow run **`/distill`** (§9.33): oldest
+   block's critical facts → `LESSONS.md`, raw block → `docs/handover-archive.md` verbatim. Default is a
+   **single root** handover. On large multi-area projects the AI may create **per-area handovers**
+   (`<area>/HANDOVER.md`, e.g. backend/frontend/agent) when an area needs its own — the root then indexes
+   them (program-level + links). Whenever it creates one it **registers the structure in
+   `docs/architecture.md`** (§1.6) and wires a nested `<area>/CLAUDE.md` `@`-import. Split only when the
    single file grows unwieldy — see `HANDOVER.md` → "Scaling: per-area handovers".
 5. **Failed attempts** are written into the handoff as "tried, didn't work, reason".
 6. **Every structural change** is recorded in `docs/architecture.md` (what each file does).
@@ -126,3 +130,30 @@
     `findings.md` carries its **source URL** + a confidence note, and low-signal/paywalled sources are flagged.
 30. `research/` is the **evidence trail**, not the final architecture — conclusions that drive a decision
     go into an **ADR** or `docs/`.
+
+## 9. Session memory (HANDOVER · LESSONS · TASKS) — surviving tens of compactions
+> The context window is volatile RAM; the repo is durable disk. Everything `@`-imported (CLAUDE.md,
+> rules, HANDOVER, LESSONS, TASKS) is re-injected from disk after every compaction — but ONLY if it was
+> written to disk. Conversation-only agreements are summarized away. Hence:
+31. **Hot-path critical notes (`LESSONS.md`).** The MOMENT the user corrects the AI, an approach fails,
+    a must-run/periodic test is identified, or a mid-project rule is agreed — the AI asks **"shall I
+    note this?"** and on approval appends an atomic, dated, tagged line (`[rule] [test] [fail] [gotcha]`)
+    to `LESSONS.md` **immediately** — never "at compact time" (a session can die before compact runs).
+    `LESSONS.md` differs from `rules.md`: rules = the constitution written at project start; lessons =
+    critical user↔AI knowledge **accumulated during** the project.
+32. **Task board (`TASKS.md`).** Cross-session tasks live in `TASKS.md` (built-in todos are session
+    scratch only). Work ONLY from `## Now` (max 3–5); every item has a verifiable `done-when:`; a
+    finished item is marked `[x]` immediately and **deleted at `/handoff`** as its one-liner lands in
+    the new HANDOVER block (a) — git is the archive; mid-session discoveries get one line in
+    `## Discovered` immediately, triaged at session end.
+33. **Consolidation (`/distill`).** Memory that is written but never reviewed degrades: when caps are
+    exceeded (HANDOVER > 5 blocks/~200 lines, LESSONS/TASKS > ~100 lines) or every ~5 sessions, run
+    `/distill` — rotate old blocks (critical → LESSONS, raw → `docs/handover-archive.md` **verbatim**),
+    dedup/merge lessons (mark `SUPERSEDED`, never silently delete), promote 3×-applied lessons into
+    rules/skills/ADRs, and lint for contradictions/stale claims.
+34. **Restorable compression.** Distillation never lossy-deletes: every distilled line carries a pointer
+    back to the raw record ("docs/handover-archive.md, block <date>"). The archive is never `@`-imported
+    (zero context cost) and is retrieved by grep on demand.
+35. **No vector DB / RAG for memory (by default).** At this scale grep-able markdown beats embeddings on
+    freshness, zero deps, and git-diffability (Claude Code itself uses agentic search, no index).
+    Reconsider only if the notes corpus reaches ~1,000+ files or fuzzy "can't-name-it" recall is needed.

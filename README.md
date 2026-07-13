@@ -44,15 +44,29 @@ flowchart LR
 The context window is volatile RAM; the repo is durable disk. Every phase writes what it did into
 `HANDOVER.md` + the docs, so the next session (even after 10+ compactions) picks up without drift.
 
+**The memory model** (three always-loaded, size-capped files + a zero-cost archive):
+
+| File | What | Anti-bloat rule |
+|---|---|---|
+| `HANDOVER.md` | last **5 session blocks** (done · tried-failed · latest · next) | on overflow `/distill` rotates the oldest block |
+| `LESSONS.md` | critical knowledge written **the moment it appears** (rules, must-run tests, gotchas, failures) — with your approval | ~100-line cap; dedup/merge; `SUPERSEDED`, never silently deleted |
+| `TASKS.md` | cross-session task board (`Now` (max 3–5) · `Next` · `Discovered`), each item with a verifiable `done-when:` | ~100-line cap; **delete on done** — git is the archive |
+| `docs/handover-archive.md` | raw rotated blocks, verbatim | never `@`-imported → zero context cost, grep on demand |
+
+No vector DB, no external memory service — grep-able markdown beats embeddings at this scale
+(Claude Code itself ships with agentic search and no index). `/distill` is the consolidation ritual:
+rotate, dedup, promote 3×-applied lessons into rules/skills, lint for contradictions.
+
 ## Two layers: guidance + enforcement
 Rules alone can be ignored; Keel also wires the discipline into Claude Code's **native, deterministic** layer.
 
 | Layer | Where | Enforced? |
 |---|---|---|
 | **Guidance** | `rules.md`, ADRs, `HANDOVER.md` | advisory — the working discipline |
-| **Always in context** | `CLAUDE.md` `@`-imports `rules.md` + `HANDOVER.md` | auto-loaded every session |
+| **Always in context** | `CLAUDE.md` `@`-imports `rules.md` + `HANDOVER.md` + `LESSONS.md` + `TASKS.md` | auto-loaded every session, re-injected after compaction |
 | **Permissions** | `.claude/settings.json` | denies reading `.env`/secrets · asks before `git push` |
 | **Hooks** | `.claude/hooks/` | blocks `rm -rf` · force-push · staging `.env` · pipe-to-shell |
+| **Compaction safety** | SessionStart + PreCompact hooks | snapshot memory files before compact · re-ground ("re-read HANDOVER/LESSONS/TASKS") + cap warnings after |
 
 ## How to use
 1. Copy the contents of this folder into the root of the new project.
@@ -62,7 +76,8 @@ Rules alone can be ignored; Keel also wires the discipline into Claude Code's **
    **Nothing is removed or added without user approval.** Not every project needs the whole template.
 3. Fill in the `<...>` placeholders in `CLAUDE.md`, `.env.example`, and `docs/architecture.md`.
 4. Choose and add a `LICENSE` before the first push (a folder with no license is "all rights reserved").
-5. Tell Claude Code: *"First read CLAUDE.md, then plan."* (CLAUDE.md `@`-imports `rules.md` + `HANDOVER.md`.)
+5. Tell Claude Code: *"First read CLAUDE.md, then plan."* (CLAUDE.md `@`-imports `rules.md` +
+   `HANDOVER.md` + `LESSONS.md` + `TASKS.md`.)
 6. Follow the discipline in `rules.md` and proceed in phases; update docs + `HANDOVER.md` at the end of
    each phase, then commit + push with approval.
 
@@ -85,23 +100,27 @@ path as **add · merge · defer**, reverse-engineers the docs from your real cod
 ```text
 claude-code-starter-kit/
 │
-├── CLAUDE.md                 # project constitution — Claude reads it first (@-imports rules + handover)
-├── rules.md                  # working discipline: docs · tests · security · git · research
-├── HANDOVER.md               # cumulative session memory (done · tried-failed · latest · next)
+├── CLAUDE.md                 # project constitution — Claude reads it first (@-imports the 4 below)
+├── rules.md                  # working discipline: docs · tests · security · git · research · memory
+├── HANDOVER.md               # session memory: last 5 blocks (done · tried-failed · latest · next)
+├── LESSONS.md                # critical knowledge written the moment it appears ([rule][test][fail][gotcha])
+├── TASKS.md                  # cross-session task board (Now (3–5) · Next · Discovered; delete-on-done)
 ├── README.md                 # this file
 ├── CONTRIBUTING.md           # how to contribute to the kit itself
 ├── LICENSE                   # MIT
 │
 ├── .claude/                  # ⚙️  Claude Code enforcement layer (deterministic, not just advice)
 │   ├── settings.json         #     permissions: deny reading secrets · ask before push
-│   ├── hooks/                #     block-dangerous.sh (rm -rf · force-push · .env) + handover reminder
-│   └── skills/               #     invokable workflows: /handoff · /phase-review · /research · /adopt
+│   ├── hooks/                #     block-dangerous · handover reminder · pre-compact snapshot ·
+│   │                         #     session-start re-ground (+ memory-cap warnings)
+│   └── skills/               #     invokable workflows: /handoff · /phase-review · /research · /adopt · /distill
 │
 ├── docs/                     # 📚 long-form documentation
 │   ├── architecture.md       #     live module map (updated on every structural change)
 │   ├── security.md           #     supply-chain security guide (pin · hash · non-root · .pth · CI)
 │   ├── layouts.md            #     per-project layout profiles (ML · service/API · CLI)
 │   ├── user_manual.md        #     end-user guide skeleton
+│   ├── handover-archive.md   #     raw rotated HANDOVER blocks (never imported — zero context cost)
 │   ├── assets/               #     README media (demo GIF)
 │   └── adr/                  #     architecture decision records (template + index)
 │
@@ -133,6 +152,9 @@ claude-code-starter-kit/
   parts and instantiates the right layout profile — always with user approval.
 - **Traceability:** every decision goes into an ADR, every structural change into `architecture.md`,
   every session into `HANDOVER.md`. The project stays stable even after 10+ compactions.
+- **Memory with a lifecycle, not a landfill:** always-loaded files are size-capped; old detail rotates
+  to a never-loaded archive; critical facts are written the moment they appear (`LESSONS.md`) and
+  consolidated by `/distill`. Files + grep beat vector DBs at this scale — no external memory service.
 - **Order:** throwaway code stays in `scratch/`, the main tree stays clean.
 - **Security from day one:** dependency pinning + hashing + non-root + secret hygiene from the start.
 - **Enforced, not just advised:** the discipline is wired into Claude Code's native layer (see the

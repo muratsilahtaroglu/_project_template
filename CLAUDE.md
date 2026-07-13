@@ -1,12 +1,24 @@
 # CLAUDE.md — <PROJECT NAME> project constitution (TEMPLATE)
 
-> Claude Code reads this first every session. The two `@`-imports below auto-load the working rules and
-> the running handover, so they're always in context. Keep this file lean (< ~200 lines); push
-> sometimes-relevant knowledge into `.claude/skills/` and deterministic checks into `.claude/hooks/`.
-> Fill in the `<...>` blanks.
+> Claude Code reads this first every session. The four `@`-imports below auto-load the working rules,
+> the running handover, the lessons database, and the task board — always in context, re-injected from
+> disk after every compaction. Keep this file lean (< ~200 lines); push sometimes-relevant knowledge
+> into `.claude/skills/` and deterministic checks into `.claude/hooks/`. Fill in the `<...>` blanks.
 
 @rules.md
 @HANDOVER.md
+@LESSONS.md
+@TASKS.md
+
+## Session protocol (rules.md §9)
+- **Start:** read the TOP block of `HANDOVER.md` + `LESSONS.md` + `TASKS.md ## Now` + recent `git log`;
+  pick ONE `## Now` item; verify tests pass before new work.
+- **During:** the moment a rule / must-run test / gotcha / failed approach is agreed or discovered — ask
+  "shall I note this?" and append it to `LESSONS.md` immediately (don't wait for compaction).
+- **End (or before compact):** `/handoff` (new HANDOVER block) · delete done TASKS items · commit with
+  approval. If any memory file exceeds its cap → `/distill`.
+- **When compacting, always preserve:** the list of modified files, open `TASKS.md ## Now` items, test
+  commands, and any agreement not yet written to `LESSONS.md` (write it there first).
 
 ## What we're building
 <Purpose of the project in 2-3 sentences. What problem it solves, who uses it.>
@@ -38,7 +50,8 @@ parameters from `config/<env>.yaml` selected by `ENV` (see `config/README.md`).
 - Every structural change → `docs/architecture.md`. Every phase end → docs + HANDOVER.md (approved commit+push).
 - Tests live in `tests/{unit,integration,e2e,fixtures}/`. Detailed rules: `rules.md`.
 - Enforcement lives in `.claude/`: `settings.json` permissions + `hooks/` (block dangerous/secret commands,
-  handover reminder). Rules are guidance; hooks/permissions are enforced.
+  handover reminder, pre-compact snapshot, session-start re-ground). Rules are guidance; hooks/permissions
+  are enforced.
 
 ## Directory map
 See `docs/architecture.md` (live module map).

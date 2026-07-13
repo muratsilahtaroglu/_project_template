@@ -3,6 +3,13 @@
   "permissions": {
     "deny": [
       "Read(./.env)",
+      "Read(./**/.env)",
+      "Read(./**/.env.local)",
+      "Read(./**/.env.development)",
+      "Read(./**/.env.dev)",
+      "Read(./**/.env.production)",
+      "Read(./**/.env.prod)",
+      "Read(./**/.env.staging)",
       "Read(./secrets/**)",
       "Read(./**/*.key)",
       "Read(./**/*.pem)",
@@ -27,6 +34,21 @@
         "matcher": "Bash",
         "hooks": [
           { "type": "command", "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/block-dangerous.sh" }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          { "type": "command", "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/session-start-reground.sh" }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          { "type": "command", "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/pre-compact-snapshot.sh" }
         ]
       }
     ],

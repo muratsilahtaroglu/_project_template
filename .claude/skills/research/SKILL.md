@@ -1,12 +1,12 @@
 ---
 name: research
 description: Opt-in external research — scan GitHub/articles/LinkedIn/HuggingFace/web and save cited findings per platform under research/.
-disable-model-invocation: true
 ---
 
 # /research — structured, opt-in external research
 
-Run only when the user opts in (rules.md §8). Produce a **verified, cited evidence trail** — never blind copy.
+**HARD GATE: never run without the user's explicit opt-in in THIS session (rules.md §8.27).** If the
+user hasn't opted in, stop and ask first. Produce a **verified, cited evidence trail** — never blind copy.
 
 Workflow:
 1. **Scope** — confirm the question + which platforms to scan (`github`, `articles`, `linkedin`,

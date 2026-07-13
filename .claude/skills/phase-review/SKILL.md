@@ -1,7 +1,6 @@
 ---
 name: phase-review
 description: End-of-phase gate — verify working product, tests, docs, ADRs, and handover before committing a phase.
-disable-model-invocation: true
 ---
 
 # /phase-review — end-of-phase checkpoint
@@ -16,7 +15,9 @@ Checklist:
 - [ ] **Architecture** — every structural change recorded in `docs/architecture.md` (rules.md §1.6).
 - [ ] **ADRs** — any significant decision captured as an ADR in `docs/adr/` (+ index row).
 - [ ] **Docs** — CLAUDE.md / docs/user_manual.md updated if behavior/usage changed.
-- [ ] **HANDOVER.md** — updated (run `/handoff`).
+- [ ] **HANDOVER.md** — session block added (run `/handoff`); caps respected (else `/distill`).
+- [ ] **TASKS.md** — done items deleted (one-liners in HANDOVER (a)); `## Discovered` triaged.
+- [ ] **LESSONS.md** — this phase's agreed rules/tests/gotchas written (rules §9.31).
 - [ ] **Secrets** — `git diff --cached` reviewed; no `.env`/secrets staged (rules.md §6.18).
 - [ ] **Deps** — if dependencies changed: lock refreshed + `pip-audit` clean (rules.md §7.23).
 

@@ -1,7 +1,6 @@
 ---
 name: adopt
 description: Adopt Keel's discipline into an EXISTING project (brownfield) — inventory, non-destructive merge, back-fill docs from real code, migrate security. Never overwrites.
-disable-model-invocation: true
 ---
 
 # /adopt — bring an existing project under Keel discipline (brownfield)
@@ -24,7 +23,8 @@ rsync -av --ignore-existing <keel>/ ./ --exclude .git
 
 ## 2. Back-fill the living docs from real code
 - `docs/architecture.md` ← reverse-engineer the **current** module map (what each real dir/file does; status ✅).
-- `HANDOVER.md` (a) Completed ← summarize what already exists / works **today** (not blank placeholders).
+- `HANDOVER.md` ← write the FIRST session block: (a) what already exists / works **today** (not blank
+  placeholders); seed `LESSONS.md` with known gotchas and `TASKS.md ## Now` with the actual next work.
 - Capture the adoption itself as an ADR in `docs/adr/` (what was added / merged / deferred and why).
 
 ## 3. Reconcile discipline

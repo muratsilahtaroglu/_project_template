@@ -1,27 +1,30 @@
-# HANDOVER.md — Cumulative session handoff (TEMPLATE)
+# HANDOVER.md — Session handover, block-rotated (TEMPLATE)
 
-> Updated BEFORE every compact/session end. Cumulative and historical. Purpose: on long projects (even
-> after many compactions), every step is recorded so progress stays stable across sessions.
-> (This is the widely-used "handover file" pattern: the repo is durable disk, the context window is
-> volatile RAM — anything not written here is assumed lost.)
+> Updated BEFORE every compact/session end. The repo is durable disk; the context window is volatile
+> RAM — anything not written here is assumed lost. This file is `@`-imported into EVERY session, so it
+> has a **hard cap: max 5 session blocks / ~200 lines.** When a 6th block would be added (or the cap is
+> hit), run **`/distill`** first: the oldest block's critical facts go to `LESSONS.md` (tagged, distilled)
+> and the raw block moves verbatim to `docs/handover-archive.md` (never imported — costs no context,
+> grep-able forever). Compaction is a curation step, not an information-loss event.
 
 _Last updated: <YYYY-MM-DD> — <short status>._
 
 ---
 
-## (a) Completed work
-- <YYYY-MM-DD> — <what was done, briefly>. (Details/decisions → relevant ADR / docs.)
+## Session blocks (newest first — a fresh session reads the TOP block first)
+<!-- Insert each new session block HERE, directly below this comment (newest first; older blocks get
+     pushed down). Max 5 blocks — then run /distill. -->
 
-## (b) Tried, didn't work (don't retry)
-- <approach> — TRIED, FAILED, reason: <...>. (So it isn't tried again — the highest-value section.)
+### <YYYY-MM-DD> — <one-line status>
+- **(a) Completed:** <what was done, briefly>. (Details/decisions → ADR / docs; done TASKS.md items land here as one-liners.)
+- **(b) Tried, didn't work (don't retry):** <approach> — FAILED, reason: <...>. (Highest-value lines — never lost: `/distill` moves them to `LESSONS.md [fail]`, not to the trash.)
+- **(c) Latest updates:** <most recent changes>
+- **(d) Next steps:** <what to do next session, in priority order>
 
-## (c) Latest updates
-- <most recent changes>
-
-## (d) Next steps
-- <what to do next session, in priority order>
+---
 
 ## Open questions / pending user decisions
+<!-- GLOBAL section — survives rotation untouched until each item is resolved (then delete it). -->
 - <topics awaiting a decision>
 
 ---
@@ -30,7 +33,7 @@ _Last updated: <YYYY-MM-DD> — <short status>._
 **Default: this single root file.** On a **large, multi-area** project (e.g. backend + frontend +
 agent/LLM) it can grow noisy — then, when an area is developed in its own sessions, give it a
 **per-area handover** next to its code (`backend/HANDOVER.md`, `frontend/HANDOVER.md`,
-`agents/HANDOVER.md`), each with its own (a)–(d). In that setup:
+`agents/HANDOVER.md`), each with its own session blocks + the same 5-block cap. In that setup:
 - this **root** file becomes the **program-level index**: milestones, cross-area/integration decisions,
   and the links below. **One "latest" per area — no duplicated truth.**
 - pair each with a nested **`<area>/CLAUDE.md`** that `@`-imports its `<area>/HANDOVER.md`; Claude Code
@@ -41,4 +44,3 @@ agent/LLM) it can grow noisy — then, when an area is developed in its own sess
 
 ### Area handovers (index)
 - <area> → `<area>/HANDOVER.md` — <one-line status>  <!-- add rows only when you actually split -->
-
