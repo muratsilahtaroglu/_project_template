@@ -1,9 +1,9 @@
 ---
-name: handoff
+name: handover
 description: Add this session's block to HANDOVER.md before ending or compacting — done / tried-failed / latest / next. Rotates via /distill when the 5-block cap is hit.
 ---
 
-# /handoff — write the session block
+# /handover — write the session block
 
 Add a new **session block** to the TOP of `HANDOVER.md`'s "Session blocks" section (rules.md §1.4).
 Newest first; never edit past blocks.

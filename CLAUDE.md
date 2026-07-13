@@ -15,7 +15,7 @@
   pick ONE `## Now` item; verify tests pass before new work.
 - **During:** the moment a rule / must-run test / gotcha / failed approach is agreed or discovered — ask
   "shall I note this?" and append it to `LESSONS.md` immediately (don't wait for compaction).
-- **End (or before compact):** `/handoff` (new HANDOVER block) · delete done TASKS items · commit with
+- **End (or before compact):** `/handover` (new HANDOVER block) · delete done TASKS items · commit with
   approval. If any memory file exceeds its cap → `/distill`.
 - **When compacting, always preserve:** the list of modified files, open `TASKS.md ## Now` items, test
   commands, and any agreement not yet written to `LESSONS.md` (write it there first).
@@ -45,7 +45,7 @@ parameters from `config/<env>.yaml` selected by `ENV` (see `config/README.md`).
 
 ## Conventions
 - Reusable prompts live in `prompts/` (versioned; code never embeds prompt strings).
-- Reusable Claude Code workflows live in `.claude/skills/<name>/SKILL.md` (e.g. `/handoff`, `/phase-review`).
+- Reusable Claude Code workflows live in `.claude/skills/<name>/SKILL.md` (e.g. `/handover`, `/phase-review`).
 - Throwaway/experimental code only in `scratch/<subfolder>/`, with a 1-line purpose comment at the top.
 - Every structural change → `docs/architecture.md`. Every phase end → docs + HANDOVER.md (approved commit+push).
 - Tests live in `tests/{unit,integration,e2e,fixtures}/`. Detailed rules: `rules.md`.

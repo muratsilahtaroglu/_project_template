@@ -8,9 +8,9 @@
 > - **Work ONLY from `## Now`** (max 3–5 items). Refill it from `## Next` when it empties.
 > - Every item carries a verifiable **`done-when:`** criterion (a test to run, an output to observe) —
 >   not a vague description. It is unacceptable to remove or weaken a `done-when:` to make a task pass.
-> - **Delete on done:** mark `[x]` the moment a task finishes; at `/handoff` the item is DELETED from
+> - **Delete on done:** mark `[x]` the moment a task finishes; at `/handover` the item is DELETED from
 >   this file as its one-liner lands in the new `HANDOVER.md` block (a) — git history is the archive.
->   Done items never survive a handoff.
+>   Done items never survive a handover.
 > - Mid-session discoveries ("tests are broken", "this module needs a refactor") get ONE line in
 >   `## Discovered` immediately — then return to your current task. Triage Discovered at session end.
 > - Optional inline tags: `blocked-by: T3` · `discovered-from: T1`.

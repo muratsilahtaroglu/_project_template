@@ -58,13 +58,13 @@
    them (program-level + links). Whenever it creates one it **registers the structure in
    `docs/architecture.md`** (§1.6) and wires a nested `<area>/CLAUDE.md` `@`-import. Split only when the
    single file grows unwieldy — see `HANDOVER.md` → "Scaling: per-area handovers".
-5. **Failed attempts** are written into the handoff as "tried, didn't work, reason".
+5. **Failed attempts** are written into the handover as "tried, didn't work, reason".
 6. **Every structural change** is recorded in `docs/architecture.md` (what each file does).
 
 ## 2. Code & tests
 7. Phases are not skipped; each phase ends with a **working product + a "how to test this" summary**.
 8. After every code change, the relevant **unit/integration (and e2e if needed) tests** are written/run;
-   results are summarized under `tests/` + in the handoff.
+   results are summarized under `tests/` + in the handover.
 9. **Reusability:** repeated prompts/scripts/helpers are not written once and thrown away — they are
    **permanently** saved into `prompts/`, `.claude/skills/` (Claude Code invokable skills), or the
    appropriate module + recorded in `docs/architecture.md`.
@@ -101,7 +101,7 @@
 17. Branch strategy: default is a short-lived branch per phase → self-review → merge to `main` → push;
     a simpler direct-to-`main` flow is fine with approval. User preference is decisive.
 18. **Secret-leak scan before push:** review `git diff --cached`; if `.env`/secrets appear, STOP.
-19. Handoff + docs updates go out in the same push round as the code.
+19. Handover + docs updates go out in the same push round as the code.
 
 ## 7. Supply-chain / dependency security (details: docs/security.md)
 20. **Exact version pinning:** all dependencies pinned with `==`; **`>=`, `~=`, `^` are FORBIDDEN**
@@ -143,7 +143,7 @@
     critical user↔AI knowledge **accumulated during** the project.
 32. **Task board (`TASKS.md`).** Cross-session tasks live in `TASKS.md` (built-in todos are session
     scratch only). Work ONLY from `## Now` (max 3–5); every item has a verifiable `done-when:`; a
-    finished item is marked `[x]` immediately and **deleted at `/handoff`** as its one-liner lands in
+    finished item is marked `[x]` immediately and **deleted at `/handover`** as its one-liner lands in
     the new HANDOVER block (a) — git is the archive; mid-session discoveries get one line in
     `## Discovered` immediately, triaged at session end.
 33. **Consolidation (`/distill`).** Memory that is written but never reviewed degrades: when caps are

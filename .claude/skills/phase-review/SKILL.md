@@ -15,7 +15,7 @@ Checklist:
 - [ ] **Architecture** — every structural change recorded in `docs/architecture.md` (rules.md §1.6).
 - [ ] **ADRs** — any significant decision captured as an ADR in `docs/adr/` (+ index row).
 - [ ] **Docs** — CLAUDE.md / docs/user_manual.md updated if behavior/usage changed.
-- [ ] **HANDOVER.md** — session block added (run `/handoff`); caps respected (else `/distill`).
+- [ ] **HANDOVER.md** — session block added (run `/handover`); caps respected (else `/distill`).
 - [ ] **TASKS.md** — done items deleted (one-liners in HANDOVER (a)); `## Discovered` triaged.
 - [ ] **LESSONS.md** — this phase's agreed rules/tests/gotchas written (rules §9.31).
 - [ ] **Secrets** — `git diff --cached` reviewed; no `.env`/secrets staged (rules.md §6.18).

@@ -57,6 +57,26 @@ No vector DB, no external memory service — grep-able markdown beats embeddings
 (Claude Code itself ships with agentic search and no index). `/distill` is the consolidation ritual:
 rotate, dedup, promote 3×-applied lessons into rules/skills, lint for contradictions.
 
+### Surviving compaction (the pincer)
+
+<p align="center">
+  <img src="docs/assets/keel-memory.gif" width="760"
+       alt="Keel memory lifecycle: a mid-session rule is written to LESSONS.md the moment it appears, survives compaction via the PreCompact snapshot + SessionStart re-ground pincer, and /distill rotates the oldest HANDOVER block when the cap is hit">
+</p>
+
+When the context window fills up, Claude Code **compacts**: the conversation is squeezed into a lossy
+summary. Anything said only in conversation can vanish — but the `@`-imported files are **re-injected
+from disk** after every compaction. Keel exploits that with a two-sided pincer around the compact:
+
+- **Before — `PreCompact` hook** (side effects only; it *cannot* inject instructions): snapshots
+  `HANDOVER/LESSONS/TASKS` to `.claude/snapshots/` and warns if the handover looks stale.
+- **After — `SessionStart` hook** (its output *is* injected into context): tells Claude to re-read the
+  top HANDOVER block, `LESSONS.md`, and `TASKS.md ## Now`, and warns when a memory file needs `/distill`.
+- **Standing directive in `CLAUDE.md`**: what every compaction summary must preserve (modified files,
+  open tasks, test commands, unwritten agreements → write them to `LESSONS.md` first).
+
+Compaction becomes a curation step, not an information-loss event.
+
 ## Two layers: guidance + enforcement
 Rules alone can be ignored; Keel also wires the discipline into Claude Code's **native, deterministic** layer.
 
@@ -93,8 +113,14 @@ rsync -av --ignore-existing /tmp/keel/ /path/to/your-project/ --exclude '.git'
 Then, in Claude Code, run **`/adopt`** (or: *"Adopt Keel into THIS project — don't overwrite my files, add
 only what's missing, back-fill `docs/architecture.md` + `HANDOVER.md` from the current code, merge conflicts
 by showing me a diff first, and propose the plan before changing anything."*). `/adopt` inventories every
-path as **add · merge · defer**, reverse-engineers the docs from your real code, and migrates security
-(rules.md §7) gradually — without breaking a working build.
+path as **add · merge · defer**, reverse-engineers the docs from your real code, **seeds the memory layer**
+(first `HANDOVER.md` block = what exists today; `LESSONS.md` = known gotchas; `TASKS.md ## Now` = the actual
+next work), and migrates security (rules.md §7) gradually — without breaking a working build.
+
+<p align="center">
+  <img src="docs/assets/keel-adopt.gif" width="760"
+       alt="Keel adopt flow: clone the kit elsewhere, rsync only missing files, then /adopt inventories add/merge/defer, keeps your git history, back-fills the docs and seeds the memory files — with your approval">
+</p>
 
 ## Contents (all generic / project-agnostic)
 ```text
@@ -113,7 +139,7 @@ claude-code-starter-kit/
 │   ├── settings.json         #     permissions: deny reading secrets · ask before push
 │   ├── hooks/                #     block-dangerous · handover reminder · pre-compact snapshot ·
 │   │                         #     session-start re-ground (+ memory-cap warnings)
-│   └── skills/               #     invokable workflows: /handoff · /phase-review · /research · /adopt · /distill
+│   └── skills/               #     invokable workflows: /handover · /phase-review · /research · /adopt · /distill
 │
 ├── docs/                     # 📚 long-form documentation
 │   ├── architecture.md       #     live module map (updated on every structural change)
@@ -121,7 +147,7 @@ claude-code-starter-kit/
 │   ├── layouts.md            #     per-project layout profiles (ML · service/API · CLI)
 │   ├── user_manual.md        #     end-user guide skeleton
 │   ├── handover-archive.md   #     raw rotated HANDOVER blocks (never imported — zero context cost)
-│   ├── assets/               #     README media (demo GIF)
+│   ├── assets/               #     README media (demo · memory-lifecycle · adopt GIFs)
 │   └── adr/                  #     architecture decision records (template + index)
 │
 ├── requirements/             # 📦 all dependency manifests (see requirements/README.md)
