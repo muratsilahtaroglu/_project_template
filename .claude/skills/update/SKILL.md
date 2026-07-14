@@ -27,14 +27,14 @@ git -C /tmp/keel-latest rev-parse --short HEAD   # record for the handover line
   `docs/handover-archive.md` · `docs/architecture.md` · `docs/adr/*` (except the kit-owned `0000`
   template and the folder `README.md` — those are TOOLING) · `CLAUDE.md` · `README.md` · `LICENSE` ·
   `config/` · `requirements/*.{txt,lock}` contents · `.env.example` values · `src/` · `tests/` ·
-  `scratch/` · `research/` findings · `reports/`.
+  `scratch/` · `research/` findings · `reports/` · `.claude/last-audit` (project audit state).
 - **REVIEW — likely tailored; full diff, apply hunk-by-hunk with approval:** `rules.md` ·
   `.claude/settings.json` (permissions merge = union, keep the project's) · `.gitignore` ·
   `.pre-commit-config.yaml` · `pyproject.toml` · `Makefile` · `Dockerfile*` · `.dockerignore` ·
   `docker-compose.yml` · `.editorconfig` · `.github/*` (workflows + PR template) ·
   `docs/layouts.md` · `docs/user_manual.md`.
 - **TOOLING — template-owned; summarize changes, one approval for the batch:** `.claude/skills/**` ·
-  `.claude/hooks/**` · `.claude/agents/{researcher,verifier,README}.md` · `.claude/rules/README.md`
+  `.claude/hooks/**` · `.claude/agents/{researcher,verifier,auditor,README}.md` · `.claude/rules/README.md`
   (+ example) · `.claude-plugin/**` · `docs/security.md` · `docs/steering.md` ·
   `docs/adr/0000-adr-template.md` · `docs/adr/README.md` · `docs/assets/` · `CONTRIBUTING.md`
   (kit-meta by its own first line) · folder `README.md`s.

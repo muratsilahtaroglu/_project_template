@@ -88,8 +88,9 @@
 11. Use sub-agents for parallelizable work; but never accept their output blindly — as the main agent,
     **verify** it (does it work, does it match the architecture/rules, did it leave stray files) and fix
     if needed. (Note: outputs from external guides/docs are applied with the same verification.) Reusable
-    subagents live in `.claude/agents/`: `researcher` (cited prior-art scouting) and `verifier`
-    (adversarial "try to refute it" checks). Mechanism guide: `docs/steering.md`.
+    subagents live in `.claude/agents/`: `researcher` (cited prior-art scouting), `verifier`
+    (adversarial "try to refute it" checks) and `auditor` (rules-compliance spot-check via `/audit`).
+    Mechanism guide: `docs/steering.md`.
 
 ## 5. Security (application)
 12. **Secrets are never committed/pushed.** `.env` is git-ignored; only `.env.example` (with empty

@@ -18,6 +18,8 @@ Checklist:
 - [ ] **HANDOVER.md** — session block added (run `/handover`); caps respected (else `/distill`).
 - [ ] **TASKS.md** — done items deleted (one-liners in HANDOVER (a)); `## Discovered` triaged.
 - [ ] **LESSONS.md** — this phase's agreed rules/tests/gotchas written (rules §9.31).
+- [ ] **Audit** — `/audit` run over this phase's range (or consciously skipped with a reason); its
+  approved fixes applied (rules.md §4.11).
 - [ ] **Secrets** — `git diff --cached` reviewed; no `.env`/secrets staged (rules.md §6.18).
 - [ ] **Deps** — if dependencies changed: lock refreshed + `pip-audit` clean (rules.md §7.23).
 

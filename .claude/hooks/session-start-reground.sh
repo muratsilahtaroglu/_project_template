@@ -13,7 +13,8 @@ source="$(printf '%s' "$payload" | sed -n 's/.*"source"[[:space:]]*:[[:space:]]*
 
 case "$source" in
   compact|resume|clear)
-    echo "[keel] Context was reset ($source) — re-read HANDOVER.md (TOP block = current state), LESSONS.md, and TASKS.md '## Now' to recover state before continuing; resume from a '## Now' item." ;;
+    echo "[keel] Context was reset ($source) — re-read HANDOVER.md (TOP block = current state), LESSONS.md, and TASKS.md '## Now' to recover state before continuing; resume from a '## Now' item."
+    echo "[keel] Post-reset self-check (30s, inline — no sub-agent): does the in-flight work still respect rules.md §3 layout / §5 security / §2 tests? Catch drift at the reset point; /audit is the deep pass when due." ;;
   *)
     echo "[keel] Keel project — skim HANDOVER.md (top block) · LESSONS.md · TASKS.md '## Now' to get oriented (rules.md §1)." ;;
 esac
@@ -64,6 +65,24 @@ if git -C "$DIR" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
     if [ "$behind" -gt 10 ]; then
       echo "[keel] HANDOVER.md last changed ${behind} commits ago — its top block may be stale; run /handover (or verify it still matches reality) before relying on it."
     fi
+  fi
+fi
+
+# Audit-due nudge (/audit): deterministic detection ONLY — the hook never spawns the auditor itself.
+# Marker: .claude/last-audit (the audited HEAD sha, written by /audit; committed, so the whole team
+# shares one clock). Threshold: 25 commits (~5 sessions); tune freely. A missing/invalid marker counts
+# from the beginning of history — right for brownfield adopts, quiet on young repos.
+if git -C "$DIR" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  base=""
+  [ -f "$DIR/.claude/last-audit" ] && base="$(tr -cd '0-9a-fA-F' < "$DIR/.claude/last-audit" | head -c 40)"
+  if [ -n "$base" ] && git -C "$DIR" cat-file -e "${base}^{commit}" 2>/dev/null; then
+    n=$(git -C "$DIR" rev-list --count "${base}..HEAD" 2>/dev/null || true)
+  else
+    n=$(git -C "$DIR" rev-list --count HEAD 2>/dev/null || true)
+  fi
+  n=${n:-0}
+  if [ "$n" -gt 25 ]; then
+    echo "[keel] ${n} commits since the last rules audit — run /audit at the next natural boundary (it skips itself on a phase-0 project)."
   fi
 fi
 exit 0

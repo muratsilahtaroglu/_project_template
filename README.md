@@ -35,7 +35,8 @@ This repo is **also its own Claude Code plugin marketplace** — install the enf
 /plugin install keel@keel
 ```
 That gives you the **skills** (namespaced: `/keel:handover` · `/keel:distill` · `/keel:phase-review` ·
-`/keel:research` · `/keel:adopt` · `/keel:update`), the `researcher` + `verifier` **subagents**, and the
+`/keel:research` · `/keel:adopt` · `/keel:update` · `/keel:audit`), the `researcher` + `verifier` +
+`auditor` **subagents**, and the
 memory/safety **hooks** — across every repo. **A clone is a snapshot; the plugin is a subscription:**
 when the template improves, one `/plugin marketplace update keel` brings the new tooling to *all* your
 projects at once — no re-cloning. It does **not** install the discipline docs (`rules.md`,
@@ -202,8 +203,8 @@ claude-code-starter-kit/
 │   ├── settings.json         #     permissions: deny reading secrets · ask before push · hook registration
 │   ├── hooks/                #     block-dangerous · handover reminder · pre-compact snapshot ·
 │   │                         #     session-start re-ground (+ memory-cap warnings)
-│   ├── skills/               #     invokable workflows: /handover · /phase-review · /research · /adopt · /distill · /update
-│   ├── agents/               #     reusable subagents: researcher · verifier (isolated context)
+│   ├── skills/               #     invokable workflows: /handover · /phase-review · /research · /adopt · /distill · /update · /audit
+│   ├── agents/               #     reusable subagents: researcher · verifier · auditor (isolated context)
 │   ├── hooks/hooks.json      #     plugin-mode hook registration (standalone mode uses settings.json)
 │   └── rules/                #     optional path-scoped rules (load only when matching files are touched)
 │

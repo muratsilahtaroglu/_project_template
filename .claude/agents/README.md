@@ -9,6 +9,8 @@ your main context. Called via the Agent tool (by name); defined here as a markdo
 Shipped with the kit:
 - **`researcher`** — cited prior-art scout (web + local repo); backs rules.md §8 and `/research`.
 - **`verifier`** — adversarial fact-checker (CONFIRMED / REFUTED / UNCERTAIN); backs rules.md §4.
+- **`auditor`** — read-only rules-compliance spot-check over a commit range; backs `/audit` (the
+  SessionStart hook nudges when one is due).
 
 **Add project-specific subagents here as the project needs them** — e.g. a `regression-runner`, a
 `migration-reviewer`, a `log-analyst`. The set is meant to **grow per project**, not stay fixed. Keep
