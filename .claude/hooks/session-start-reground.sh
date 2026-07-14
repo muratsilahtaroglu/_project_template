@@ -32,6 +32,16 @@ warn_cap "HANDOVER.md" 200
 warn_cap "LESSONS.md" 100
 warn_cap "TASKS.md" 100
 
+# Rule-budget check (rules.md §10.38): the constitution is capped like the memory files — a rules.md
+# nobody can hold in attention stops steering anything.
+if [ -f "$DIR/rules.md" ]; then
+  rlines=$(wc -l < "$DIR/rules.md" 2>/dev/null || true)
+  rlines=${rlines:-0}
+  if [ "$rlines" -gt 200 ]; then
+    echo "[keel] rules.md is ${rlines} lines (budget ~200 lines / ~40 rules — rules.md §10.38): merge/retire a rule or promote it to a hook instead of appending."
+  fi
+fi
+
 # Block-count check: >5 SESSION blocks in HANDOVER.md → rotation due.
 # Count only dated block headings (### YYYY-MM-DD ...) — other ### headings (e.g. the area-handover
 # index) and the unfilled <YYYY-MM-DD> placeholder must not inflate the count.
@@ -40,6 +50,20 @@ if [ -f "$DIR/HANDOVER.md" ]; then
   blocks=${blocks:-0}
   if [ "$blocks" -gt 5 ]; then
     echo "[keel] HANDOVER.md has ${blocks} session blocks (max 5) — run /distill to rotate the oldest to docs/handover-archive.md."
+  fi
+fi
+
+# Handover-staleness check (rules.md §1.4): commits kept landing but HANDOVER.md didn't move — the top
+# block may no longer describe reality (ritual decay, caught early). Threshold: 10 commits (~2 sessions
+# at normal commit cadence); tune freely. Skips quietly when HANDOVER.md has no commit history yet.
+if git -C "$DIR" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  last=$(git -C "$DIR" log -1 --format=%H -- HANDOVER.md 2>/dev/null)
+  if [ -n "$last" ]; then
+    behind=$(git -C "$DIR" rev-list --count "${last}..HEAD" 2>/dev/null || true)
+    behind=${behind:-0}
+    if [ "$behind" -gt 10 ]; then
+      echo "[keel] HANDOVER.md last changed ${behind} commits ago — its top block may be stale; run /handover (or verify it still matches reality) before relying on it."
+    fi
   fi
 fi
 exit 0

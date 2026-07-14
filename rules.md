@@ -186,3 +186,7 @@
     bigger. State where you verified it ("per docs X" / "per LESSONS.md"); if you can't cite a source,
     say you're unsure and check before writing code. **Proportionality:** skip this for trivial
     one-sentence-diff changes or things already verified this session.
+38. **Rule budget.** This file is capped like the memory files: **~40 rules / ~200 lines** (the
+    SessionStart hook warns on overflow). A new rule must earn its slot — merge it into an existing
+    rule, retire one, or promote the behavior to a hook/permission (enforced beats written). A
+    constitution too long to hold in attention is decoration, not discipline.
