@@ -37,15 +37,17 @@ This repo is **also its own Claude Code plugin marketplace** — install the enf
 That gives you the **skills** (namespaced: `/keel:handover` · `/keel:distill` · `/keel:phase-review` ·
 `/keel:research` · `/keel:adopt` · `/keel:update`), the `researcher` + `verifier` **subagents**, and the
 memory/safety **hooks** — across every repo. **A clone is a snapshot; the plugin is a subscription:**
-when the template improves, one `/plugin marketplace update` brings the new tooling to *all* your
+when the template improves, one `/plugin marketplace update keel` brings the new tooling to *all* your
 projects at once — no re-cloning. It does **not** install the discipline docs (`rules.md`,
 `HANDOVER/LESSONS/TASKS`, `docs/`) or the `.claude/settings.json` permissions (plugins can't seed repo
 files or permission rules). The clone above is the full kit; the plugin is the tooling half for teams
 that already have the docs or want the skills everywhere.
 
 **Updating a cloned kit** works the same reviewed way: run **`/update`** in the project — it fetches the
-latest template, diffs **only template-owned files**, skips what your bootstrap pruned, and applies just
-the hunks you approve. Your project memory (`HANDOVER/LESSONS/TASKS`) and tailored docs are never touched.
+latest template, skips what your bootstrap pruned, and shows the rest as diffs: kit tooling in one
+reviewed batch, likely-tailored files (`rules.md`, config, workflows) hunk-by-hunk. Only hunks you
+approve are applied; your project memory (`HANDOVER/LESSONS/TASKS`), your code, and the project-owned
+docs (`CLAUDE.md`, architecture, ADRs) are never touched.
 
 > **Purpose:** When starting a new project (you or your teammates), give Claude Code this folder as a
 > **template**. The generic "working discipline" files inside help set up the project from day one as
@@ -144,9 +146,11 @@ git clone https://github.com/muratsilahtaroglu/claude-code-starter-kit.git /tmp/
 # add ONLY the files you don't already have (existing files are kept, never overwritten):
 rsync -av --ignore-existing /tmp/keel/ /path/to/your-project/ --exclude '.git'
 ```
-Windows has no `rsync` (not even in Git Bash) — use the built-in `robocopy` instead
-(copies only files missing from the target, like `--ignore-existing`):
+Windows has no `rsync` (not even in Git Bash) — run the built-in `robocopy` from **cmd/PowerShell**
+instead, cloning to a Windows path first (in Git Bash `/tmp` is NOT `C:\tmp`; `/XC /XN /XO` skip
+everything already in the target, like `--ignore-existing`):
 ```bat
+git clone https://github.com/muratsilahtaroglu/claude-code-starter-kit.git C:\tmp\keel
 robocopy C:\tmp\keel C:\path\to\your-project /E /XC /XN /XO /XD .git
 ```
 Then, in Claude Code, run **`/adopt`** (or: *"Adopt Keel into THIS project — don't overwrite my files, add
