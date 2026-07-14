@@ -31,5 +31,5 @@ compaction behavior. Put each instruction in the RIGHT one instead of piling eve
   `/plan` (phase map: status table + regenerated Mermaid DAG in `PLAN.md`).
 - **Side tasks** → subagents: `researcher`, `verifier`, `auditor` (`.claude/agents/`).
 - **Guarantees** → hooks (`block-dangerous`, `pre-compact-snapshot`, `session-start-reground`, handover
-  reminder) + `settings.json` permissions.
+  reminder, `plan-phase-nudge`) + `settings.json` permissions.
 - **File-local constraints** → optional `.claude/rules/` (see the example there).

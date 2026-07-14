@@ -26,7 +26,8 @@
     "Stop": [
       {
         "hooks": [
-          { "type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT}\"/.claude/hooks/handover-reminder.sh" }
+          { "type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT}\"/.claude/hooks/handover-reminder.sh" },
+          { "type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT}\"/.claude/hooks/plan-phase-nudge.sh" }
         ]
       }
     ]

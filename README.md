@@ -89,7 +89,7 @@ The context window is volatile RAM; the repo is durable disk. Every phase writes
 | `LESSONS.md` | critical knowledge written **the moment it appears** (rules, must-run tests, gotchas, failures) — with your approval | ~100-line cap; dedup/merge; `SUPERSEDED`, never silently deleted |
 | `TASKS.md` | cross-session task board (`Now` (max 3–5) · `Next` · `Discovered`), each item with a verifiable `done-when:` | ~100-line cap; **delete on done** — git is the archive |
 | `docs/handover-archive.md` | raw rotated blocks, verbatim | never `@`-imported → zero context cost, grep on demand |
-| `PLAN.md` | strategic phase map: status table + **colored Mermaid DAG** (renders live on GitHub/VSCode — watch nodes turn red→yellow→green) + post-completion fix log | not `@`-imported; statuses flip only at rituals; a hook warns on table↔diagram↔TASKS drift |
+| `PLAN.md` | strategic phase map: status table + **colored Mermaid DAG** (renders live on GitHub/VSCode — watch nodes turn red→yellow→green) + post-completion fix log | not `@`-imported; statuses flip at rituals — a Stop hook nudges the moment a `wip` phase's tasks are all done but its status wasn't flipped (+ table↔diagram↔TASKS drift check) |
 
 No vector DB, no external memory service — grep-able markdown beats embeddings at this scale
 (Claude Code itself ships with agentic search and no index). `/distill` is the consolidation ritual:
@@ -203,7 +203,7 @@ claude-code-starter-kit/
 │
 ├── .claude/                  # ⚙️  Claude Code layer — guidance + deterministic enforcement
 │   ├── settings.json         #     permissions: deny reading secrets · ask before push · hook registration
-│   ├── hooks/                #     block-dangerous · handover reminder · pre-compact snapshot ·
+│   ├── hooks/                #     block-dangerous · handover reminder · phase-done nudge · pre-compact snapshot ·
 │   │                         #     session-start re-ground (+ cap · staleness · audit-due · plan-drift warnings)
 │   ├── skills/               #     invokable workflows: /handover · /phase-review · /research · /adopt · /distill · /update · /audit · /plan
 │   ├── agents/               #     reusable subagents: researcher · verifier · auditor (isolated context)

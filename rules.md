@@ -65,7 +65,9 @@
 6. **Every structural change** is recorded in `docs/architecture.md` (what each file does).
 
 ## 2. Code & tests
-7. Phases are not skipped; each phase ends with a **working product + a "how to test this" summary**.
+7. Phases are not skipped; each phase ends with a **working product + a "how to test this" summary** —
+   and is not `done` until its gate is flipped to `done` in `PLAN.md` via `/phase-review` (a Stop hook
+   nudges the moment a `wip` phase's `## Now` tasks are all checked but its status was never flipped).
 8. After every code change, the relevant **unit/integration (and e2e if needed) tests** are written/run;
    results are summarized under `tests/` + in the handover.
 9. **Reusability:** repeated scripts/helpers/prompts are not written once and thrown away. By kind:
