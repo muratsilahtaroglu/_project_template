@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1156" viewBox="0 0 1200 1156" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" role="img" aria-label="Keel repository structure map">
+<defs><filter id="sh" x="-8%" y="-8%" width="116%" height="130%"><feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#1b2a3f" flood-opacity="0.10"/></filter></defs>
+<rect width="1200" height="1156" fill="#f4f6f9"/>
+<rect width="1200" height="108" fill="#eef1f6"/>
+<rect y="108" width="1200" height="1" fill="#d7dde5"/>
+<text x="50" y="58" font-size="34" font-weight="800" letter-spacing="0.5" fill="#212a35">KEEL<tspan font-weight="500" fill="#5b6673"> — project structure</tspan></text>
+<text x="52" y="86" font-size="14.5" fill="#5b6673">The discipline scaffold Claude Code reads first — everything @-imported is re-injected after every compaction.</text>
+<rect x="1062" y="34" width="88" height="26" rx="13" fill="#212a35"/>
+<text x="1106" y="51.5" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">v0.7.0</text>
+<text x="74" y="142" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="15" font-weight="700" fill="#212a35">claude-code-starter-kit/</text>
+<path d="M62 150 V970.0" stroke="#d7dde5" stroke-width="1.6" fill="none"/>
+<path d="M62 179.0 H70" stroke="#d6336c" stroke-width="1.8" fill="none"/>
+<path d="M72 173.0 h6 l2 3 h7 v9 a1.5 1.5 0 0 1 -1.5 1.5 h-19 a1.5 1.5 0 0 1 -1.5 -1.5 v-11 a1.5 1.5 0 0 1 1.5 -1.5 z" fill="#d6336c" opacity="0.92"/>
+<text x="94" y="184.0" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="14.5" font-weight="700" fill="#9a244d">constitution + memory</text>
+<path d="M88 189.0 V277" stroke="#d6336c" stroke-width="1.4" fill="none" opacity="0.45"/>
+<path d="M88 208 H100" stroke="#d6336c" stroke-width="1.4" fill="none" opacity="0.45"/>
+<text x="104" y="212.5" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13" fill="#212a35">CLAUDE.md</text>
+<path d="M88 231 H100" stroke="#d6336c" stroke-width="1.4" fill="none" opacity="0.45"/>
+<text x="104" y="235.5" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13" fill="#212a35">rules.md</text>
+<path d="M88 254 H100" stroke="#d6336c" stroke-width="1.4" fill="none" opacity="0.45"/>
+<text x="104" y="258.5" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13" fill="#212a35">HANDOVER · LESSONS · TASKS</text>
+<path d="M88 277 H100" stroke="#d6336c" stroke-width="1.4" fill="none" opacity="0.45"/>
+<text x="104" y="281.5" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13" fill="#212a35">PLAN.md</text>
+<path d="M410 179.0 C440 179.0, 452 179.0, 484 179.0" stroke="#d6336c" stroke-width="2" fill="none" opacity="0.55"/>
+<circle cx="412" cy="179.0" r="2.6" fill="#d6336c"/>
+<rect x="486" y="150" width="664" height="152" rx="12" fill="#ffffff" stroke="#d6336c" stroke-width="1.4" filter="url(#sh)"/>
+<rect x="502" y="164" width="231" height="30" rx="8" fill="#d6336c"/>
+<text x="617.5" y="184.0" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="14.5" font-weight="700" fill="#fff" text-anchor="middle">constitution + memory</text>
+<circle cx="512" cy="208" r="3" fill="#d6336c"/>
+<text x="526" y="212.5" font-size="13.5"><tspan font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-weight="700" fill="#9a244d">CLAUDE.md</tspan><tspan font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" fill="#5b6673">  read first — @-imports the 4 memory files</tspan></text>
+<circle cx="512" cy="231" r="3" fill="#d6336c"/>
+<text x="526" y="235.5" font-size="13.5"><tspan font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-weight="700" fill="#9a244d">rules.md</tspan><tspan font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" fill="#5b6673">  working discipline: docs·tests·security·git</tspan></text>
+<circle cx="512" cy="254" r="3" fill="#d6336c"/>
+<text x="526" y="258.5" font-size="13.5"><tspan font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-weight="700" fill="#9a244d">HANDOVER · LESSONS · TASKS</tspan><tspan font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" fill="#5b6673">  session memory — survives every compaction</tspan></text>
+<circle cx="512" cy="277" r="3" fill="#d6336c"/>
+<text x="526" y="281.5" font-size="13.5"><tspan font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-weight="700" fill="#9a244d">PLAN.md</tspan><tspan font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" fill="#5b6673">  phase map: status table + Mermaid DAG</tspan></text>
+<path d="M62 351.0 H70" stroke="#1c7ed6" stroke-width="1.8" fill="none"/>
+<path d="M72 345.0 h6 l2 3 h7 v9 a1.5 1.5 0 0 1 -1.5 1.5 h-19 a1.5 1.5 0 0 1 -1.5 -1.5 v-11 a1.5 1.5 0 0 1 1.5 -1.5 z" fill="#1c7ed6" opacity="0.92"/>
+<text x="94" y="356.0" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="14.5" font-weight="700" fill="#145a9a">.claude/</text>
+<path d="M88 361.0 V472" stroke="#1c7ed6" stroke-width="1.4" fill="none" opacity="0.45"/>
+<path d="M88 380 H100" stroke="#1c7ed6" stroke-width="1.4" fill="none" opacity="0.45"/>
+<text x="104" y="384.5" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13" fill="#212a35">settings.json</text>
+<path d="M88 403 H100" stroke="#1c7ed6" stroke-width="1.4" fill="none" opacity="0.45"/>
+<text x="104" y="407.5" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13" fill="#212a35">hooks/</text>
+<path d="M88 426 H100" stroke="#1c7ed6" stroke-width="1.4" fill="none" opacity="0.45"/>
+<text x="104" y="430.5" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13" fill="#212a35">skills/</text>
+<path d="M88 449 H100" stroke="#1c7ed6" stroke-width="1.4" fill="none" opacity="0.45"/>
+<text x="104" y="453.5" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13" fill="#212a35">agents/</text>
+<path d="M88 472 H100" stroke="#1c7ed6" stroke-width="1.4" fill="none" opacity="0.45"/>
+<text x="104" y="476.5" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13" fill="#212a35">rules/</text>
+<path d="M410 351.0 C440 351.0, 452 351.0, 484 351.0" stroke="#1c7ed6" stroke-width="2" fill="none" opacity="0.55"/>
+<circle cx="412" cy="351.0" r="2.6" fill="#1c7ed6"/>
+<rect x="486" y="322" width="664" height="175" rx="12" fill="#ffffff" stroke="#1c7ed6" stroke-width="1.4" filter="url(#sh)"/>
+<rect x="502" y="336" width="110" height="30" rx="8" fill="#1c7ed6"/>
+<text x="557.0" y="356.0" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="14.5" font-weight="700" fill="#fff" text-anchor="middle">.claude/</text>
+<circle cx="512" cy="380" r="3" fill="#1c7ed6"/>
+<text x="526" y="384.5" font-size="13.5"><tspan font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-weight="700" fill="#145a9a">settings.json</tspan><tspan font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" fill="#5b6673">  permissions — deny secrets · ask before push</tspan></text>
+<circle cx="512" cy="403" r="3" fill="#1c7ed6"/>
+<text x="526" y="407.5" font-size="13.5"><tspan font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-weight="700" fill="#145a9a">hooks/</tspan><tspan font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" fill="#5b6673">  deterministic guards — block-dangerous · nudges</tspan></text>
+<circle cx="512" cy="426" r="3" fill="#1c7ed6"/>
+<text x="526" y="430.5" font-size="13.5"><tspan font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-weight="700" fill="#145a9a">skills/</tspan><tspan font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" fill="#5b6673">  /keel-* workflows — handover · plan · audit</tspan></text>
+<circle cx="512" cy="449" r="3" fill="#1c7ed6"/>
+<text x="526" y="453.5" font-size="13.5"><tspan font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-weight="700" fill="#145a9a">agents/</tspan><tspan font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" fill="#5b6673">  subagents — researcher · verifier · auditor</tspan></text>
+<circle cx="512" cy="472" r="3" fill="#1c7ed6"/>
+<text x="526" y="476.5" font-size="13.5"><tspan font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-weight="700" fill="#145a9a">rules/</tspan><tspan font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" fill="#5b6673">  optional path-scoped rules</tspan></text>
+<path d="M62 546.0 H70" stroke="#7048e8" stroke-width="1.8" fill="none"/>
+<path d="M72 540.0 h6 l2 3 h7 v9 a1.5 1.5 0 0 1 -1.5 1.5 h-19 a1.5 1.5 0 0 1 -1.5 -1.5 v-11 a1.5 1.5 0 0 1 1.5 -1.5 z" fill="#7048e8" opacity="0.92"/>
+<text x="94" y="551.0" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="14.5" font-weight="700" fill="#5033a7">.claude-plugin/</text>
+<path d="M88 556.0 V598" stroke="#7048e8" stroke-width="1.4" fill="none" opacity="0.45"/>
+<path d="M88 575 H100" stroke="#7048e8" stroke-width="1.4" fill="none" opacity="0.45"/>
+<text x="104" y="579.5" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13" fill="#212a35">plugin.json</text>
+<path d="M88 598 H100" stroke="#7048e8" stroke-width="1.4" fill="none" opacity="0.45"/>
+<text x="104" y="602.5" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13" fill="#212a35">marketplace.json</text>
+<path d="M410 546.0 C440 546.0, 452 546.0, 484 546.0" stroke="#7048e8" stroke-width="2" fill="none" opacity="0.55"/>
+<circle cx="412" cy="546.0" r="2.6" fill="#7048e8"/>
+<rect x="486" y="517" width="664" height="106" rx="12" fill="#ffffff" stroke="#7048e8" stroke-width="1.4" filter="url(#sh)"/>
+<rect x="502" y="531" width="175" height="30" rx="8" fill="#7048e8"/>
+<text x="589.5" y="551.0" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="14.5" font-weight="700" fill="#fff" text-anchor="middle">.claude-plugin/</text>
+<circle cx="512" cy="575" r="3" fill="#7048e8"/>
+<text x="526" y="579.5" font-size="13.5"><tspan font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-weight="700" fill="#5033a7">plugin.json</tspan><tspan font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" fill="#5b6673">  bundles skills·agents·hooks as the “keel” plugin</tspan></text>
+<circle cx="512" cy="598" r="3" fill="#7048e8"/>
+<text x="526" y="602.5" font-size="13.5"><tspan font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-weight="700" fill="#5033a7">marketplace.json</tspan><tspan font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" fill="#5b6673">  self-hosted — /plugin marketplace add</tspan></text>
+<path d="M62 672.0 H70" stroke="#0ca678" stroke-width="1.8" fill="none"/>
+<path d="M72 666.0 h6 l2 3 h7 v9 a1.5 1.5 0 0 1 -1.5 1.5 h-19 a1.5 1.5 0 0 1 -1.5 -1.5 v-11 a1.5 1.5 0 0 1 1.5 -1.5 z" fill="#0ca678" opacity="0.92"/>
+<text x="94" y="677.0" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="14.5" font-weight="700" fill="#087756">docs/</text>
+<path d="M88 682.0 V770" stroke="#0ca678" stroke-width="1.4" fill="none" opacity="0.45"/>
+<path d="M88 701 H100" stroke="#0ca678" stroke-width="1.4" fill="none" opacity="0.45"/>
+<text x="104" y="705.5" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13" fill="#212a35">architecture.md</text>
+<path d="M88 724 H100" stroke="#0ca678" stroke-width="1.4" fill="none" opacity="0.45"/>
+<text x="104" y="728.5" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13" fill="#212a35">security.md</text>
+<path d="M88 747 H100" stroke="#0ca678" stroke-width="1.4" fill="none" opacity="0.45"/>
+<text x="104" y="751.5" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13" fill="#212a35">layouts.md · steering.md</text>
+<path d="M88 770 H100" stroke="#0ca678" stroke-width="1.4" fill="none" opacity="0.45"/>
+<text x="104" y="774.5" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13" fill="#212a35">adr/</text>
+<path d="M410 672.0 C440 672.0, 452 672.0, 484 672.0" stroke="#0ca678" stroke-width="2" fill="none" opacity="0.55"/>
+<circle cx="412" cy="672.0" r="2.6" fill="#0ca678"/>
+<rect x="486" y="643" width="664" height="152" rx="12" fill="#ffffff" stroke="#0ca678" stroke-width="1.4" filter="url(#sh)"/>
+<rect x="502" y="657" width="82" height="30" rx="8" fill="#0ca678"/>
+<text x="543.0" y="677.0" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="14.5" font-weight="700" fill="#fff" text-anchor="middle">docs/</text>
+<circle cx="512" cy="701" r="3" fill="#0ca678"/>
+<text x="526" y="705.5" font-size="13.5"><tspan font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-weight="700" fill="#087756">architecture.md</tspan><tspan font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" fill="#5b6673">  live module map — updated on every change</tspan></text>
+<circle cx="512" cy="724" r="3" fill="#0ca678"/>
+<text x="526" y="728.5" font-size="13.5"><tspan font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-weight="700" fill="#087756">security.md</tspan><tspan font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" fill="#5b6673">  supply-chain: pin · hash · non-root · CI</tspan></text>
+<circle cx="512" cy="747" r="3" fill="#0ca678"/>
+<text x="526" y="751.5" font-size="13.5"><tspan font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-weight="700" fill="#087756">layouts.md · steering.md</tspan><tspan font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" fill="#5b6673">  layout profiles · mechanism guide</tspan></text>
+<circle cx="512" cy="770" r="3" fill="#0ca678"/>
+<text x="526" y="774.5" font-size="13.5"><tspan font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-weight="700" fill="#087756">adr/</tspan><tspan font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" fill="#5b6673">  architecture decision records</tspan></text>
+<path d="M62 844.0 H70" stroke="#e8590c" stroke-width="1.8" fill="none"/>
+<path d="M72 838.0 h6 l2 3 h7 v9 a1.5 1.5 0 0 1 -1.5 1.5 h-19 a1.5 1.5 0 0 1 -1.5 -1.5 v-11 a1.5 1.5 0 0 1 1.5 -1.5 z" fill="#e8590c" opacity="0.92"/>
+<text x="94" y="849.0" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="14.5" font-weight="700" fill="#a74008">requirements/</text>
+<path d="M88 854.0 V896" stroke="#e8590c" stroke-width="1.4" fill="none" opacity="0.45"/>
+<path d="M88 873 H100" stroke="#e8590c" stroke-width="1.4" fill="none" opacity="0.45"/>
+<text x="104" y="877.5" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13" fill="#212a35">base.txt · base.lock</text>
+<path d="M88 896 H100" stroke="#e8590c" stroke-width="1.4" fill="none" opacity="0.45"/>
+<text x="104" y="900.5" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13" fill="#212a35">dev.txt · dev.lock</text>
+<path d="M410 844.0 C440 844.0, 452 844.0, 484 844.0" stroke="#e8590c" stroke-width="2" fill="none" opacity="0.55"/>
+<circle cx="412" cy="844.0" r="2.6" fill="#e8590c"/>
+<rect x="486" y="815" width="664" height="106" rx="12" fill="#ffffff" stroke="#e8590c" stroke-width="1.4" filter="url(#sh)"/>
+<rect x="502" y="829" width="156" height="30" rx="8" fill="#e8590c"/>
+<text x="580.0" y="849.0" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="14.5" font-weight="700" fill="#fff" text-anchor="middle">requirements/</text>
+<circle cx="512" cy="873" r="3" fill="#e8590c"/>
+<text x="526" y="877.5" font-size="13.5"><tspan font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-weight="700" fill="#a74008">base.txt · base.lock</tspan><tspan font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" fill="#5b6673">  runtime deps — pinned (==) + hash-locked</tspan></text>
+<circle cx="512" cy="896" r="3" fill="#e8590c"/>
+<text x="526" y="900.5" font-size="13.5"><tspan font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-weight="700" fill="#a74008">dev.txt · dev.lock</tspan><tspan font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" fill="#5b6673">  dev tooling — never enters the prod image</tspan></text>
+<path d="M62 970.0 H70" stroke="#0c8599" stroke-width="1.8" fill="none"/>
+<path d="M72 964.0 h6 l2 3 h7 v9 a1.5 1.5 0 0 1 -1.5 1.5 h-19 a1.5 1.5 0 0 1 -1.5 -1.5 v-11 a1.5 1.5 0 0 1 1.5 -1.5 z" fill="#0c8599" opacity="0.92"/>
+<text x="94" y="975.0" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="14.5" font-weight="700" fill="#085f6e">project scaffold</text>
+<path d="M88 980.0 V1045" stroke="#0c8599" stroke-width="1.4" fill="none" opacity="0.45"/>
+<path d="M88 999 H100" stroke="#0c8599" stroke-width="1.4" fill="none" opacity="0.45"/>
+<text x="104" y="1003.5" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13" fill="#212a35">config/ · tests/ · research/</text>
+<path d="M88 1022 H100" stroke="#0c8599" stroke-width="1.4" fill="none" opacity="0.45"/>
+<text x="104" y="1026.5" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13" fill="#212a35">.github/</text>
+<path d="M88 1045 H100" stroke="#0c8599" stroke-width="1.4" fill="none" opacity="0.45"/>
+<text x="104" y="1049.5" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="13" fill="#212a35">Dockerfile · Makefile</text>
+<path d="M410 970.0 C440 970.0, 452 970.0, 484 970.0" stroke="#0c8599" stroke-width="2" fill="none" opacity="0.55"/>
+<circle cx="412" cy="970.0" r="2.6" fill="#0c8599"/>
+<rect x="486" y="941" width="664" height="129" rx="12" fill="#ffffff" stroke="#0c8599" stroke-width="1.4" filter="url(#sh)"/>
+<rect x="502" y="955" width="184" height="30" rx="8" fill="#0c8599"/>
+<text x="594.0" y="975.0" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="14.5" font-weight="700" fill="#fff" text-anchor="middle">project scaffold</text>
+<circle cx="512" cy="999" r="3" fill="#0c8599"/>
+<text x="526" y="1003.5" font-size="13.5"><tspan font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-weight="700" fill="#085f6e">config/ · tests/ · research/</tspan><tspan font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" fill="#5b6673">  params · unit·integration·e2e · findings</tspan></text>
+<circle cx="512" cy="1022" r="3" fill="#0c8599"/>
+<text x="526" y="1026.5" font-size="13.5"><tspan font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-weight="700" fill="#085f6e">.github/</tspan><tspan font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" fill="#5b6673">  CI — hash-verify · pip-audit · .pth scan</tspan></text>
+<circle cx="512" cy="1045" r="3" fill="#0c8599"/>
+<text x="526" y="1049.5" font-size="13.5"><tspan font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-weight="700" fill="#085f6e">Dockerfile · Makefile</tspan><tspan font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" fill="#5b6673">  multi-stage non-root build · make targets</tspan></text>
+<rect y="1108" width="1200" height="1" fill="#d7dde5"/>
+<text x="50" y="1130" font-family="'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace" font-size="12.5" font-weight="700" fill="#212a35">keel</text>
+<text x="86" y="1130" font-size="12.5" fill="#5b6673">clone = full kit + docs + permissions &#8226; /plugin install keel@keel = the tooling layer, everywhere</text>
+</svg>

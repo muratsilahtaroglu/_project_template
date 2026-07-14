@@ -189,6 +189,13 @@ inside `src/`. **Existing project:** your code already exists and the shell wrap
 nothing in your `src/` moves. Keel is a **shell that wraps your project, not a skeleton you pour code into.**
 
 ## Contents (all generic / project-agnostic)
+
+<p align="center">
+  <img src="docs/assets/architecture.svg" alt="Keel repository structure — a colored tree on the left with matching callout cards on the right, grouping the repo into constitution + memory, .claude/, .claude-plugin/, docs/, requirements/, and the project scaffold" width="960">
+</p>
+
+<sub>Diagram generated from [`docs/assets/gen_architecture_svg.py`](docs/assets/gen_architecture_svg.py) — edit the group list and re-run to regenerate. The full copy-pasteable tree is below.</sub>
+
 ```text
 claude-code-starter-kit/
 │
