@@ -13,10 +13,13 @@ _Last updated: <YYYY-MM-DD> — <short status>._
 
 ## Session blocks (newest first — a fresh session reads the TOP block first)
 <!-- Insert each new session block HERE, directly below this comment (newest first; older blocks get
-     pushed down). Max 5 blocks — then run /keel-distill. On the FIRST real session, REPLACE the placeholder
-     block below (don't stack a real block on top of it, or the phantom placeholder lingers forever). -->
+     pushed down). ONE BLOCK PER SESSION, not per day: the heading carries HH:MM, so several same-day
+     sessions stay separate; a /keel-handover re-run in the SAME session updates its own block (keeping
+     its original time). Max 5 blocks — then run /keel-distill. On the FIRST real session, REPLACE the
+     placeholder block below (don't stack a real block on top of it, or the phantom placeholder lingers
+     forever). -->
 
-### <YYYY-MM-DD> — <one-line status>   <!-- ← REPLACE this whole placeholder block on the first session -->
+### <YYYY-MM-DD HH:MM> — <one-line status>   <!-- ← REPLACE this whole placeholder block on the first session -->
 - **(a) Completed:** <what was done, briefly>. (Details/decisions → ADR / docs; done TASKS.md items land here as one-liners.)
 - **(b) Tried, didn't work (don't retry):** <approach> — FAILED, reason: <...>. (Highest-value lines — never lost: `/keel-distill` moves them to `LESSONS.md [fail]`, not to the trash.)
 - **(c) Latest updates:** <most recent changes>

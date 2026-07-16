@@ -23,7 +23,11 @@ if [ -f "$DIR/.claude/compact-force" ]; then rm -f "$DIR/.claude/compact-force";
 printf '%s' "$payload" | grep -qi 'keel-force' && exit 0
 
 git -C "$DIR" rev-parse --is-inside-work-tree >/dev/null 2>&1 || exit 0
-[ -z "$(git -C "$DIR" status --porcelain 2>/dev/null)" ] && exit 0     # clean tree → nothing unsaved
+# Dirty check — telemetry must never trigger the gate: exclude .claude/ritual-log (normally
+# git-ignored anyway; this guards projects that skipped the .gitignore hunk) and the
+# regenerable stats report it feeds.
+changed="$(git -C "$DIR" status --porcelain 2>/dev/null | grep -vE '\.claude/ritual-log|reports/ritual-stats\.md|^\?\? reports/$')"
+[ -z "$changed" ] && exit 0                                            # clean tree → nothing unsaved
 # HANDOVER.md modified in the working tree → the ritual ran (or is running) → fresh enough.
 [ -n "$(git -C "$DIR" status --porcelain -- HANDOVER.md 2>/dev/null)" ] && exit 0
 # HANDOVER committed as the most recent history touching it AND that commit is FRESH (≤30 min):
@@ -37,5 +41,6 @@ if [ -n "$last" ]; then
   [ "${behind:-0}" -eq 0 ] && [ "$age" -le 1800 ] && exit 0
 fi
 
+echo "$(date '+%F %T') compact-gate BLOCK: stale manual /compact" >> "$DIR/.claude/ritual-log" 2>/dev/null || true
 echo "[keel] /compact BLOCKED: the tree changed this session but HANDOVER.md was not updated — the summary would be the only record of this session. Run /keel-compact (refreshes HANDOVER/LESSONS/TASKS/PLAN, then hands you back to /compact). Emergency bypass: '/compact keel-force' or 'touch .claude/compact-force' then /compact." >&2
 exit 2

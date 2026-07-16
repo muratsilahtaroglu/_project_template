@@ -13,6 +13,10 @@ projects built *with* it (that discipline lives in `rules.md`).
   it (README contents list, `CLAUDE.md`, `docs/*`, `rules.md`) so nothing dangles.
 - **Verify what you touch.** The hooks have a runnable test pattern; the `.pth` CI scan must not
   false-fail on legitimate `.pth` files (e.g. `distutils-precedence.pth`, `coloredlogs`). Test before PR.
+  When testing hooks, keep trigger strings OFF the command line — a payload containing e.g. a
+  staging-a-dotenv command trips the session's own `block-dangerous` hook (it string-matches your Bash
+  call, quotes included; seen in three real projects). Write payloads to files and pipe them:
+  `bash hook.sh < payload.json`.
 
 ## How to propose a change
 1. Fork + branch.

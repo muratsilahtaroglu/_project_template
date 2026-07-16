@@ -17,7 +17,8 @@ always — this is the umbrella, not a replacement.
    regenerated diagram, TASKS.md cleanup, and the §9.31 sweep of unwritten agreements into
    `LESSONS.md`. Do not duplicate its steps here — invoke it.
 2. **Freshness gate** — report a short pass/fail checklist; fix gaps before proceeding:
-   - [ ] `HANDOVER.md` top block is dated TODAY and describes THIS session (not a stale block).
+   - [ ] `HANDOVER.md` top block carries THIS session's `YYYY-MM-DD HH:MM` and describes THIS session
+         (same-day ≠ same-session: another session's block from today is still stale — add your own).
    - [ ] `TASKS.md ## Now` matches reality; finished items deleted (one-liners in block (a)).
    - [ ] No agreement / gotcha / failed approach from this conversation is still unwritten (§9.31).
    - [ ] Caps respected: HANDOVER ≤ 5 blocks / ~200 lines · LESSONS/TASKS ≤ ~100 (else `/keel-distill`).

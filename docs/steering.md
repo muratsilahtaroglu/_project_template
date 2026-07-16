@@ -33,5 +33,9 @@ compaction behavior. Put each instruction in the RIGHT one instead of piling eve
 - **Side tasks** → subagents: `researcher`, `verifier`, `auditor` (`.claude/agents/`).
 - **Guarantees** → hooks (`block-dangerous`, `compact-gate` (blocks a stale manual `/compact`),
   `pre-compact-snapshot`, `session-start-reground`, handover reminder, `plan-phase-nudge`) +
-  `settings.json` permissions.
+  `settings.json` permissions. Plus `ritual-log` telemetry: every Skill-tool invocation, every
+  user-typed command (built-ins included, via `UserPromptExpansion`), compact boundary
+  (manual/auto), session start and hook BLOCK is appended to `.claude/ritual-log` (git-ignored,
+  self-trimmed). **`/keel-stats`** renders it into `reports/ritual-stats.md` — PLAN.md-style
+  colored Mermaid interval boxes + a counts table.
 - **File-local constraints** → optional `.claude/rules/` (see the example there).

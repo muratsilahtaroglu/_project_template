@@ -10,7 +10,11 @@ cmd="$(python3 -c 'import sys, json; print(json.load(sys.stdin).get("tool_input"
   || echo "block-dangerous.sh: could not parse hook input — allowing (check python3)" >&2
 [ -z "$cmd" ] && exit 0
 
-block() { echo "BLOCKED by .claude/hooks/block-dangerous.sh: $1" >&2; exit 2; }
+block() {
+  # telemetry (best-effort): BLOCK events land in the ritual-log too
+  echo "$(date '+%F %T') block-dangerous BLOCK: $1" >> "${CLAUDE_PROJECT_DIR:-.}/.claude/ritual-log" 2>/dev/null || true
+  echo "BLOCKED by .claude/hooks/block-dangerous.sh: $1" >&2; exit 2
+}
 
 # 1) Recursive delete of root / home / cwd (allows rm -rf ./subdir and absolute project paths).
 #    ('rm' matched without \b — a GNU extension that silently never matches on BSD/macOS grep.)

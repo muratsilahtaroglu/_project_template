@@ -24,6 +24,9 @@ Checklist:
 - [ ] **LESSONS.md** — this phase's agreed rules/tests/gotchas written (rules §9.31).
 - [ ] **Audit** — `/keel-audit` run over this phase's range (or consciously skipped with a reason); its
   approved fixes applied (rules.md §4.11).
+- [ ] **Code review** — `/code-review` (or the project's review flow) run over this phase's diff;
+  findings triaged: fixed now, or one line each in `TASKS.md ## Discovered`. The phase gate is the
+  review boundary — cheaper than reviewing every session, earlier than reviewing at release.
 - [ ] **Secrets** — `git diff --cached` reviewed; no `.env`/secrets staged (rules.md §6.18).
 - [ ] **Deps** — if dependencies changed: lock refreshed + `pip-audit` clean (rules.md §7.23).
 

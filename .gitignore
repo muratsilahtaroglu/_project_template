@@ -45,6 +45,7 @@ scratch/**/*.out
 # === Claude Code — commit settings.json/skills/hooks; ignore personal ===
 .claude/settings.local.json
 .claude/snapshots/
+.claude/ritual-log*
 CLAUDE.local.md
 
 # === Research — commit findings.md; ignore raw/large downloads (rules.md §8) ===

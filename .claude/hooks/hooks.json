@@ -6,20 +6,35 @@
         "hooks": [
           { "type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT}\"/.claude/hooks/block-dangerous.sh" }
         ]
+      },
+      {
+        "matcher": "Skill",
+        "hooks": [
+          { "type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT}\"/.claude/hooks/ritual-log.sh" }
+        ]
+      }
+    ],
+    "UserPromptExpansion": [
+      {
+        "hooks": [
+          { "type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT}\"/.claude/hooks/ritual-log.sh" }
+        ]
       }
     ],
     "SessionStart": [
       {
         "matcher": "startup|resume|clear|compact",
         "hooks": [
-          { "type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT}\"/.claude/hooks/session-start-reground.sh" }
+          { "type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT}\"/.claude/hooks/session-start-reground.sh" },
+          { "type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT}\"/.claude/hooks/ritual-log.sh" }
         ]
       }
     ],
     "PreCompact": [
       {
         "hooks": [
-          { "type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT}\"/.claude/hooks/pre-compact-snapshot.sh" }
+          { "type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT}\"/.claude/hooks/pre-compact-snapshot.sh" },
+          { "type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT}\"/.claude/hooks/ritual-log.sh" }
         ]
       },
       {
