@@ -29,7 +29,8 @@ compaction behavior. Put each instruction in the RIGHT one instead of piling eve
 - **Procedures** → skills: `/keel-handover`, `/keel-phase-review`, `/keel-research`, `/keel-adopt`, `/keel-distill`, `/keel-update`
   (pull the latest template with per-file approval), `/keel-audit` (rules-compliance spot-check when due),
   `/keel-plan` (phase map: status table + regenerated Mermaid DAG in `PLAN.md`), `/keel-compact`
-  (pre-compact bundle: refresh the disk via `/keel-handover`, verify freshness, hand off to `/compact`).
+  (pre-compact bundle: refresh the disk via `/keel-handover`, verify freshness, hand off to `/compact`),
+  `/keel-pilot` (staged bulk-run gate: declare thresholds → smoke → gold-set validation → ramp → acceptance).
 - **Side tasks** → subagents: `researcher`, `verifier`, `auditor` (`.claude/agents/`).
 - **Guarantees** → hooks (`block-dangerous`, `compact-gate` (blocks a stale manual `/compact`),
   `pre-compact-snapshot`, `session-start-reground`, handover reminder, `plan-phase-nudge`) +

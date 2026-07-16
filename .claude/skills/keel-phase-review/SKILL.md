@@ -11,7 +11,7 @@ a commit.
 Checklist:
 - [ ] **Working product** — the phase's feature runs; include a one-line "how to test this".
 - [ ] **Tests** — relevant unit/integration (e2e if needed) written and run; results summarized under
-  `tests/` + in HANDOVER.md (rules.md §2.8).
+  `tests/` + in HANDOVER.md (rules.md §2.8); bulk outputs passed the `/keel-pilot` gates where applicable.
 - [ ] **Architecture** — every structural change recorded in `docs/architecture.md` (rules.md §1.6).
 - [ ] **PLAN.md (do not skip — this is what marks the phase `done`)** — the finished phase's gate
   flipped to `done` (+ next phase set `wip`, _Current focus_ updated, diagram regenerated from the
@@ -25,8 +25,11 @@ Checklist:
 - [ ] **Audit** — `/keel-audit` run over this phase's range (or consciously skipped with a reason); its
   approved fixes applied (rules.md §4.11).
 - [ ] **Code review** — `/code-review` (or the project's review flow) run over this phase's diff;
-  findings triaged: fixed now, or one line each in `TASKS.md ## Discovered`. The phase gate is the
-  review boundary — cheaper than reviewing every session, earlier than reviewing at release.
+  each finding triaged **through the `verifier` subagent** (adversarial "try to refute") before any
+  fix is applied: CONFIRMED → fix now · REFUTED → record with its counter-evidence · UNCERTAIN → ask
+  the user (default: don't fix). Reviewer output is a claim, not a verdict (rules.md §4.11); deferred
+  items get one line each in `TASKS.md ## Discovered`. The phase gate is the review boundary —
+  cheaper than reviewing every session, earlier than reviewing at release.
 - [ ] **Secrets** — `git diff --cached` reviewed; no `.env`/secrets staged (rules.md §6.18).
 - [ ] **Deps** — if dependencies changed: lock refreshed + `pip-audit` clean (rules.md §7.23).
 

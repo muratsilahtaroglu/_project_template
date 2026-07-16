@@ -37,7 +37,7 @@ This repo is **also its own Claude Code plugin marketplace** — install the enf
 That gives you the **skills** (each `keel-`-prefixed, so under the plugin namespace: `/keel:keel-handover` ·
 `/keel:keel-distill` · `/keel:keel-phase-review` · `/keel:keel-research` · `/keel:keel-adopt` ·
 `/keel:keel-update` · `/keel:keel-audit` · `/keel:keel-plan` · `/keel:keel-compact` ·
-`/keel:keel-stats`), the `researcher` +
+`/keel:keel-stats` · `/keel:keel-pilot`), the `researcher` +
 `verifier` + `auditor` **subagents**, and the
 memory/safety **hooks** — across every repo. **A clone is a snapshot; the plugin is a subscription:**
 when the template improves, one `/plugin marketplace update keel` brings the new tooling to *all* your
@@ -223,7 +223,7 @@ claude-code-starter-kit/
 │   ├── settings.json         #     permissions: deny reading secrets · ask before push · hook registration
 │   ├── hooks/                #     block-dangerous · manual-compact gate · handover reminder · phase-done nudge · pre-compact snapshot ·
 │   │                         #     session-start re-ground (+ cap · staleness · audit-due · plan-drift warnings) · ritual-log telemetry
-│   ├── skills/               #     invokable workflows: /keel-handover · /keel-phase-review · /keel-research · /keel-adopt · /keel-distill · /keel-update · /keel-audit · /keel-plan · /keel-compact · /keel-stats
+│   ├── skills/               #     invokable workflows: /keel-handover · /keel-phase-review · /keel-research · /keel-adopt · /keel-distill · /keel-update · /keel-audit · /keel-plan · /keel-compact · /keel-stats · /keel-pilot
 │   ├── agents/               #     reusable subagents: researcher · verifier · auditor (isolated context)
 │   ├── hooks/hooks.json      #     plugin-mode hook registration (standalone mode uses settings.json)
 │   └── rules/                #     optional path-scoped rules (load only when matching files are touched)
