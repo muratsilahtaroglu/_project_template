@@ -107,8 +107,13 @@ When the context window fills up, Claude Code **compacts**: the conversation is 
 summary. Anything said only in conversation can vanish — but the `@`-imported files are **re-injected
 from disk** after every compaction. Keel exploits that with a two-sided pincer around the compact:
 
-- **Before — `PreCompact` hook** (side effects only; it *cannot* inject instructions): snapshots
-  `HANDOVER/LESSONS/TASKS` to `.claude/snapshots/` and warns if the handover looks stale.
+- **Before — `PreCompact` hooks**: `pre-compact-snapshot` snapshots `HANDOVER/LESSONS/TASKS` to
+  `.claude/snapshots/` and warns if the handover looks stale (its stdout *cannot* inject
+  instructions — that's SessionStart's job); `compact-gate` goes further and **blocks a manual
+  `/compact` outright** (exit 2) while the disk is stale — tree changed but `HANDOVER.md`
+  untouched — pointing at `/keel-compact`. Auto-compact is never blocked (a blocked auto-compact
+  could wedge a full session); on older CLIs the block degrades to a loud warning. Bypasses:
+  `/compact keel-force` or `touch .claude/compact-force`.
 - **After — `SessionStart` hook** (its output *is* injected into context): tells Claude to re-read the
   top HANDOVER block, `LESSONS.md`, and `TASKS.md ## Now`, and warns when a memory file needs `/keel-distill`.
 - **Standing directive in `CLAUDE.md`**: what every compaction summary must preserve (modified files,
@@ -215,7 +220,7 @@ claude-code-starter-kit/
 │
 ├── .claude/                  # ⚙️  Claude Code layer — guidance + deterministic enforcement
 │   ├── settings.json         #     permissions: deny reading secrets · ask before push · hook registration
-│   ├── hooks/                #     block-dangerous · handover reminder · phase-done nudge · pre-compact snapshot ·
+│   ├── hooks/                #     block-dangerous · manual-compact gate · handover reminder · phase-done nudge · pre-compact snapshot ·
 │   │                         #     session-start re-ground (+ cap · staleness · audit-due · plan-drift warnings)
 │   ├── skills/               #     invokable workflows: /keel-handover · /keel-phase-review · /keel-research · /keel-adopt · /keel-distill · /keel-update · /keel-audit · /keel-plan · /keel-compact
 │   ├── agents/               #     reusable subagents: researcher · verifier · auditor (isolated context)

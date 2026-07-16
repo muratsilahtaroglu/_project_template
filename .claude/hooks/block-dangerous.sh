@@ -30,10 +30,15 @@ fi
 
 # 3) Staging a real .env — including variants (.env.production/.env.local/...) but not .env.example.
 #    The allowed name is STRIPPED first, so `git add .env .env.example` can't ride along on the
-#    exclusion, and the variant pattern catches `.env.<anything>`.
+#    exclusion, and the variant pattern catches `.env.<anything>`. The check is scoped to the
+#    command SEGMENTS (split on |;&) that actually contain `git add` — a `.env` in an unrelated
+#    segment (e.g. `git add -A && git diff | grep '\.env'`) is a grep pattern, not a staged file
+#    (this false-positive bit two real projects). Trade-off: an exotic `echo .env | xargs git add`
+#    now passes — the pre-commit no-tracked-dotenv hook + CI secret-file guard are the backstops.
 if printf '%s' "$cmd" | grep -Eq 'git[[:space:]]+add'; then
   stripped="$(printf '%s' "$cmd" | sed 's/\.env\.example//g')"
-  if printf '%s' "$stripped" | grep -Eq '(^|[[:space:]"'\''=/])\.env(\.[A-Za-z0-9_-]+)?([[:space:]"'\'']|$)'; then
+  if printf '%s\n' "$stripped" | tr '|;&' '\n\n\n' | grep -E 'git[[:space:]]+add' \
+     | grep -Eq '(^|[[:space:]"'\''=/])\.env(\.[A-Za-z0-9_-]+)?([[:space:]"'\''*]|$)'; then
     block "staging a .env file — secrets must never be committed (rules.md §5)"
   fi
 fi

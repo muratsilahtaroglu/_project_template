@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# PreCompact hook (manual + auto) — side-effect only: PreCompact CANNOT inject instructions into the
-# compaction summary (that's SessionStart's job — see session-start-reground.sh). What it CAN do is
+# PreCompact hook (manual + auto) — side-effect only: PreCompact stdout CANNOT inject instructions
+# into the compaction summary (that's SessionStart's job — see session-start-reground.sh); the
+# manual-compact BLOCKING gate lives in compact-gate.sh (matcher "manual"). What this one CAN do is
 # make compaction safe: snapshot the memory files so nothing is lost if the summary goes wrong, and
 # warn (systemMessage) if the handover looks stale. Always exits 0 — never blocks auto-compact.
 set -u

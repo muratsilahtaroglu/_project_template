@@ -58,6 +58,12 @@
         "hooks": [
           { "type": "command", "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/pre-compact-snapshot.sh" }
         ]
+      },
+      {
+        "matcher": "manual",
+        "hooks": [
+          { "type": "command", "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/compact-gate.sh" }
+        ]
       }
     ],
     "Stop": [

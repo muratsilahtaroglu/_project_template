@@ -31,6 +31,7 @@ compaction behavior. Put each instruction in the RIGHT one instead of piling eve
   `/keel-plan` (phase map: status table + regenerated Mermaid DAG in `PLAN.md`), `/keel-compact`
   (pre-compact bundle: refresh the disk via `/keel-handover`, verify freshness, hand off to `/compact`).
 - **Side tasks** → subagents: `researcher`, `verifier`, `auditor` (`.claude/agents/`).
-- **Guarantees** → hooks (`block-dangerous`, `pre-compact-snapshot`, `session-start-reground`, handover
-  reminder, `plan-phase-nudge`) + `settings.json` permissions.
+- **Guarantees** → hooks (`block-dangerous`, `compact-gate` (blocks a stale manual `/compact`),
+  `pre-compact-snapshot`, `session-start-reground`, handover reminder, `plan-phase-nudge`) +
+  `settings.json` permissions.
 - **File-local constraints** → optional `.claude/rules/` (see the example there).

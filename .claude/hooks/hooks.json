@@ -21,6 +21,12 @@
         "hooks": [
           { "type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT}\"/.claude/hooks/pre-compact-snapshot.sh" }
         ]
+      },
+      {
+        "matcher": "manual",
+        "hooks": [
+          { "type": "command", "command": "\"${CLAUDE_PLUGIN_ROOT}\"/.claude/hooks/compact-gate.sh" }
+        ]
       }
     ],
     "Stop": [

@@ -27,7 +27,13 @@ always — this is the umbrella, not a replacement.
 4. **Hand off:** tell the user — "Disk is fresh; now run `/compact`." A skill CANNOT invoke the
    built-in `/compact` itself; stop here and let the user trigger it.
 
-Scope honesty: this covers MANUAL compacts only. Auto-compact fires without warning — the defense
-there remains the hot-path discipline (§9.31: write it the moment it appears) + the pincer. For
-full determinism you can disable auto-compact in `/config` and compact only via this ritual
-(trade-off: forget too long and the session hits the hard context limit mid-turn).
+Enforcement: this ritual is not just advice — the `compact-gate` PreCompact hook (matcher
+`manual`) BLOCKS a stale manual `/compact` with exit 2 and points here, so forgetting it can't
+silently cost a session (on older CLIs the block degrades to a warning). Emergency bypasses:
+`/compact keel-force` · `touch .claude/compact-force` (one-shot).
+
+Scope honesty: the gate covers MANUAL compacts only. Auto-compact is never blocked (a blocked
+auto-compact could wedge a full session) — the defense there remains the hot-path discipline
+(§9.31: write it the moment it appears) + the pincer. For full determinism you can disable
+auto-compact in `/config` and compact only via this ritual (trade-off: forget too long and the
+session hits the hard context limit mid-turn).
