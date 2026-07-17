@@ -23,9 +23,10 @@ GROUPS = [
     (".claude/", "#1c7ed6", [
         ("settings.json", "permissions — deny secrets · ask before push"),
         ("hooks/", "deterministic guards — block-dangerous · nudges"),
-        ("skills/", "/keel-* workflows — handover · plan · audit"),
+        ("skills/", "11 /keel-* workflows — handover · plan · audit · pilot"),
         ("agents/", "subagents — researcher · verifier · auditor"),
         ("rules/", "optional path-scoped rules"),
+        ("snapshots/ · last-audit · ritual-log", "runtime state — appears as you work"),
     ]),
     (".claude-plugin/", "#7048e8", [
         ("plugin.json", "bundles skills·agents·hooks as the “keel” plugin"),

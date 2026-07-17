@@ -72,6 +72,26 @@ docs (`CLAUDE.md`, architecture, ADRs) are never touched.
 > **professional, traceable, and secure**. No file contains a project name or project-specific detail —
 > fill in the placeholders.
 
+## What Keel fixes (problem → mechanism)
+
+The whole kit in one table — left, what goes wrong in long AI-assisted projects; right, the concrete
+mechanism that closes it:
+
+| Without Keel | With Keel — the mechanism |
+|---|---|
+| **Volatile memory.** The context window fills and the conversation is compacted into a lossy summary — decisions, verbal agreements and warnings vanish; every session restarts half-blind. | **Repo = durable disk.** Critical facts hit `HANDOVER` / `LESSONS` / `TASKS` the moment they appear and auto-reload every session; a stale manual `/compact` is **blocked outright** (compact-gate). |
+| **Repeated mistakes.** Failed approaches aren't remembered — the same dead end is re-entered, burning time and tokens. | **Permanent "tried, didn't work" record.** HANDOVER (b) + `LESSONS [fail]` load automatically every session — a dead end is entered once. |
+| **A free hand.** A model slip or prompt injection becomes `rm -rf`, a committed secret, a force-push. Writing "don't" is not a guarantee. | **Enforcement layer.** Hooks reject the command before it runs, permissions make secrets unreadable, push waits for approval. Text advises; hooks and permissions **guarantee**. |
+| **Dependency chaos + supply-chain risk.** Scattered manifests, open ranges (`>=`) — one poisoned release away from an incident. | **One home + five barriers.** Everything in `requirements/` (base/dev); `==` pins + hashed lock + `pip-audit` + `.pth` scan + non-root container + security CI on every PR. |
+| **File sprawl.** The agent invents files ad hoc; the root fills with mystery files; the architecture drifts. | **Layout contract.** Code only under `src/`; every structural change lands in `docs/architecture.md`; no unexplained file survives a session — drift is hunted by hooks + the auditor. |
+| **Scattered throwaway code & prompts.** Experiments and one-off scripts leak into the main tree; the same prompt is improvised again and again. | **Quarantine + promotion.** Experiments live only in `scratch/` (1-line purpose header); runtime prompts are versioned files under `src/`; the SECOND similar ad-hoc prompt is promoted to a skill. |
+| **Unproven "it works".** Tests postponed, claims not backed by a run, bulk outputs shipped blind. | **Layered test contract + pilot gate.** Tests written + run per change; e2e evidence at phase gates; bulk jobs pass `/keel-pilot` (smoke → gold set → staged ramp → acceptance sample). |
+| **Plan-free drift.** Phases skipped, five things in flight, "done" claimed without proof. | **Gated phase map + single-task flow.** `PLAN.md` DAG with verifiable gates; work only from `TASKS ## Now` (max 3–5); `done` flips only via `/keel-phase-review` — a Stop hook catches skipped flips. |
+| **Person-dependent knowledge.** The project lives in one head / one machine; a departure resets it. | **Memory in the repo.** It travels through git; a new person or session loads the same five files and is oriented in minutes — even with **no AI access at all** (see the human-handover section). |
+| **No trail.** "Why did we build it this way?" has no answer; there is nothing to audit. | **Audit-ready trail.** Every decision an ADR, every session a HANDOVER block, every phase in `PLAN.md` + its fix log. |
+| **Unmeasurable discipline.** Rules exist on paper; nobody knows whether they actually run. | **Enforce + measure.** Telemetry logs every skill/command/compact/BLOCK; `/keel-stats` renders it visually; `/keel-audit` samples commit ranges against the rules. |
+| **One-size-fits-all templates.** Starter kits dump their full structure onto every project. | **Prune-to-fit bootstrap.** The first session tailors the kit to THIS project (remove · add · layout) with approval; `/keel-adopt` overlays existing projects non-destructively. |
+
 ## When (not) to use Keel
 Honest scoping: **solo developer, one machine, a weekend project?** Claude Code's built-in auto-memory +
 compaction will mostly carry you — Keel's discipline would be overhead. Keel pays off when any of these
@@ -239,77 +259,5 @@ nothing in your `src/` moves. Keel is a **shell that wraps your project, not a s
   <img src="docs/assets/architecture.svg" alt="Keel repository structure — a colored tree on the left with matching callout cards on the right, grouping the repo into constitution + memory, .claude/, .claude-plugin/, docs/, requirements/, and the project scaffold" width="960">
 </p>
 
-<sub>Diagram generated from [`docs/assets/gen_architecture_svg.py`](docs/assets/gen_architecture_svg.py) — edit the group list and re-run to regenerate. The full copy-pasteable tree is below.</sub>
+<sub>Diagram generated from [`docs/assets/gen_architecture_svg.py`](docs/assets/gen_architecture_svg.py) — edit the group list and re-run to regenerate. Every item's one-line role lives in the per-folder READMEs and `docs/architecture.md`.</sub>
 
-```text
-claude-code-starter-kit/
-│
-├── CLAUDE.md                 # project constitution — Claude reads it first (@-imports the 4 below)
-├── rules.md                  # working discipline: docs · tests · security · git · research · memory · judgment
-├── HANDOVER.md               # session memory: last 5 blocks (done · tried-failed · latest · next)
-├── LESSONS.md                # critical knowledge written the moment it appears ([rule][test][fail][gotcha])
-├── TASKS.md                  # cross-session task board (Now (3–5) · Next · Discovered; delete-on-done)
-├── PLAN.md                   # phase map: status table (source of truth) + colored Mermaid DAG + fix log
-├── README.md                 # this file
-├── CONTRIBUTING.md           # how to contribute to the kit itself
-├── LICENSE                   # MIT
-│
-├── .claude/                  # ⚙️  Claude Code layer — guidance + deterministic enforcement
-│   ├── settings.json         #     permissions: deny reading secrets · ask before push · hook registration
-│   ├── hooks/                #     block-dangerous · manual-compact gate · handover reminder · phase-done nudge · pre-compact snapshot ·
-│   │                         #     session-start re-ground (+ cap · staleness · audit-due · plan-drift warnings) · ritual-log telemetry
-│   ├── skills/               #     invokable workflows: /keel-handover · /keel-phase-review · /keel-research · /keel-adopt · /keel-distill · /keel-update · /keel-audit · /keel-plan · /keel-compact · /keel-stats · /keel-pilot
-│   ├── agents/               #     reusable subagents: researcher · verifier · auditor (isolated context)
-│   ├── hooks/hooks.json      #     plugin-mode hook registration (standalone mode uses settings.json)
-│   └── rules/                #     optional path-scoped rules (load only when matching files are touched)
-│
-├── .claude-plugin/           # 🔌 install the tooling via /plugin (this repo is its own marketplace)
-│   ├── plugin.json           #     bundles .claude/ skills · agents · hooks as the "keel" plugin
-│   └── marketplace.json      #     self-hosted marketplace (/plugin marketplace add <repo>)
-│
-├── docs/                     # 📚 long-form documentation
-│   ├── architecture.md       #     live module map (updated on every structural change)
-│   ├── security.md           #     supply-chain security guide (pin · hash · non-root · .pth · CI)
-│   ├── layouts.md            #     per-project layout profiles (ML · service/API · CLI)
-│   ├── steering.md           #     which Claude Code mechanism for what (skill/hook/rule/subagent/…)
-│   ├── user_manual.md        #     end-user guide skeleton
-│   ├── handover-archive.md   #     raw rotated HANDOVER blocks (never imported — zero context cost)
-│   ├── assets/               #     README media (demo · memory-lifecycle · adopt GIFs)
-│   └── adr/                  #     architecture decision records (template + index)
-│
-├── requirements/             # 📦 all dependency manifests (see requirements/README.md)
-│   ├── base.txt · base.lock  #     runtime deps — pinned (==) + hash-locked
-│   └── dev.txt  · dev.lock   #     dev tooling — never enters the prod image
-│
-├── config/                   # non-secret parameters per env (local.yaml · prod.yaml)
-├── tests/                    # unit · integration · e2e · fixtures
-├── scratch/                  # throwaway experiments (probes · one_off · experiments)
-├── reports/                  # generated reports
-├── research/                 # opt-in external research trail
-│   └── github · articles · linkedin · huggingface · web   → findings.md per source
-│
-├── .github/                  # CI + PR template
-│   ├── workflows/ci.yml      #     hash-verify · pip-audit · .pth scan on every PR/push
-│   └── PULL_REQUEST_TEMPLATE.md  # Definition-of-Done checklist (mirrors rules.md)
-│
-├── Dockerfile · .dockerignore · docker-compose.yml   # multi-stage, non-root container skeleton
-├── Makefile                  # runnable targets: setup · test · lint · lock · audit
-├── pyproject.toml            # tool config only: ruff (+ security lint S) + pytest
-├── .pre-commit-config.yaml   # gitleaks + .env guard + hygiene hooks
-└── .editorconfig · .env.example · .gitignore
-```
-
-## Philosophy (why this discipline?)
-- **Fit the project, don't force the template:** the bootstrap step (rules.md §0.0) prunes unneeded
-  parts and instantiates the right layout profile — always with user approval.
-- **Traceability:** every decision goes into an ADR, every structural change into `architecture.md`,
-  every session into `HANDOVER.md`. The project stays stable even after 10+ compactions.
-- **Memory with a lifecycle, not a landfill:** always-loaded files are size-capped; old detail rotates
-  to a never-loaded archive; critical facts are written the moment they appear (`LESSONS.md`) and
-  consolidated by `/keel-distill`. Files + grep beat vector DBs at this scale — no external memory service.
-- **Order:** throwaway code stays in `scratch/`, the main tree stays clean.
-- **Security from day one:** dependency pinning + hashing + non-root + secret hygiene from the start.
-- **Enforced, not just advised:** the discipline is wired into Claude Code's native layer (see the
-  table above) — rules are guidance; permissions and hooks are enforced.
-- **Controlled progress:** phases are not skipped; each phase ends with a working product + an
-  approved commit/push.
