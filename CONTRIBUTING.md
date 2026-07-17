@@ -24,6 +24,9 @@ projects built *with* it (that discipline lives in `rules.md`).
 3. Fill in the PR checklist (`.github/PULL_REQUEST_TEMPLATE.md`).
 4. Open a PR describing *what* and *why* (link an issue if there is one).
 
+**`main` is maintainer-only.** Direct pushes are restricted to the repository owner (branch ruleset:
+PR required, force-pushes and deletion blocked) — every contribution lands through a reviewed PR.
+
 ## Security posture
 The supply-chain rules (`docs/security.md`, `rules.md §7`) are intentionally strict defaults. Proposals to
 **relax** them need a rationale; proposals to **strengthen** them are welcome. Never include real secrets
