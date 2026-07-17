@@ -239,12 +239,9 @@ root `CLAUDE.md`; `.gitignore` / `pyproject.toml` must be at root). They don't m
 sit *beside* it, exactly like `package.json` or `.eslintrc` in any project. Your actual application code
 lives in a **separate source tree** the bootstrap creates from a `docs/layouts.md` profile:
 
-```text
-your-project/
-├── CLAUDE.md · rules.md · HANDOVER.md · LESSONS.md · TASKS.md   ← discipline (fixed, at root)
-├── .claude/ · docs/ · tests/ · config/ · requirements/            ← support (fixed)
-└── src/<app-or-package>/   (+ data/ entrypoint/ notebooks/ for ML)   ← YOUR CODE (added at bootstrap)
-```
+<p align="center">
+  <img src="docs/assets/code-layout.svg" alt="Where your code lives: discipline files fixed at the root (CLAUDE.md, rules, memory files), support folders beside them (.claude/, docs/, tests/, config/, requirements/), and YOUR application code in its own src/ tree created at bootstrap from a layouts.md profile" width="960">
+</p>
 
 The kit ships **no `src/`** — it is NOT part of the shipped tree below; the bootstrap proposes the right
 layout for *your* project type (service / CLI / ML / mix) and you approve it, then **all application code
