@@ -37,7 +37,7 @@ This repo is **also its own Claude Code plugin marketplace** — install the enf
 That gives you the **skills** (each `keel-`-prefixed, so under the plugin namespace: `/keel:keel-handover` ·
 `/keel:keel-distill` · `/keel:keel-phase-review` · `/keel:keel-research` · `/keel:keel-adopt` ·
 `/keel:keel-update` · `/keel:keel-audit` · `/keel:keel-plan` · `/keel:keel-compact` ·
-`/keel:keel-stats` · `/keel:keel-pilot`), the `researcher` +
+`/keel:keel-stats` · `/keel:keel-pilot` · `/keel:keel-autopilot`), the `researcher` +
 `verifier` + `auditor` **subagents**, and the
 memory/safety **hooks** — across every repo. **A clone is a snapshot; the plugin is a subscription:**
 when the template improves, one `/plugin marketplace update keel` brings the new tooling to *all* your
@@ -268,4 +268,3 @@ nothing in your `src/` moves. Keel is a **shell that wraps your project, not a s
 </p>
 
 <sub>Diagram generated from [`docs/assets/gen_architecture_svg.py`](docs/assets/gen_architecture_svg.py) — edit the group list and re-run to regenerate. Every item's one-line role lives in the per-folder READMEs and `docs/architecture.md`.</sub>
-

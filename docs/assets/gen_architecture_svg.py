@@ -13,7 +13,7 @@ import os
 GROUND, BANDTOP = "#f4f6f9", "#eef1f6"
 INK, MUTED, HAIR = "#212a35", "#5b6673", "#d7dde5"
 CARD_BG = "#ffffff"
-VERSION = "v0.8.4"
+VERSION = "v0.8.5"
 
 # ---- data: each group -> (pill label, accent, [(name, desc), ...]) ----------
 GROUPS = [
@@ -26,7 +26,7 @@ GROUPS = [
     (".claude/", "#1c7ed6", [
         ("settings.json", "permissions — deny secrets · ask before push"),
         ("hooks/", "deterministic guards — block-dangerous · nudges"),
-        ("skills/", "11 /keel-* workflows — handover · plan · audit · pilot"),
+        ("skills/", "12 /keel-* workflows — handover · plan · pilot · autopilot"),
         ("agents/", "subagents — researcher · verifier · auditor"),
         ("rules/", "optional path-scoped rules"),
         ("snapshots/ · last-audit · ritual-log", "runtime state — appears as you work"),
