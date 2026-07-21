@@ -9,10 +9,15 @@ Run at the end of a phase (rules.md §2). Report the checklist with pass/fail; f
 a commit.
 
 Checklist:
-- [ ] **Working product** — the phase's feature runs; include a one-line "how to test this".
+- [ ] **Working product** — the phase's feature runs; include a one-line "how to test this" **for the
+  user**. What only a human can verify (browser/UX, prod host, real creds) is handed off as a recipe
+  and tracked in HANDOVER (d) — never silently assumed passed.
 - [ ] **Tests** — relevant unit/integration (e2e if needed) written and run via `make test` (auto-log →
   `reports/tests/<date>/`); the phase's **committed summary** written to `reports/tests/<date>-phase<N>.md`
-  (suites, counts, what was verified); new test/fixture files one-lined in their folder README; one-line
+  (suites, counts, what was verified, and **measured durations**: suite runtime + the gate's key step
+  timings — WHAT to time is project-specific (E2E latency, first token, query ms, batch throughput, …) —
+  side-by-side with the previous phase's numbers so slowdowns surface at the gate, not in production);
+  new test/fixture files one-lined in their folder README; one-line
   summary in HANDOVER.md (rules.md §2.8); bulk outputs passed the `/keel-pilot` gates where applicable.
 - [ ] **Architecture** — every structural change recorded in `docs/architecture.md` (rules.md §1.6).
 - [ ] **PLAN.md (do not skip — this is what marks the phase `done`)** — the finished phase's gate
