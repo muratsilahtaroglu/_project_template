@@ -166,35 +166,35 @@
     the new HANDOVER block (a) — git is the archive; mid-session discoveries get one line in
     `## Discovered` immediately, triaged at session end.
 33. **Consolidation (`/keel-distill`).** These caps are the single source of truth — the `keel-distill` skill and
-    `.claude/hooks/session-start-reground.sh` mirror them; change one, change all three. Memory that is
-    written but never reviewed degrades: when caps are
-    exceeded (HANDOVER > 5 blocks/~200 lines, LESSONS/TASKS > ~100 lines) or every ~5 sessions, run
-    `/keel-distill` — rotate old blocks (critical → LESSONS, raw → `docs/handover-archive.md` **verbatim**),
-    dedup/merge lessons (mark `SUPERSEDED`, never silently delete), promote 3×-applied lessons into
-    rules/skills/ADRs, and lint for contradictions/stale claims.
-34. **Restorable compression.** Distillation never lossy-deletes: every distilled line carries a pointer
-    back to the raw record ("docs/handover-archive.md, block <date>"). The archive is never `@`-imported
-    (zero context cost) and is retrieved by grep on demand.
-35. **No vector DB / RAG for memory (by default).** At this scale grep-able markdown beats embeddings on
-    freshness, zero deps, and git-diffability (Claude Code itself uses agentic search, no index).
-    Reconsider only if the notes corpus reaches ~1,000+ files or fuzzy "can't-name-it" recall is needed.
+    `.claude/hooks/session-start-reground.sh` mirror them; change one, change all three. Memory written
+    but never reviewed degrades: when caps are exceeded (HANDOVER > 5 blocks/~200 lines, LESSONS/TASKS >
+    ~100 lines) or every ~5 sessions, run `/keel-distill` — rotate old blocks (critical → LESSONS,
+    raw → `docs/handover-archive.md` **verbatim**), dedup/merge lessons (mark `SUPERSEDED`, never
+    silently delete), promote 3×-applied lessons into rules/skills/ADRs, and lint for contradictions.
+34. **Restorable compression.** Distillation never lossy-deletes: every distilled line points back to the
+    raw record ("docs/handover-archive.md, block <date>"); the archive is never `@`-imported — grep it on demand.
+35. **No vector DB / RAG for memory (by default).** Grep-able markdown beats embeddings on freshness,
+    zero deps, and git-diffability; reconsider only at ~1,000+ note files or fuzzy "can't-name-it" recall.
 
 ## 10. Judgment — weighing requests and uncertainty
 36. **Sanity-check, don't rubber-stamp.** Before implementing a request, check it against the project's
     architecture, conventions, and stated goals. If it conflicts with them, looks like a likely mistake,
     or a clearly simpler approach exists, say so **once, concretely** — the specific problem, its
     consequence, and an alternative — then stop. Do not refuse, lecture, or manufacture objections to
-    appear rigorous: **silent compliance and reflexive pushback are both failures.** Once the user
-    confirms after hearing the concern, their decision is **final** — implement it well and don't
-    re-litigate it later in the session. Never agree just to be agreeable — accuracy over agreement.
+    appear rigorous: **silent compliance and reflexive pushback are both failures** — accuracy over
+    agreement. Once the user confirms, their decision is **final** — implement well, don't re-litigate.
 37. **Ground before you build.** When not confident that an API, mechanism, or approach works the way
     you're about to use it (unfamiliar library, framework hook, architectural pattern), do NOT invent it
     from memory — hallucinated APIs are common and confidently wrong. Check prior art cheapest-first:
-    `LESSONS.md`/ADRs + existing code patterns → official docs → a research sub-agent for anything
-    bigger. State where you verified it ("per docs X" / "per LESSONS.md"); if you can't cite a source,
-    say you're unsure and check before writing code. **Proportionality:** skip this for trivial
-    one-sentence-diff changes or things already verified this session.
+    `LESSONS.md`/ADRs + existing code patterns → official docs → a research sub-agent for anything bigger.
+    State where you verified it ("per docs X"); no citable source = say you're unsure and check first.
+    **Proportionality:** skip for trivial one-sentence diffs or things already verified this session.
 38. **Rule budget.** This file is capped like the memory files: **~40 rules / ~200 lines** (the
     SessionStart hook warns on overflow). A new rule must earn its slot — merge it into an existing
     rule, retire one, or promote the behavior to a hook/permission (enforced beats written). A
     constitution too long to hold in attention is decoration, not discipline.
+39. **Fix the class, not the instance.** When a fix targets one failing case (a query, a test, an input),
+    find the mechanism-level cause and fix THERE — never hard-wire case-specific instructions into
+    runtime prompts or code so one example passes. Verified = a **variant case the fix was not built on**
+    also passes + the original failing case joins the regression/golden set (§2.8, `tests/fixtures/`).
+    A deliberate point-fix is OK only when **declared**: "point fix — generalize later" in TASKS/LESSONS.
