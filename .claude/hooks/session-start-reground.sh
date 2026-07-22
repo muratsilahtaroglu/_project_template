@@ -103,6 +103,19 @@ if [ -f "$DIR/PLAN.md" ] && ! grep -q 'REPLACE this example at bootstrap' "$DIR/
       echo "[keel] PLAN.md has a wip phase but TASKS.md '## Now' is empty — refill Now from the wip gate (or flip the phase)."
     fi
   fi
+  # Dependency-consistency check: a `done` phase whose `after` names a non-done phase is a contradiction —
+  # the DAG says it cannot have finished before its dependency. Usually the edge is too loose or the gate
+  # needs rescoping (the "p6 done but p3 still wip" confusion). Warn only; fixing is /keel-plan's job.
+  bad=$(awk -F'|' '
+    $2 ~ /^ *[a-z][a-z0-9_]* *$/ && $4 ~ /^ *(todo|wip|done) *$/ {
+      id=$2; st=$4; a=$5; gsub(/ /,"",id); gsub(/ /,"",st); gsub(/ /,"",a); status[id]=st; after[id]=a }
+    END { for (id in status) if (status[id]=="done") {
+      n=split(after[id],d,","); for (i=1;i<=n;i++)
+        if (d[i]!="" && d[i]!="-" && status[d[i]]!="" && status[d[i]]!="done")
+          printf "%s<-%s(%s) ", id, d[i], status[d[i]] } }' "$DIR/PLAN.md" 2>/dev/null)
+  if [ -n "$bad" ]; then
+    echo "[keel] PLAN.md dependency contradiction — done phase(s) depend on non-done: ${bad}— tighten the 'after' edge or rescope the gate (/keel-plan)."
+  fi
   # User-manual placeholder check (rules.md §1.3): phases keep shipping but the manual is still the
   # untouched template — the phase-review Docs item FAILs on this; warn early, at session start.
   if [ -f "$DIR/docs/user_manual.md" ] && grep -qE '<PROJECT NAME>|\(TEMPLATE\)' "$DIR/docs/user_manual.md"; then
@@ -126,6 +139,16 @@ if git -C "$DIR" rev-parse --is-inside-work-tree >/dev/null 2>&1 \
     if [ "${drift:-0}" -gt 10 ]; then
       echo "[keel] docs/architecture.md hasn't moved for ${drift} source commits — record the structural changes: module rows AND the component overview (the table is the source of truth; rules.md §1.6)."
     fi
+  fi
+fi
+
+# Double-fire check: back-to-back IDENTICAL ritual-log lines mean hooks fired twice for one event —
+# either a stale long-lived session that predates a settings change, or plugin + settings dual
+# registration (docs/steering.md). Detect only; NEVER auto-dedup the log (that masks the cause).
+if [ -f "$DIR/.claude/ritual-log" ]; then
+  dup=$(tail -40 "$DIR/.claude/ritual-log" 2>/dev/null | awk '$0==p&&$0!=""{n++} {p=$0} END{print n+0}')
+  if [ "${dup:-0}" -gt 2 ]; then
+    echo "[keel] ritual-log has ${dup} back-to-back duplicate lines — hooks are double-firing (stale long-lived session, or plugin + settings dual registration). Refresh the session; if it persists, 'claude plugin disable <name> --scope project' (see docs/steering.md)."
   fi
 fi
 exit 0

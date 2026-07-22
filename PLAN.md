@@ -31,26 +31,30 @@ re-plan are removed, not marked (failures live in `LESSONS.md`; git history keep
 
 ## Diagram (regenerated from the table — do NOT hand-edit between the markers)
 
-Conventions (GitHub renders ~Mermaid v10; violating these breaks the WHOLE diagram): ids `[a-z0-9_]`;
-every node DEFINED on its own line, edges below; labels always `"double-quoted"`, ASCII only — **no
-emoji, no `(`/`)` unquoted, no lowercase `end`**; solid `-->` = depends-on, dotted `-.->` = contains;
-every `classDef` pairs `fill` with `color` (dark-mode); never force a theme via `%%{init}%%`.
+Full palette + node/label rules: the `/keel-plan` skill owns the canonical spec (it regenerates this
+block). In short: node id = the phase id (`p1`, not "Phase 1"); **order is the arrows, not the number**;
+`done` green · `wip` amber+thick · `todo` grey+dashed · `blocked` red (reserved). Mermaid safety (GitHub
+~v10): ids `[a-z0-9_]`, one node per line, `"quoted"` ASCII labels, no emoji / unquoted `()` / lowercase
+`end`; `-->` depends-on, `-.->` contains; never `%%{init}%%`.
+
+> yeşil done · **amber** wip · gri-kesik todo · kırmızı blocked — sıra OKLARDA, numarada değil.
 
 <!-- KEEL_PLAN_DIAGRAM_BEGIN -->
 ```mermaid
 flowchart TD
-  p0["Phase 0 - bootstrap"]:::done
-  p1["Phase 1 - data layer"]:::wip
-  p1_1["1.1 schema"]:::done
-  p1_2["1.2 ingest worker"]:::wip
-  p2["Phase 2 - API"]:::todo
+  p0["p0 bootstrap"]:::done
+  p1["p1 data layer"]:::wip
+  p1_1["p1_1 schema"]:::done
+  p1_2["p1_2 ingest worker"]:::wip
+  p2["p2 API"]:::todo
   p0 --> p1
   p1 -.-> p1_1
   p1 -.-> p1_2
   p1 --> p2
-  classDef done fill:#2e7d32,color:#ffffff,stroke:#1b5e20
-  classDef wip fill:#f9a825,color:#000000,stroke:#b28704
-  classDef todo fill:#c62828,color:#ffffff,stroke:#8e0000
+  classDef done    fill:#2e7d32,color:#ffffff,stroke:#1b5e20
+  classDef wip     fill:#f9a825,color:#000000,stroke:#e65100,stroke-width:3px
+  classDef todo    fill:#eceff1,color:#37474f,stroke:#b0bec5,stroke-dasharray:4 3
+  classDef blocked fill:#c62828,color:#ffffff,stroke:#8e0000
 ```
 <!-- KEEL_PLAN_DIAGRAM_END -->
 
