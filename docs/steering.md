@@ -36,7 +36,8 @@ compaction behavior. Put each instruction in the RIGHT one instead of piling eve
   full `/keel-phase-review` with real evidence, commits are local, pushes batch for ONE approval).
 - **Side tasks** → subagents: `researcher`, `verifier`, `auditor` (`.claude/agents/`).
 - **Guarantees** → hooks (`block-dangerous`, `compact-gate` (blocks a stale manual `/compact`),
-  `pre-compact-snapshot`, `session-start-reground`, handover reminder, `plan-phase-nudge`) +
+  `pre-compact-snapshot`, `session-start-reground`, handover reminder, `plan-phase-nudge`,
+  `owner-guard` (multi-user: blocks non-owner governance edits, armed by `.claude/project-owner`)) +
   `settings.json` permissions. Plus `ritual-log` telemetry: every Skill-tool invocation, every
   user-typed command (built-ins included, via `UserPromptExpansion`), compact boundary
   (manual/auto), session start and hook BLOCK is appended to `.claude/ritual-log` (git-ignored,
