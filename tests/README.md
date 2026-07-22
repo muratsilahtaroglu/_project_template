@@ -3,9 +3,16 @@
 - `unit/` — pure unit tests.
 - `integration/` — tests against real dependencies (DB/services).
 - `e2e/` — end-to-end smoke tests.
-- `fixtures/` — saved inputs, test cases and gold sets as DATA (no live requests in CI). Any format
-  that fits the test — `.json` / `.jsonl` / `.yaml` / `.parquet` / `.html` / … — cases are never
-  hardcoded into test code; `/keel-pilot` gold sets live here too.
+- `fixtures/` — saved inputs and reusable case sets as DATA (no live requests in CI). Any format that
+  fits the test — `.json` / `.jsonl` / `.yaml` / `.parquet` / `.html` / …
+
+**Two kinds of cases — different rules.** Ordinary unit-test edge cases belong INLINE in the test code
+(pytest parametrize is idiomatic; readable diffs beat indirection). But a **corpus** — any case set that
+is run repeatedly across phases/models/configs (golden question sets, SQL goldens, honesty/regression
+sets, `/keel-pilot` gold sets) — is DATA with **stable ids**, never buried in test code or chat history.
+Default home: `fixtures/`. A dedicated corpus dir (e.g. `benchmarks/`) is fine — **then this README
+carries a one-line corpus index pointing to it**, so `tests/` remains the one place to find every case
+set. §10.39's failing-case rule feeds these corpora: every point-fixed failure joins one.
 
 **Why-READMEs (per folder).** Each subfolder's `README.md` lists every test/fixture file with ONE
 line — what it guards and why it exists (the phase/bug that produced it) — added the moment the file

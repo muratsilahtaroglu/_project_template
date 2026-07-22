@@ -17,7 +17,10 @@ Checklist:
   (suites, counts, what was verified, and **measured durations**: suite runtime + the gate's key step
   timings — WHAT to time is project-specific (E2E latency, first token, query ms, batch throughput, …) —
   side-by-side with the previous phase's numbers so slowdowns surface at the gate, not in production);
-  new test/fixture files one-lined in their folder README; one-line
+  new test/fixture files one-lined in their folder README; **repeatedly-run corpora** (golden /
+  regression / pilot question sets) exist as DATA files with stable ids — `tests/fixtures/` or a corpus
+  dir indexed from `tests/README.md`, never only inline in test code (§10.39 feeds them: every
+  point-fixed failing case joins one); one-line
   summary in HANDOVER.md (rules.md §2.8); bulk outputs passed the `/keel-pilot` gates where applicable.
   Ad-hoc reports (speed tests, golden proofs) complement `reports/tests/<date>-phase<N>.md` — never replace it.
 - [ ] **Architecture** — every structural change recorded in `docs/architecture.md`: new/changed module
