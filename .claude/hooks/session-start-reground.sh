@@ -106,9 +106,14 @@ if [ -f "$DIR/PLAN.md" ] && ! grep -q 'REPLACE this example at bootstrap' "$DIR/
   # Dependency-consistency check: a `done` phase whose `after` names a non-done phase is a contradiction —
   # the DAG says it cannot have finished before its dependency. Usually the edge is too loose or the gate
   # needs rescoping (the "p6 done but p3 still wip" confusion). Warn only; fixing is /keel-plan's job.
+  # Header-aware: find the `status` and `after` column indices from the table header, so an inserted
+  # `owner` column (or any reordering) doesn't shift the parse (old tables have no owner col; both work).
   bad=$(awk -F'|' '
-    $2 ~ /^ *[a-z][a-z0-9_]* *$/ && $4 ~ /^ *(todo|wip|done) *$/ {
-      id=$2; st=$4; a=$5; gsub(/ /,"",id); gsub(/ /,"",st); gsub(/ /,"",a); status[id]=st; after[id]=a }
+    /\| *id *\|/ && /status/ && /after/ {
+      for (i=1;i<=NF;i++){c=$i; gsub(/^ +| +$/,"",c); if(c=="status")si=i; if(c=="after")ai=i} next }
+    si && ai && $2 ~ /^ *[a-z][a-z0-9_]* *$/ {
+      st=$si; gsub(/ /,"",st); if(st!="todo"&&st!="wip"&&st!="done") next
+      id=$2; a=$ai; gsub(/ /,"",id); gsub(/ /,"",a); status[id]=st; after[id]=a }
     END { for (id in status) if (status[id]=="done") {
       n=split(after[id],d,","); for (i=1;i<=n;i++)
         if (d[i]!="" && d[i]!="-" && status[d[i]]!="" && status[d[i]]!="done")
@@ -139,6 +144,19 @@ if git -C "$DIR" rev-parse --is-inside-work-tree >/dev/null 2>&1 \
     if [ "${drift:-0}" -gt 10 ]; then
       echo "[keel] docs/architecture.md hasn't moved for ${drift} source commits — record the structural changes: module rows AND the component overview (the table is the source of truth; rules.md §1.6)."
     fi
+  fi
+fi
+
+# Ownership check (multi-user, rules: TASKS ## Now @owner tag): warn when open ## Now items are ALL
+# owned by others — so the AI doesn't do work assigned to someone else (the parallel-work collision the
+# tag exists to prevent). Silent when no @owner tags exist (single-user projects pay nothing). The tag
+# value is the owner's `git config user.name`; a spaced user.name won't match a single-token tag.
+if git -C "$DIR" rev-parse --is-inside-work-tree >/dev/null 2>&1 && [ -f "$DIR/TASKS.md" ]; then
+  me=$(git -C "$DIR" config user.name 2>/dev/null)
+  owners=$(sed -n '/^## Now/,/^## Next/p' "$DIR/TASKS.md" 2>/dev/null | grep '^- \[ \]' \
+           | grep -oE '@[A-Za-z0-9_.-]+' | sed 's/^@//' | sort -u)
+  if [ -n "$owners" ] && [ -n "$me" ] && ! printf '%s\n' "$owners" | grep -qixF "$me"; then
+    echo "[keel] TASKS.md '## Now' is owned by others ($(printf '@%s ' $owners)) but you are '${me}' — don't do another owner's assigned work; take an unassigned/your-own item or hand back (TASKS ownership tag)."
   fi
 fi
 

@@ -12,8 +12,10 @@ Steps:
 1. Read the current `HANDOVER.md`. If it already has **5 blocks** (or exceeds ~200 lines), run
    `/keel-distill` first to rotate the oldest block out (critical facts → `LESSONS.md`, raw block →
    `docs/handover-archive.md`).
-2. Write this session's block: `### <YYYY-MM-DD HH:MM> — <one-line status>` (time = when the block
-   was first created). **One block per SESSION, not per day:** if THIS session already wrote a block
+2. Write this session's block: `### <YYYY-MM-DD HH:MM> — @<git user.name> — <one-line status>` (time =
+   when the block was first created; the `@<git user.name>` attributes the session's author so multi-user
+   handovers stay legible — read it from `git config user.name`; single-user projects still get it, at
+   zero cost). **One block per SESSION, not per day:** if THIS session already wrote a block
    (a mid-session handover, or /keel-compact re-running this), UPDATE that block in place — keep its
    original HH:MM. A NEW session always adds a NEW block, even on the same day — same-day sessions
    must stay distinguishable. The block contains:

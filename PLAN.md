@@ -21,13 +21,16 @@ CVE sweep, a pure refactor — goes to an ADR / the Fix log, not a node (an `aft
 the graph on something that never ships). This file holds ONLY the latest plan — phases dropped by a
 re-plan are removed, not marked (failures live in `LESSONS.md`; git history keeps every earlier plan).
 
-| id | phase | status | after | gate (done-when) | since |
-|---|---|---|---|---|---|
-| p0 | Bootstrap | done | - | tailoring applied + recorded | <YYYY-MM-DD> |
-| p1 | Data layer | wip | p0 | ingest e2e green | <YYYY-MM-DD> |
-| p1_1 | Schema | done | - | migrations apply clean | <YYYY-MM-DD> |
-| p1_2 | Ingest worker | wip | p1_1 | e2e ingest test green | <YYYY-MM-DD> |
-| p2 | API | todo | p1 | CRUD + auth smoke green | |
+`owner` = who does this phase (their `git config user.name`); blank = anyone. In multi-user work only the
+owner advances an owned phase — others surface it, don't touch it (`/keel-autopilot` stops at a foreign one).
+
+| id | phase | status | owner | after | gate (done-when) | since |
+|---|---|---|---|---|---|---|
+| p0 | Bootstrap | done | | - | tailoring applied + recorded | <YYYY-MM-DD> |
+| p1 | Data layer | wip | | p0 | ingest e2e green | <YYYY-MM-DD> |
+| p1_1 | Schema | done | | - | migrations apply clean | <YYYY-MM-DD> |
+| p1_2 | Ingest worker | wip | | p1_1 | e2e ingest test green | <YYYY-MM-DD> |
+| p2 | API | todo | | p1 | CRUD + auth smoke green | |
 
 ## Diagram (regenerated from the table — do NOT hand-edit between the markers)
 

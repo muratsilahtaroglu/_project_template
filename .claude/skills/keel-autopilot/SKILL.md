@@ -25,7 +25,9 @@ Mode contract (4 rules):
    UNCERTAIN (verifier verdict or §10.37 grounding gap) · a scope/architecture surprise would need a
    new ADR · anything security-adjacent (secrets, auth, non-routine dependency changes) · a bulk
    output hits the `/keel-pilot` threshold (its human-routing rules override autopilot) · the same
-   test is red twice after fixes.
+   test is red twice after fixes · **the next `## Now` item or wip phase is owned by another user**
+   (`@owner` ≠ the current `git config user.name`) — autopilot NEVER does someone else's assigned
+   work; stop and surface it (this is the parallel-work collision the ownership tag exists to prevent).
 
 Boundaries:
 - **One session.** Cross-session automation (cron, /loop) is out of scope — re-request the mode each

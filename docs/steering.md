@@ -91,3 +91,15 @@ enabled automatically — no per-person `/plugin marketplace add` + `/plugin ins
 Never add this to a **full clone** of the kit: the clone already registers the same hooks via
 `.claude/settings.json`, and plugin + settings registration together fire each hook **twice**
 (the dual-registration trap above).
+
+**If a full clone double-fires anyway** (the `session-start-reground` double-fire detector flags it — see
+the ritual-log for same-second identical lines): the plugin is enabled at **user scope**
+(`~/.claude/settings.json` `enabledPlugins`) and its hooks fire in the clone too. A project-scope
+`enabledPlugins:{"keel@keel":false}` *should* override per settings precedence — but a plugin whose hooks
+load **before** the enable-filter (notably a stale/`failed to load` cache, e.g. an old 0.8.x pin) fires
+its hooks regardless of the flag. Resolution, in order: (1) try `.claude/settings.local.json` (Local
+scope, higher precedence, git-ignored) with the same `false`, then start a **fresh session**
+(`enabledPlugins` is read at session start, not hot-reloaded); (2) if hooks still fire, the stale plugin
+cache is the culprit — update it (`/plugin` → update) or remove the plugin at user scope. **A full clone
+and the plugin are mutually exclusive** — pick one per project; the clone is self-contained, the plugin
+is for non-clone projects.

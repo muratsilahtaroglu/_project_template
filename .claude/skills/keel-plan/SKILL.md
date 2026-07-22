@@ -10,8 +10,11 @@ re-plan, or when scope changes enough that the DAG no longer matches reality. `P
 view; `TASKS.md` stays the tactical board — never duplicate checkboxes across them.
 
 1. **Propose.** From the user's goal derive phases + sub-phases, each with: id (`p1`, `p1_2` — lowercase
-   `[a-z0-9_]`), a **gate** (verifiable done-when, same spirit as TASKS.md), and `after` dependencies
-   (siblings with no mutual `after` may run in parallel). Map **product** phases only — what the project
+   `[a-z0-9_]`), a **gate** (verifiable done-when, same spirit as TASKS.md), `after` dependencies
+   (siblings with no mutual `after` may run in parallel), and — on a multi-user project — an `owner`
+   (the person's `git config user.name`; blank = anyone). Ask who owns what when parallel branches are
+   assigned to different people; only the owner advances an owned phase (`/keel-autopilot` stops at a
+   foreign one). Single-user projects leave `owner` blank. Map **product** phases only — what the project
    builds and ships. One-time meta/tooling work (a mid-project tool adoption, a dependency/CVE sweep, a
    pure refactor) is **not** a phase node: record it in an ADR and/or the Fix log. A meta stub given an
    `after` becomes a permanent dead-end fork in the graph — exactly the noise the map should avoid. Show
