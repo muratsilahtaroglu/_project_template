@@ -109,10 +109,10 @@
 14. Minimize personal data / PII collection; comply with applicable regulation (e.g. GDPR/local law).
 
 ## 6. Version control (host-agnostic: GitHub / GitLab / Gitea / none)
-15. **Every meaningful unit of work / phase end → commit + `push`** (remote `main` or phase branch → PR).
-    Push happens **only after user approval**. Host-specific files are set at bootstrap (§0a): GitHub uses
-    `.github/`; GitLab uses `.gitlab-ci.yml` + merge-request templates; a project with **no remote** commits
-    locally only (drop the push steps). Adapt this section to the chosen host.
+15. **Commit at every meaningful unit of work; PUSH in a batch at a boundary** (phase end, or session end /
+    `/keel-compact`) — ONE approval, not a prompt per commit. Push happens **only after user approval** (the
+    `ask` on push stays — the enforced backstop, never removed). Host files set at bootstrap (§0a): GitHub
+    `.github/`; GitLab `.gitlab-ci.yml` + MR templates; **no remote** = commit locally only.
 16. Commit messages are descriptive + tagged with phase/work item (e.g. `phase1: <feature>`). Commits are
     made **as the project owner** (git config: `<git-user> <git-email>`); no AI co-author line unless
     requested.

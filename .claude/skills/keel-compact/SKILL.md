@@ -23,8 +23,10 @@ always — this is the umbrella, not a replacement.
    - [ ] No agreement / gotcha / failed approach from this conversation is still unwritten (§9.31).
    - [ ] Caps respected: HANDOVER ≤ 3 blocks / ~150 lines · LESSONS ≤ ~150 · TASKS ≤ ~100 (else `/keel-distill`).
    - [ ] `PLAN.md` statuses + _Current focus_ current (if the project uses PLAN.md).
-3. **Offer an approved commit** of the memory files (rules.md §1.3, §6.15) — git is the second
-   safety net beside `.claude/snapshots/`: even a bad summary then loses nothing.
+3. **Offer an approved commit + the batched push** (rules.md §1.3, §6.15) — this is the natural push
+   boundary: commits accrued through the session go out here in ONE approval (the `ask` on push fires
+   once, not per-commit — that's the point). git is the second safety net beside `.claude/snapshots/`:
+   even a bad summary then loses nothing.
 4. **Hand off:** tell the user — "Disk is fresh; now run `/compact`." A skill CANNOT invoke the
    built-in `/compact` itself; stop here and let the user trigger it.
 
