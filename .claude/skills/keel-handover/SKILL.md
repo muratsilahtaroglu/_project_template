@@ -29,6 +29,14 @@ Steps:
      the highest-value section — don't skip it.
    - **(c) Latest updates** — the most recent concrete changes.
    - **(d) Next steps** — prioritized, for the next session.
+
+   **Signal only — a block is project STATE for the next session, not a transcript.** Before writing a
+   line, test it: would a FRESH session need it to continue, AND is it not already in `git log` or
+   `.claude/ritual-log`? If it fails either test, drop it. EXCLUDE: VCS/ritual bookkeeping ("committed/
+   pushed N commits", sha ranges, "ran /keel-distill / /keel-compact") and conversational meta ("user
+   asked if I saved", "don't rush", who said what). A DECISION that merely touches git is different —
+   keep the WHY ("left settings.json unstaged — it holds the machine's allow-list"), drop the mechanics.
+   At the ~150-line cap this noise is exactly what crowds out the facts that matter.
 3. **PLAN.md** (if the project uses it): flip the phase statuses that changed this session, refresh
    _Current focus_, regenerate the diagram block from the table (see `/keel-plan` step 2) — patch the file,
    never rewrite it wholesale. If the wip phase's gate looks MET (its `## Now` items all checked, gate

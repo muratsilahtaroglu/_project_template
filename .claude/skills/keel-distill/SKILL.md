@@ -37,6 +37,9 @@ For each block being rotated, triage by criticality — **content-aware, not age
 - Triage `## Discovered` into `## Next` (or drop with a reason); refill `## Now` (max 3–5).
 
 ## 4. Lint the memory set (drift check)
+- **Strip noise:** delete VCS/ritual bookkeeping ("pushed N commits", sha ranges, "ran /keel-distill")
+  and conversational meta ("user asked if I saved", "don't rush") from HANDOVER — it's git-log /
+  ritual-log-derivable, and it's usually what pushed the file over cap (keep decisions + their WHY).
 - Contradictions between `rules.md` / `LESSONS.md` / `CLAUDE.md` — flag, ask the user which wins.
 - Stale claims (files/commands/paths that no longer exist) — fix or mark superseded.
 - Cap check: `HANDOVER.md` ≤ ~150 lines, `LESSONS.md` ≤ ~150, `TASKS.md` ≤ ~100, `CLAUDE.md` ≤ ~200,
