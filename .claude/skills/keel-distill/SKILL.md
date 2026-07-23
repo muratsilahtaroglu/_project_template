@@ -5,14 +5,14 @@ description: Consolidate project memory — rotate old HANDOVER blocks to the ar
 
 # /keel-distill — the memory consolidation ritual ("sleep" for the project)
 
-Run when `HANDOVER.md` exceeds **5 session blocks / ~200 lines**, when `LESSONS.md` or `TASKS.md`
-exceeds **~100 lines** (the SessionStart hook warns on all of these), or every ~5 sessions as hygiene —
+Run when `HANDOVER.md` exceeds **3 session blocks / ~150 lines**, when `LESSONS.md` exceeds **~150** or
+`TASKS.md` **~100 lines** (the SessionStart hook warns on all of these), or every ~5 sessions as hygiene —
 that cadence is yours to keep, the hook only detects cap overflows. Memory that is written but never
 reviewed degrades the project — consolidation is what keeps it useful (rules.md §9).
 
 Propose the full plan, get user approval, then apply. Never lossy-delete.
 
-## 1. Rotate HANDOVER blocks (oldest first, until ≤4 blocks AND under ~200 lines)
+## 1. Rotate HANDOVER blocks (oldest first, until ≤2 blocks AND under ~150 lines)
 For each block being rotated, triage by criticality — **content-aware, not age-blind**:
 - **(b) Tried, didn't work** → PERMANENT: distill each to one `LESSONS.md [fail]` line
   (`<date> — <approach> → FAILED: <reason>. (full trace: docs/handover-archive.md, block <date>)`).
@@ -27,7 +27,10 @@ For each block being rotated, triage by criticality — **content-aware, not age
 - Merge duplicates and near-duplicates into the stronger phrasing (keep the earliest date).
 - A contradicted entry is marked `SUPERSEDED by <entry/date>` — visible, dated, never just removed.
 - **Promote what has graduated:** a lesson applied 3+ times is no longer a lesson — move it into
-  `rules.md` (conduct), a `.claude/skills/` skill (procedure), or an ADR (decision), and drop it here.
+  `rules.md` (conduct), a `.claude/skills/` skill (procedure), an ADR (decision), or — for a permanent
+  DOMAIN fact (a data quirk, an API contract) — the relevant **docs** (`docs/architecture.md` "known
+  limitations" / a guide), then drop it here. This is the main pressure valve on a long project's
+  `[gotcha]` list: reference facts belong in docs, not the always-loaded `LESSONS.md`.
 
 ## 3. Prune TASKS.md
 - Verify done items were deleted (their one-liner lives in HANDOVER (a)); delete any stragglers.
@@ -36,7 +39,7 @@ For each block being rotated, triage by criticality — **content-aware, not age
 ## 4. Lint the memory set (drift check)
 - Contradictions between `rules.md` / `LESSONS.md` / `CLAUDE.md` — flag, ask the user which wins.
 - Stale claims (files/commands/paths that no longer exist) — fix or mark superseded.
-- Cap check: `HANDOVER.md` ≤ ~200 lines, `LESSONS.md` ≤ ~100, `TASKS.md` ≤ ~100, `CLAUDE.md` ≤ ~200,
+- Cap check: `HANDOVER.md` ≤ ~150 lines, `LESSONS.md` ≤ ~150, `TASKS.md` ≤ ~100, `CLAUDE.md` ≤ ~200,
   `rules.md` ≤ ~200 (rule budget §10.38 — merge/retire/promote to a hook, don't just append).
 
 ## 5. Report → approve → commit

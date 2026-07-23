@@ -1,6 +1,6 @@
 ---
 name: keel-handover
-description: Add this session's block to HANDOVER.md before ending or compacting — done / tried-failed / latest / next. Rotates via /keel-distill when the 5-block cap is hit.
+description: Add this session's block to HANDOVER.md before ending or compacting — done / tried-failed / latest / next. Rotates via /keel-distill when the 3-block cap is hit.
 ---
 
 # /keel-handover — write the session block
@@ -9,7 +9,7 @@ Add a new **session block** to the TOP of `HANDOVER.md`'s "Session blocks" secti
 Newest first; never edit past blocks.
 
 Steps:
-1. Read the current `HANDOVER.md`. If it already has **5 blocks** (or exceeds ~200 lines), run
+1. Read the current `HANDOVER.md`. If it already has **3 blocks** (or exceeds ~150 lines), run
    `/keel-distill` first to rotate the oldest block out (critical facts → `LESSONS.md`, raw block →
    `docs/handover-archive.md`).
 2. Write this session's block: `### <YYYY-MM-DD HH:MM> — @<git user.name> — <one-line status>` (time =

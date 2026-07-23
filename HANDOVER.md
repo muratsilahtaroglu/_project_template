@@ -2,7 +2,7 @@
 
 > Updated BEFORE every compact/session end. The repo is durable disk; the context window is volatile
 > RAM — anything not written here is assumed lost. This file is `@`-imported into EVERY session, so it
-> has a **hard cap: max 5 session blocks / ~200 lines.** When a 6th block would be added (or the cap is
+> has a **hard cap: max 3 session blocks / ~150 lines.** When a 4th block would be added (or the cap is
 > hit), run **`/keel-distill`** first: the oldest block's critical facts go to `LESSONS.md` (tagged, distilled)
 > and the raw block moves verbatim to `docs/handover-archive.md` (never imported — costs no context,
 > grep-able forever). Compaction is a curation step, not an information-loss event.
@@ -15,7 +15,7 @@ _Last updated: <YYYY-MM-DD> — <short status>._
 <!-- Insert each new session block HERE, directly below this comment (newest first; older blocks get
      pushed down). ONE BLOCK PER SESSION, not per day: the heading carries HH:MM, so several same-day
      sessions stay separate; a /keel-handover re-run in the SAME session updates its own block (keeping
-     its original time). Max 5 blocks — then run /keel-distill. On the FIRST real session, REPLACE the
+     its original time). Max 3 blocks — then run /keel-distill. On the FIRST real session, REPLACE the
      placeholder block below (don't stack a real block on top of it, or the phantom placeholder lingers
      forever). -->
 
@@ -37,7 +37,7 @@ _Last updated: <YYYY-MM-DD> — <short status>._
 **Default: this single root file.** On a **large, multi-area** project (e.g. backend + frontend +
 agent/LLM) it can grow noisy — then, when an area is developed in its own sessions, give it a
 **per-area handover** next to its code (`backend/HANDOVER.md`, `frontend/HANDOVER.md`,
-`agents/HANDOVER.md`), each with its own session blocks + the same 5-block cap. In that setup:
+`agents/HANDOVER.md`), each with its own session blocks + the same 3-block cap. In that setup:
 - this **root** file becomes the **program-level index**: milestones, cross-area/integration decisions,
   and the links below. **One "latest" per area — no duplicated truth.**
 - pair each with a nested **`<area>/CLAUDE.md`** that `@`-imports its `<area>/HANDOVER.md`; Claude Code

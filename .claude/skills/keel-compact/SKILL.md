@@ -21,7 +21,7 @@ always — this is the umbrella, not a replacement.
          (same-day ≠ same-session: another session's block from today is still stale — add your own).
    - [ ] `TASKS.md ## Now` matches reality; finished items deleted (one-liners in block (a)).
    - [ ] No agreement / gotcha / failed approach from this conversation is still unwritten (§9.31).
-   - [ ] Caps respected: HANDOVER ≤ 5 blocks / ~200 lines · LESSONS/TASKS ≤ ~100 (else `/keel-distill`).
+   - [ ] Caps respected: HANDOVER ≤ 3 blocks / ~150 lines · LESSONS ≤ ~150 · TASKS ≤ ~100 (else `/keel-distill`).
    - [ ] `PLAN.md` statuses + _Current focus_ current (if the project uses PLAN.md).
 3. **Offer an approved commit** of the memory files (rules.md §1.3, §6.15) — git is the second
    safety net beside `.claude/snapshots/`: even a bad summary then loses nothing.

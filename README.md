@@ -133,8 +133,8 @@ The context window is volatile RAM; the repo is durable disk. Every phase writes
 
 | File | What | Anti-bloat rule |
 |---|---|---|
-| `HANDOVER.md` | last **5 session blocks** (done · tried-failed · latest · next) | on overflow `/keel-distill` rotates the oldest block |
-| `LESSONS.md` | critical knowledge written **the moment it appears** (rules, must-run tests, gotchas, failures) — with your approval | ~100-line cap; dedup/merge; `SUPERSEDED`, never silently deleted |
+| `HANDOVER.md` | last **3 session blocks** (done · tried-failed · latest · next) | on overflow `/keel-distill` rotates the oldest block |
+| `LESSONS.md` | critical knowledge written **the moment it appears** (rules, must-run tests, gotchas, failures) — with your approval | ~150-line cap; graduate 3×-applied lessons out (→ rules/skill/ADR/docs); dedup/merge; `SUPERSEDED`, never silently deleted |
 | `TASKS.md` | cross-session task board (`Now` (max 3–5) · `Next` · `Discovered`), each item with a verifiable `done-when:` | ~100-line cap; **delete on done** — git is the archive |
 | `docs/handover-archive.md` | raw rotated blocks, verbatim | never `@`-imported → zero context cost, grep on demand |
 | `PLAN.md` | strategic phase map: status table + **colored Mermaid DAG** (renders live on GitHub/VSCode — watch nodes turn red→yellow→green) + post-completion fix log | not `@`-imported; statuses flip at rituals — a Stop hook nudges the moment a `wip` phase's tasks are all done but its status wasn't flipped (+ table↔diagram↔TASKS drift check) |

@@ -54,7 +54,7 @@
 4. **`HANDOVER.md` is updated BEFORE every compact/session end** (before a manual compact, the
    `/keel-compact` skill bundles this + the cap check, then hands off to `/compact`) — one dated **session block** (newest
    first) with (a) completed, (b) tried-and-failed (so they aren't retried), (c) latest updates,
-   (d) next steps. **Hard cap: max 5 blocks / ~200 lines** (it is `@`-imported into every session — bloat
+   (d) next steps. **Hard cap: max 3 blocks / ~150 lines** (it is `@`-imported into every session — bloat
    is a per-session token tax and an adherence tax). On overflow run **`/keel-distill`** (§9.33): oldest
    block's critical facts → `LESSONS.md`, raw block → `docs/handover-archive.md` verbatim. Default is a
    **single root** handover. On large multi-area projects the AI may create **per-area handovers**
@@ -167,7 +167,7 @@
     `## Discovered` immediately, triaged at session end.
 33. **Consolidation (`/keel-distill`).** These caps are the single source of truth — the `keel-distill` skill and
     `.claude/hooks/session-start-reground.sh` mirror them; change one, change all three. Memory written
-    but never reviewed degrades: when caps are exceeded (HANDOVER > 5 blocks/~200 lines, LESSONS/TASKS >
+    but never reviewed degrades: when caps hit (HANDOVER > 3 blocks/~150 lines, LESSONS > ~150, TASKS >
     ~100 lines) or every ~5 sessions, run `/keel-distill` — rotate old blocks (critical → LESSONS,
     raw → `docs/handover-archive.md` **verbatim**), dedup/merge lessons (mark `SUPERSEDED`, never
     silently delete), promote 3×-applied lessons into rules/skills/ADRs, and lint for contradictions.

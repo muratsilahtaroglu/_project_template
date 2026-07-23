@@ -29,8 +29,8 @@ warn_cap() { # $1=file $2=max_lines
     echo "[keel] $1 is ${lines} lines (cap ~$2) — run /keel-distill before adding more."
   fi
 }
-warn_cap "HANDOVER.md" 200
-warn_cap "LESSONS.md" 100
+warn_cap "HANDOVER.md" 150
+warn_cap "LESSONS.md" 150
 warn_cap "TASKS.md" 100
 
 # Rule-budget check (rules.md §10.38): the constitution is capped like the memory files — a rules.md
@@ -43,14 +43,14 @@ if [ -f "$DIR/rules.md" ]; then
   fi
 fi
 
-# Block-count check: >5 SESSION blocks in HANDOVER.md → rotation due.
+# Block-count check: >3 SESSION blocks in HANDOVER.md → rotation due.
 # Count only dated block headings (### YYYY-MM-DD ...) — other ### headings (e.g. the area-handover
 # index) and the unfilled <YYYY-MM-DD> placeholder must not inflate the count.
 if [ -f "$DIR/HANDOVER.md" ]; then
   blocks=$(grep -cE '^### [0-9]{4}-[0-9]{2}-[0-9]{2}' "$DIR/HANDOVER.md" 2>/dev/null || true)
   blocks=${blocks:-0}
-  if [ "$blocks" -gt 5 ]; then
-    echo "[keel] HANDOVER.md has ${blocks} session blocks (max 5) — run /keel-distill to rotate the oldest to docs/handover-archive.md."
+  if [ "$blocks" -gt 3 ]; then
+    echo "[keel] HANDOVER.md has ${blocks} session blocks (max 3) — run /keel-distill to rotate the oldest to docs/handover-archive.md."
   fi
 fi
 
