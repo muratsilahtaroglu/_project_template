@@ -183,6 +183,20 @@ if git -C "$DIR" rev-parse --is-inside-work-tree >/dev/null 2>&1 && [ -f "$DIR/T
   fi
 fi
 
+# Due-date nudge: open '## Now' (and an in-between '## Review') items may carry `due: YYYY-MM-DD`
+# (sprint targets, multi-user assignments — docs/steering.md "Multi-user"). Surface past dates at
+# session start; the fix is finishing, re-scoping, or re-dating WITH the owner — never silent rot.
+if [ -f "$DIR/TASKS.md" ]; then
+  today=$(date +%F)
+  overdue=$(sed -n '/^## Now/,/^## Next/p' "$DIR/TASKS.md" 2>/dev/null | grep -E '^- \[.\]' \
+            | grep -oE 'due: ?[0-9]{4}-[0-9]{2}-[0-9]{2}' | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}' \
+            | awk -v t="$today" '$0 < t' | sort -u)
+  if [ -n "$overdue" ]; then
+    n=$(printf '%s\n' "$overdue" | wc -l)
+    echo "[keel] ${n} TASKS.md due-date(s) already passed ($(printf '%s ' $overdue)· today ${today}) — finish, re-scope, or re-date the item(s) with the owner; a silently stale due: is a broken promise."
+  fi
+fi
+
 # Double-fire check: back-to-back IDENTICAL ritual-log lines mean hooks fired twice for one event —
 # either a stale long-lived session that predates a settings change, or plugin + settings dual
 # registration (docs/steering.md). Detect only; NEVER auto-dedup the log (that masks the cause).
